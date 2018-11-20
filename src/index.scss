@@ -2,6 +2,5 @@
    Main entry point
 \*============================================================================*/
 
-
-$has-classes: true;
-@import "framework/index";
+$has-classes: true !default;
+@import 'framework/index';
