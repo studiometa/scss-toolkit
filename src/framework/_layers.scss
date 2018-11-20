@@ -1,0 +1,32 @@
+/*============================================================================*\
+   Layers (z-index) definitions
+\*============================================================================*/
+
+$layers: (
+  'goku': 9000,
+  'modal': 6000,
+  'sticky': 2000,
+  'menu': 300,
+  'tooltip': 200,
+  'dropdown': 100,
+  'default': 1,
+  'limbo': -999,
+);
+
+/**
+ * A function helper to avoid having to type `map-get($layers, ...)`
+ * Based on http://css-tricks.com/handling-z-index/
+ *
+ * @param  {string} $layer The name of the z-index
+ * @param  {number} $var   The modifier if needed
+ * @return {number}        The corresponding z-index based on the $layers var
+ */
+@function z($layer, $var: 0) {
+  @if not map-has-key($layers, $layer) {
+    @warn 'No z-index found in $layers map for `#{$layer}`. Property omitted.';
+    @return 'initial';
+  }
+
+  $value: map-get($layers, $layer);
+  @return $value + $var;
+}

@@ -1,0 +1,61 @@
+/*============================================================================*\
+   Breakpoints definition
+\*============================================================================*/
+
+$has-classes: false !default;
+$breakpoints: (
+  'xxs': 0,
+  'xs': 480,
+  's': 768,
+  'm': 1024,
+  'l': 1280,
+  'xl': 1440,
+  'xxl': 1920,
+);
+
+/*============================================================================*\
+   Function helper
+\*============================================================================*/
+
+/**
+ * Create variables for the media queries
+ * @param  {string} $breakpoint The wanted breakpoint
+ * @param  {string} $type            Type of media query (min or max)
+ * @param  {string} $unit            The unit for the media queries (em or px)
+ * @return {string}                  A media query expression
+ */
+@function md($breakpoint, $type: 'min', $unit: 'em') {
+  @if not map-has-key($breakpoints, $breakpoint) {
+    @error 'No breakpoint found in $breakpoints map for `#{$breakpoint}`.';
+  }
+
+  $value: map-get($breakpoints, $breakpoint);
+
+  @if $value / $value != 1 and $value != 0 {
+    @return $value;
+  }
+
+  @if $unit == 'em' {
+    $size: $value / 16 * 1em;
+
+    @if $type == 'min' {
+      @return '(min-width: #{$size})';
+    }
+
+    @if $type == 'max' {
+      @return 'not all and (min-width: #{$size})';
+    }
+  }
+
+  @if $unit == 'px' {
+    $size: $value * 1px;
+
+    @if $type == 'min' {
+      @return '(min-width: #{$size})';
+    }
+
+    @if $type == 'max' {
+      @return 'not all and (min-width: #{$size})';
+    }
+  }
+}

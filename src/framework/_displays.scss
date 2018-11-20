@@ -1,0 +1,127 @@
+/*============================================================================*\
+   Displays helpers
+\*============================================================================*/
+
+/*============================================================================*\
+   Helper mixins
+\*============================================================================*/
+
+/**
+ * A mixin to hide elements but keep them accessible
+ *
+ * @author Facebook Accessibility Team
+ * @source http://cloud.meta.fr/8fdbea50b775
+ */
+@mixin hidden-accessible {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  white-space: nowrap;
+  pointer-events: none;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+/*============================================================================*\
+   Helper classes
+\*============================================================================*/
+
+@if $has-classes {
+  .hidden {
+    display: none;
+  }
+
+  .hidden--force {
+    display: none !important;
+  }
+
+  .visible-block {
+    display: block;
+  }
+
+  .visible-block--force {
+    display: block !important;
+  }
+
+  .visible-flex {
+    display: flex;
+  }
+
+  .visible-flex--force {
+    display: flex !important;
+  }
+
+  .visible-inline {
+    display: inline;
+  }
+
+  .visible-inline--force {
+    display: inline !important;
+  }
+
+  .visible-inline-block {
+    display: inline-block;
+  }
+
+  .visible-inline-block--force {
+    display: inline-block !important;
+  }
+
+  .hidden-accessible {
+    @include hidden-accessible();
+  }
+
+  /*==========================================================================*\
+     Visibility breakpoints modifiers
+  \*==========================================================================*/
+
+  @each $breakpoint in $breakpoints {
+    $key: nth($breakpoint, 1);
+
+    @media #{md($key)} {
+      .hidden--#{$key} {
+        display: none;
+      }
+
+      .hidden--force-#{$key} {
+        display: none !important;
+      }
+
+      .hidden-accessible--#{$key} {
+        @include hidden-accessible();
+      }
+
+      .visible-block--#{$key} {
+        display: block;
+      }
+
+      .visible-block--force-#{$key} {
+        display: block !important;
+      }
+
+      .visible-flex--#{$key} {
+        display: flex;
+      }
+
+      .visible-flex--force-#{$key} {
+        display: flex !important;
+      }
+
+      .visible-inline--#{$key} {
+        display: inline;
+      }
+
+      .visible-inline--force-#{$key} {
+        display: inline !important;
+      }
+
+      .visible-inline-block--#{$key} {
+        display: inline-block;
+      }
+
+      .visible-inline-block--force-#{$key} {
+        display: inline-block !important;
+      }
+    }
+  }
+}
