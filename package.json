@@ -1,0 +1,19 @@
+{
+  "name": "@studiometa/scss-toolkit",
+  "version": "1.0.0",
+  "description": "SCSS Toolkit",
+  "main": "src/index.scss",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/studiometa/scss-toolkit.git"
+  },
+  "author": "Studio Meta <agence@studiometa.fr> (https://www.studiometa.fr)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/studiometa/scss-toolkit/issues"
+  },
+  "homepage": "https://github.com/studiometa/scss-toolkit#readme"
+}
