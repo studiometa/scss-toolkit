@@ -1,0 +1,211 @@
+$has-classes: false !default;
+
+/*============================================================================*\
+   Spaces variables
+\*============================================================================*/
+
+/**
+ * Definition of the space rules
+ */
+$spaces-base: 8px / 16px * 1rem;
+$spaces: (
+  '0': 0,
+  'x1': $spaces-base,
+  'x2': $spaces-base * 2,
+  'x3': $spaces-base * 3,
+  'x4': $spaces-base * 4,
+  'x6': $spaces-base * 6,
+  'x8': $spaces-base * 8,
+  'x10': $spaces-base * 10,
+  'x13': $spaces-base * 13,
+  'x16': $spaces-base * 16,
+  'auto': 'auto',
+);
+
+/*============================================================================*\
+   Helper function
+\*============================================================================*/
+
+/**
+ * A function helper to facilitate the usage of the different
+ * spaces accross the whole projet.
+ *
+ * @param  {string} $size The name of the wanted size in the $spaces map
+ * @return {string}       The corresponding size
+ */
+@function space($space) {
+  @if not map-has-key($spaces, $space) {
+    @warn 'No size found in $spaces map for `#{$space}`. Property omitted.';
+  }
+
+  @return map-get($spaces, $space);
+}
+
+/**
+ * Space gutter
+ */
+$space-gutter: space('x6');
+
+/*============================================================================*\
+   Spaces class helpers
+\*============================================================================*/
+
+/**
+ * Generate helper classes for each space defined in the above map. The naming
+ * convention is as follow:
+ *
+ * ```css
+ * .space-{{ type }}-{{ factor }}
+ * ```
+ *
+ * Helper classes are also generated for each breakpoint defined in the grid
+ * of the style guide. The breakpoint specific classes are defined as modifiers:
+ *
+ * ```css
+ * .space-{{ type }}-{{ factor }}--{{ breakpoint }}
+ * ```
+ *
+ * For example, to set a global bottom double margin you can use the
+ * `.space-mb-x2` class. And to set a x-axis quadruple padding for the `xxl`
+ * breakpoint you can use the `.space-px-x4--xxl` class.
+ *
+ */
+
+@if $has-classes {
+  @each $space in $spaces {
+    $key: nth($space, 1);
+    $value: space($key);
+
+    /**
+     * Margin spacers
+     */
+
+    .space-mx-#{$key} {
+      margin-right: $value;
+      margin-left: $value;
+    }
+
+    .space-my-#{$key} {
+      margin-top: $value;
+      margin-bottom: $value;
+    }
+
+    .space-mt-#{$key} {
+      margin-top: $value;
+    }
+
+    .space-mr-#{$key} {
+      margin-right: $value;
+    }
+
+    .space-mb-#{$key} {
+      margin-bottom: $value;
+    }
+
+    .space-ml-#{$key} {
+      margin-left: $value;
+    }
+
+    /**
+     * Padding spacers
+     */
+
+    .space-px-#{$key} {
+      padding-right: $value;
+      padding-left: $value;
+    }
+
+    .space-py-#{$key} {
+      padding-top: $value;
+      padding-bottom: $value;
+    }
+
+    .space-pt-#{$key} {
+      padding-top: $value;
+    }
+
+    .space-pr-#{$key} {
+      padding-right: $value;
+    }
+
+    .space-pb-#{$key} {
+      padding-bottom: $value;
+    }
+
+    .space-pl-#{$key} {
+      padding-left: $value;
+    }
+  }
+
+  // Media queries
+  @each $breakpoint in $breakpoints {
+    $breakpoint: nth($breakpoint, 1);
+
+    @media #{md($breakpoint)} {
+      @each $space in $spaces {
+        $key: nth($space, 1);
+        $value: space($key);
+
+        /**
+         * Margin spacers
+         */
+
+        .space-mx-#{$key}--#{$breakpoint} {
+          margin-right: $value;
+          margin-left: $value;
+        }
+
+        .space-my-#{$key}--#{$breakpoint} {
+          margin-top: $value;
+          margin-bottom: $value;
+        }
+
+        .space-mt-#{$key}--#{$breakpoint} {
+          margin-top: $value;
+        }
+
+        .space-mr-#{$key}--#{$breakpoint} {
+          margin-right: $value;
+        }
+
+        .space-mb-#{$key}--#{$breakpoint} {
+          margin-bottom: $value;
+        }
+
+        .space-ml-#{$key}--#{$breakpoint} {
+          margin-left: $value;
+        }
+
+        /**
+         * Padding spacers
+         */
+
+        .space-px-#{$key}--#{$breakpoint} {
+          padding-right: $value;
+          padding-left: $value;
+        }
+
+        .space-py-#{$key}--#{$breakpoint} {
+          padding-top: $value;
+          padding-bottom: $value;
+        }
+
+        .space-pt-#{$key}--#{$breakpoint} {
+          padding-top: $value;
+        }
+
+        .space-pr-#{$key}--#{$breakpoint} {
+          padding-right: $value;
+        }
+
+        .space-pb-#{$key}--#{$breakpoint} {
+          padding-bottom: $value;
+        }
+
+        .space-pl-#{$key}--#{$breakpoint} {
+          padding-left: $value;
+        }
+      }
+    }
+  }
+}

@@ -4,7 +4,8 @@
   "description": "SCSS Toolkit",
   "main": "src/index.scss",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint-scss": "stylelint ./src/"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/studiometa/scss-toolkit/issues"
   },
-  "homepage": "https://github.com/studiometa/scss-toolkit#readme"
+  "homepage": "https://github.com/studiometa/scss-toolkit#readme",
+  "devDependencies": {
+    "@studiometa/stylelint-config": "^1.0.0",
+    "stylelint": "^9.8.0"
+  }
 }

@@ -10,8 +10,20 @@ yarn add @studiometa/scss-toolkit
 npm install @studiometa/scss-toolkit
 ```
 
-Import the `index.scss` file in your project:
+Import the `index.scss` file in your project to have access to all helpers functions, mixins, variables and classes:
 
 ```scss
-@import "~/@studiometa/scss-toolkit/index";
+@import "@studiometa/scss-toolkit/index";
 ```
+
+If you need some mixins or functions of a specific framework file, you can import it separately:
+
+```scss
+@import "@studiometa/scss-toolkit/framework/breakpoints";
+@import "@studiometa/scss-toolkit/framework/easings";
+```
+
+## TODO
+
+- Write documentation
+- Improve configuration 

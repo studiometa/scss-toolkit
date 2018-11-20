@@ -1,0 +1,79 @@
+/*============================================================================*\
+   Colors
+\*============================================================================*/
+
+$has-classes: false !default;
+$colors: (
+  'red': #ad1b32,
+  'red-medium': #94182a,
+  'wine': #67101e,
+  'purple-dark': #0c102e,
+  'white': #fff,
+  'white-medium': #f4f4f0,
+  'grey-light': #eee,
+  'grey-border': #dedede,
+  'grey-medium': #ababab,
+  'grey': #505050,
+  'black': #222,
+);
+
+/**
+ * A function helper to avoid having to type `map-get($colors, ...)`
+ * Based on http://css-tricks.com/handling-z-index/
+ *
+ * @param  {string} $color The name of the color
+ * @return {number}        The value corresponding to the color's name
+ */
+@function c($color) {
+  @if not map-has-key($colors, $color) {
+    @warn 'No color found in $colors map for `#{$color}`. Property omitted.';
+  }
+
+  @return map-get($colors, $color);
+}
+
+/*============================================================================*\
+   Color helpers
+\*============================================================================*/
+
+@if $has-classes {
+  @each $color in $colors {
+    $name: nth($color, 1);
+    $value: c($name);
+
+    .color-#{$name} {
+      color: $value;
+    }
+
+    .color-#{$name}--force {
+      color: $value !important;
+    }
+  }
+}
+
+/*============================================================================*\
+   SVG Color helpers
+\*============================================================================*/
+
+@if $has-classes {
+  @each $color in $colors {
+    $name: nth($color, 1);
+    $value: c($name);
+
+    .fill-#{$name} {
+      fill: $value;
+    }
+
+    .fill-#{$name}--force {
+      fill: $value !important;
+    }
+
+    .stroke-#{$name} {
+      stroke: $value;
+    }
+
+    .stroke-#{$name}--force {
+      stroke: $value !important;
+    }
+  }
+}
