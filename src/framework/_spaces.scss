@@ -1,5 +1,3 @@
-$has-classes: false !default;
-
 /*============================================================================*\
    Spaces variables
 \*============================================================================*/
@@ -7,7 +5,8 @@ $has-classes: false !default;
 /**
  * Definition of the space rules
  */
-$spaces-base: 8px / 16px * 1rem;
+$has-classes: false !default;
+$spaces-base: 8px / 16px * 1rem !default;
 $spaces: (
   '0': 0,
   'x1': $spaces-base,
@@ -20,7 +19,7 @@ $spaces: (
   'x13': $spaces-base * 13,
   'x16': $spaces-base * 16,
   'auto': 'auto',
-);
+) !default;
 
 /*============================================================================*\
    Helper function

@@ -4,18 +4,9 @@
 
 $has-classes: false !default;
 $colors: (
-  'red': #ad1b32,
-  'red-medium': #94182a,
-  'wine': #67101e,
-  'purple-dark': #0c102e,
   'white': #fff,
-  'white-medium': #f4f4f0,
-  'grey-light': #eee,
-  'grey-border': #dedede,
-  'grey-medium': #ababab,
-  'grey': #505050,
-  'black': #222,
-);
+  'black': #000,
+) !default;
 
 /**
  * A function helper to avoid having to type `map-get($colors, ...)`

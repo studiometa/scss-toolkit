@@ -3,11 +3,11 @@
 \*============================================================================*/
 
 $has-classes: false !default;
-$font-dir: '/source/fonts/';
-$font-name-serif: 'Granville';
-$font-name-sans: 'Proxima Nova';
-$font-family-serif: $font-name-serif, Georgia, serif;
-$font-family-sans: $font-name-sans, 'Helvetica Neue', Arial, sans-serif;
+$font-dir: '/source/fonts/' !default;
+$font-name-serif: Georgia !default;
+$font-name-sans: Arial !default;
+$font-family-serif: $font-name-serif, serif !default;
+$font-family-sans: $font-name-sans, sans-serif !default;
 
 /**
  * A map to define all font-sizes and their corresponding line-heights, the
@@ -59,7 +59,7 @@ $font-sizes: (
     10px,
     18px,
   ),
-);
+) !default;
 
 /*============================================================================*\
    Font-sizes helper function
@@ -388,14 +388,6 @@ $font-sizes: (
 \*============================================================================*/
 
 @if $has-classes {
-  body {
-    color: c('grey');
-    font-family: $font-family-sans;
-    font-weight: 400;
-
-    @include fz('body');
-  }
-
   h1,
   h2,
   h3,
@@ -405,28 +397,5 @@ $font-sizes: (
 
   a {
     color: inherit;
-  }
-}
-
-/*============================================================================*\
-   Titles mixins and utily classes
-
-   @see https://invis.io/WUOLIY0NGSB#/325780933_00_StyleGuide
-\*============================================================================*/
-
-@mixin type-primary-title() {
-  @include fz('display-2');
-  font-family: $font-family-serif;
-  font-weight: 300;
-
-  // Media queries
-  @media #{md("s")} {
-    @include fz('display-3');
-  }
-}
-
-@if $has-classes {
-  .type-primary-title {
-    @include type-primary-title();
   }
 }

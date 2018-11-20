@@ -11,7 +11,7 @@ $layers: (
   'dropdown': 100,
   'default': 1,
   'limbo': -999,
-);
+) !default;
 
 /**
  * A function helper to avoid having to type `map-get($layers, ...)`
