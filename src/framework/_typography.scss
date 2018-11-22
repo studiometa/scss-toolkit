@@ -9,6 +9,11 @@ $font-name-sans: Arial !default;
 $font-family-serif: $font-name-serif, serif !default;
 $font-family-sans: $font-name-sans, sans-serif !default;
 
+$font-faces: (
+  $font-name-serif 'type-serif-regular' 400 normal,
+  $font-name-sans 'type-sans-regular' 400 normal,
+) !default;
+
 /**
  * A map to define all font-sizes and their corresponding line-heights, the
  * first value is the font-size, the seconde the line-height.
@@ -132,22 +137,22 @@ $font-sizes: (
    Fontaces declarations
 \*============================================================================*/
 
-// @each $font-face in $font-faces {
-//   $name:   nth($font-face, 1);
-//   $file:   nth($font-face, 2);
-//   $weight: nth($font-face, 3);
-//   $style:  nth($font-face, 4);
+@if $has-classes {
+  @each $font-face in $font-faces {
+    $name:   nth($font-face, 1);
+    $file:   nth($font-face, 2);
+    $weight: nth($font-face, 3);
+    $style:  nth($font-face, 4);
 
-//   @if $has-classes {
-//     @font-face {
-//       font-family: $name;
-//       src: url("#{$font-dir + $file}.woff2") format("woff2"),
-//         url("#{$font-dir + $file}.woff") format("woff");
-//       font-weight: $weight;
-//       font-style: $style;
-//     }
-//   }
-// }
+    @font-face {
+      font-family: $name;
+      src: url("#{$font-dir + $file}.woff2") format("woff2"),
+        url("#{$font-dir + $file}.woff") format("woff");
+      font-weight: $weight;
+      font-style: $style;
+    }
+  }
+}
 
 /*============================================================================*\
    Responsive type mixin
