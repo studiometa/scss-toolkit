@@ -11,7 +11,7 @@ $font-family-sans: $font-name-sans, sans-serif !default;
 
 $font-faces: (
   $font-name-serif 'type-serif-regular' 400 normal,
-  $font-name-sans 'type-sans-regular' 400 normal,
+  $font-name-sans 'type-sans-regular' 400 normal
 ) !default;
 
 /**
@@ -139,15 +139,15 @@ $font-sizes: (
 
 @if $has-classes {
   @each $font-face in $font-faces {
-    $name:   nth($font-face, 1);
-    $file:   nth($font-face, 2);
+    $name: nth($font-face, 1);
+    $file: nth($font-face, 2);
     $weight: nth($font-face, 3);
-    $style:  nth($font-face, 4);
+    $style: nth($font-face, 4);
 
     @font-face {
       font-family: $name;
-      src: url("#{$font-dir + $file}.woff2") format("woff2"),
-        url("#{$font-dir + $file}.woff") format("woff");
+      src: url('#{$font-dir + $file}.woff2') format('woff2'),
+        url('#{$font-dir + $file}.woff') format('woff');
       font-weight: $weight;
       font-style: $style;
     }
