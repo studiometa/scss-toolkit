@@ -19,8 +19,8 @@ Import the `index.scss` file in your project to have access to all helpers funct
 If you need some mixins or functions of a specific framework file, you can import it separately:
 
 ```scss
-@import "@studiometa/scss-toolkit/framework/breakpoints";
-@import "@studiometa/scss-toolkit/framework/easings";
+@import "@studiometa/scss-toolkit/src/framework/breakpoints";
+@import "@studiometa/scss-toolkit/src/framework/easings";
 ```
 
 ## TODO
