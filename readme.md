@@ -27,3 +27,11 @@ If you need some mixins or functions of a specific framework file, you can impor
 
 - Write documentation
 - Improve configuration 
+- Improve the grid component
+  + Add some flex helpers or create a flex grid component
+- Improve the typography configuration
+  + Add keys to the font-sizes map
+  + Add font-weight to the font-sizes map
+- Rename the visibility class prefix to `display-`
+- Rename functions with a more comprehensive name and create one letter aliases
+- Add a reset component
