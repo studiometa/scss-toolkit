@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/studiometa/scss-toolkit#readme",
   "devDependencies": {
-    "@studiometa/stylelint-config": "^1.0.0",
+    "@studiometa/stylelint-config": "^1.0.1",
     "stylelint": "^9.8.0"
   }
 }

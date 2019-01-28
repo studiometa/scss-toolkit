@@ -132,10 +132,10 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@studiometa/stylelint-config@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@studiometa/stylelint-config/-/stylelint-config-1.0.0.tgz#d428b7f14657648496bd2f82d0b27dc2a71f920b"
-  integrity sha512-8pwV9FhmOlbqKaPfXtuSsSBy6o1TPI+SXHS/clEqH6JNs4xtlWMK6H5JNXgK4SInFYiEd2e6TlHmUlVxxmQlJQ==
+"@studiometa/stylelint-config@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@studiometa/stylelint-config/-/stylelint-config-1.0.1.tgz#e881af6d1598f272119e073e10735c6bcdc72ddb"
+  integrity sha512-bb2zVVOzFYLcbjJIO8JpIEUJEbUo9wIsEwq3VU3vHL0Pz9IEFWIxHj3JzEr2K1ooG+tAqmhxZflLX3fV9hBj2Q==
   dependencies:
     prettier "^1.15.2"
     stylelint "^9.8.0"
