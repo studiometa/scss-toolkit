@@ -1,6 +1,15 @@
 # SCSS Toolkit
 
+- [Usage](#usage)
+  + [Installation](#installation)
+  + [Recommended usage](#recommended-usage)
+- [Documentation](#documentation)
+  + [Framework](#framework)
+  + [Components](#components)
+
 ## Usage
+
+### Installation
 
 Install it with your favorite package manager:
 
@@ -33,18 +42,12 @@ The best way to use the micro framework in your application is to create a separ
    Global SCSS configuration
 \*==========================================================================*/
 
-
-/* Assets directories configuration
-\*==========================================================================*/
-
+// Assets directories configuration
 $img-dir: '/assets/img/';
 $svg-dir: '/assets/svg/';
 $font-dir: '/assets/fonts/';
 
-
-/* Typography configuration
-\*==========================================================================*/
-
+// Typography configuration
 $font-name-serif: 'Meta Serif';
 $font-name-sans: 'Meta OT';
 $font-faces: (
@@ -54,10 +57,7 @@ $font-faces: (
   $font-name-sans 'meta-or-bold' 700 normal,
 );
 
-
-/* Colors definition
-\*==========================================================================*/
-
+// Colors definition
 $colors: (
   'white': #fff,
   'black': #000,
@@ -66,9 +66,8 @@ $colors: (
   'blue': #00f,
 );
 
-
 // Import SCSS Toolkit after the configuration overrides
-@import '@studiometa/scss-toolkit';
+@import '~@studiometa/scss-toolkit';
 ```
 
 You can then import your `_config.scss` file wherever you need to access a function, mixin or variable from the toolkit. You can import both your configuration file and the SCSS Toolkit package in your main SCSS file with a variable `$has-classes` set to `true` to import all the class helpers from the toolkit.
@@ -81,13 +80,13 @@ You can then import your `_config.scss` file wherever you need to access a funct
 
 // Import dependencies:
 // - _config.scss to override the SCSS toolkit's defaults
-// - sanitize.css to get some nice defaults
+// - @studiometa/scss-toolkit/components/reset to get some nice defaults
 // - @studiometa/scss-toolkit with the `$has-classes` variable set to `true`
 //   for the functions, mixins and classes helpers
 @import './config';
-@import '~sanitize.css';
+@import '~@studiometa/scss-toolkit/components/reset';
 $has-classes: true;
-@import '@studiometa/scss-toolkit';
+@import '~@studiometa/scss-toolkit';
 $has-classes: false;
 
 // ...
@@ -95,15 +94,57 @@ $has-classes: false;
 
 > ⚠️ We reset the `$has-classes` variable to `false` right after the toolkit import to make sure future import in any SCSS file will only import the mixins, functions and variables declarations without the class helpers.
 
-## TODO
+## Documentation
 
-- Write documentation
-- Improve configuration 
-- Improve the grid component
-  + Add some flex helpers or create a flex grid component
-- Improve the typography configuration
-  + Add keys to the font-sizes map
-  + Add font-weight to the font-sizes map
-- Rename the visibility class prefix to `display-`
-- Rename functions with a more comprehensive name and create one letter aliases
-- Add a reset component
+### Framework
+
+The micro-framework is composed of 8 different files which defines each a set of variables, mixins, functions and classes. Find below what each file is responsible for.
+
+#### [`framework/_breakpoints.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_breakpoints.scss)
+
+TODO
+
+#### [`framework/_colors.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_colors.scss)
+
+TODO
+
+#### [`framework/_displays.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_displays.scss)
+
+TODO
+
+#### [`framework/_easings.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_easings.scss)
+
+TODO
+
+#### [`framework/_index.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_index.scss)
+
+TODO
+
+#### [`framework/_layers.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_layers.scss)
+
+TODO
+
+#### [`framework/_spaces.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_spaces.scss)
+
+TODO
+
+#### [`framework/_typography.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_typography.scss)
+
+TODO
+
+
+### Components
+
+This toolkit come with some useful components : a grid, a reset and a debug helper.
+
+#### [`components/debug.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/components/debug.scss)
+
+TODO
+
+#### [`components/grid.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/components/grid.scss)
+
+TODO
+
+#### [`components/reset.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/components/reset.scss)
+
+TODO
