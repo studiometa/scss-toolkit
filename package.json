@@ -20,5 +20,8 @@
   "devDependencies": {
     "@studiometa/stylelint-config": "^1.0.1",
     "stylelint": "^9.8.0"
+  },
+  "dependencies": {
+    "reset-css": "^4.0.1"
   }
 }
