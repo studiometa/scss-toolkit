@@ -24,7 +24,7 @@ $breakpoints: (
  * @param  {string} $unit            The unit for the media queries (em or px)
  * @return {string}                  A media query expression
  */
-@function md($breakpoint, $type: 'min', $unit: 'em') {
+@function media($breakpoint, $type: 'min', $unit: 'em') {
   @if not map-has-key($breakpoints, $breakpoint) {
     @error 'No breakpoint found in $breakpoints map for `#{$breakpoint}`.';
   }
@@ -58,4 +58,11 @@ $breakpoints: (
       @return 'not all and (min-width: #{$size})';
     }
   }
+}
+
+/**
+ * Alias of the `media($breakpoint, $type, $unit)` function above
+ */
+@function md($breakpoint, $type: 'min', $unit: 'em') {
+  @return media($breakpoint, $type, $unit);
 }
