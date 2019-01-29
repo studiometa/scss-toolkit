@@ -6,7 +6,18 @@
   + [Advanced usage](#advanced-usage)
 - [Documentation](#documentation)
   + [Framework](#framework)
+    * [Breakpoints](#framework_breakpointsscss)
+    * [Colors](#framework_colorsscss)
+    * [Displays](#framework_displaysscss)
+    * [Easings](#framework_easingsscss)
+    * [Index](#framework_indexscss)
+    * [Layers](#framework_layersscss)
+    * [Spaces](#framework_spacesscss)
+    * [Typography](#framework_typographyscss)
   + [Components](#components)
+    * [Debug](#componentsdebugscss)
+    * [Grid](#componentsgridscss)
+    * [Reset](#componentsresetscss)
 
 ## Installation
 
