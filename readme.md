@@ -1,15 +1,14 @@
 # SCSS Toolkit
 
+- [Installation](#installation)
 - [Usage](#usage)
-  + [Installation](#installation)
-  + [Recommended usage](#recommended-usage)
+  + [Simple usage](#simple-usage)
+  + [Advanced usage](#advanced-usage)
 - [Documentation](#documentation)
   + [Framework](#framework)
   + [Components](#components)
 
-## Usage
-
-### Installation
+## Installation
 
 Install it with your favorite package manager:
 
@@ -19,22 +18,28 @@ yarn add @studiometa/scss-toolkit
 npm install @studiometa/scss-toolkit
 ```
 
-Import the `index.scss` file in your project to have access to all helpers functions, mixins, variables and classes:
+## Usage
+
+### Simple Usage
+
+Import the toolkit in your project to have access to all helpers functions, mixins, variables and classes:
 
 ```scss
-@import "@studiometa/scss-toolkit/index";
+@import '~@studiometa/scss-toolkit';
 ```
 
 If you need some mixins or functions of a specific framework file, you can import it separately:
 
 ```scss
-@import "@studiometa/scss-toolkit/src/framework/breakpoints";
-@import "@studiometa/scss-toolkit/src/framework/easings";
+@import '~@studiometa/scss-toolkit/src/framework/breakpoints';
+@import '~@studiometa/scss-toolkit/src/framework/easings';
 ```
 
-### Recommended usage
+> If your current Sass implementation does not support `@import`s from Node modules, have a look at the [`node-sass-magic-importer`](https://www.npmjs.com/package/node-sass-magic-importer) custom importer.
 
-The best way to use the micro framework in your application is to create a separate `_config.scss` file in your project which will override the configurations of the framework.
+### Advanced usage
+
+If you need to specify a custom configuration — you probably will, the best way to use the micro framework in your application is to create a separate `_config.scss` file which will override the configurations of the framework.
 
 **_config.scss**
 ```scss
@@ -52,15 +57,11 @@ $font-name-serif: 'Meta Serif';
 $font-name-sans: 'Meta OT';
 $font-faces: (
   $font-name-serif 'meta-serif-regular' 400 normal,
-  $font-name-serif 'meta-serif-bold' 700 normal,
   $font-name-sans 'meta-ot-regular' 400 normal,
-  $font-name-sans 'meta-or-bold' 700 normal,
 );
 
 // Colors definition
 $colors: (
-  'white': #fff,
-  'black': #000,
   'red': #f00,
   'green': #0f0,
   'blue': #00f,
@@ -102,7 +103,40 @@ The micro-framework is composed of 8 different files which defines each a set of
 
 #### [`framework/_breakpoints.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_breakpoints.scss)
 
-TODO
+**Description**
+
+In this file are defined a `$breapoints` map a `media($breakpoint, $type, $unit)` function and its alias `md($breakpoint, $type, $unit)`.
+
+**Defaults**
+
+```scss
+$breakpoints: (
+  'xxs': 0,
+  'xs': 480,
+  's': 768,
+  'm': 1024,
+  'l': 1280,
+  'xl': 1440,
+  'xxl': 1920,
+) !default;
+```
+
+**Usage**
+
+```scss
+.foo {
+  display: none;
+
+  // Media queries
+  @media #{media('s')} { // @media (min-width: 48em) { ... }
+    display: block;
+  }
+
+  @media #{md('xs', 'max')} { // @media not all and (min-width: 48em) { ... }
+    display: flex;
+  }
+}
+```
 
 #### [`framework/_colors.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_colors.scss)
 
