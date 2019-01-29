@@ -103,7 +103,11 @@ The micro-framework is composed of 8 different files which defines each a set of
 
 #### [`framework/_breakpoints.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_breakpoints.scss)
 
-In this file are defined a `$breapoints` map a `media($breakpoint, $type, $unit)` function and its alias `md($breakpoint, $type, $unit)`.
+**Definitions**
+
+- `$breapoints`: a map of names and values of breakpoints
+- `@function media($breakpoint, $type, $unit)`: a function to get a breakpoint declaration given a name
+- `@function md($breakpoint, $type, $unit)`: an alias for the `media(...)` function
 
 **Defaults**
 
@@ -138,11 +142,11 @@ $breakpoints: (
 
 #### [`framework/_colors.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_colors.scss)
 
-In this file are defined the following:
+**Definitions**
 
-- `$colors`: a map of name and values for your projet's colors
+- `$colors`: a map of names and values of colors
 - `@function color($color)`: a function to get a color value by its name defined in the previous map
-- `@function c($color)`: an alias for the `color($color)` function
+- `@function c($color)`: an alias for the `color(...)` function
 - Class helpers:
   + `.color-#{$colorName}`: set the `color` property to the color's value 
   + `.color-#{$colorName}--force`: set the `color` property with the `!important` flag
@@ -185,27 +189,77 @@ Example usage of the helper classes:
 
 #### [`framework/_displays.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_displays.scss)
 
-TODO
+**Definitions**
+
+- `@mixin hidden-accessible`: a set of properties to hide an element while keeping it accessible
+- Class helpers:
+  + `.display-<type>[--<breakpoint>|--force[-<breakpoint>]]` : classes setting the property `display` to the given `<type>`, with the `--force` modifier adding the `!important` flag to the declaration, and the `<breakpoint>` modifier applying the style to the corresponding breakpoint
+    * `<type>`: `none`, `block`, `flex`, `inline`, `inline-block`
+    * `<breakpoint>`: any of the [defined breakpoint](#framework_breakpointsscss)
+  + `.hidden-accessible` : a class using the `hidden-accessible()` mixin
+
+**Usage**
+
+Example usage for the `hidden-accessible` mixin:
+
+```scss
+.foo {
+  @include hidden-accessible; // Hide this element while keeping it accessible
+}
+```
+
+Example usage for the helper classes:
+
+```html
+<!-- Display an inline element as a block -->
+<span class="display-block"></span>
+
+<!-- Force an inline display on an element -->
+<div class="display-inline--force"></div>
+
+<!-- Hide an element on small screen, display it as a block on bigger ones -->
+<div class="display-none--xxs display-block--m"></div>
+```
 
 #### [`framework/_easings.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_easings.scss)
 
-TODO
+**Definitions**
+
+**Defaults**
+
+**Usage**
 
 #### [`framework/_index.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_index.scss)
 
-TODO
+**Definitions**
+
+**Defaults**
+
+**Usage**
 
 #### [`framework/_layers.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_layers.scss)
 
-TODO
+**Definitions**
+
+**Defaults**
+
+**Usage**
 
 #### [`framework/_spaces.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_spaces.scss)
 
-TODO
+**Definitions**
+
+**Defaults**
+
+**Usage**
 
 #### [`framework/_typography.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_typography.scss)
 
-TODO
+**Definitions**
+
+**Defaults**
+
+**Usage**
 
 
 ### Components
