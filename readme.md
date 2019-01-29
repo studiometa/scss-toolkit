@@ -159,12 +159,9 @@ $breakpoints: (
 - `@function color($color)`: a function to get a color value by its name defined in the previous map
 - `@function c($color)`: an alias for the `color(...)` function
 - Class helpers:
-  + `.color-#{$colorName}`: set the `color` property to the color's value 
-  + `.color-#{$colorName}--force`: set the `color` property with the `!important` flag
-  + `.fill-#{$colorName}`: set the `fill` property to the color's value
-  + `.fill-#{$colorName}--force`: set the `fill` property with the `!important` flag
-  + `.stroke-#{$colorName}`: set the `stroke` property to the color's value
-  + `.stroke-#{$colorName}--force`: set the `stroke` property with the `!important` flag
+  + `.<property>-<color>[--force]`: set the given `<property>` to the given `<color>`'s value, with the `--force` modifier adding an `!important` flag
+    * `<property>`: `color`, `fill`, `stroke`
+    * `<color>`: one of the [defined colors](#framework_colorsscss)
 
 **Defaults**
 
@@ -196,6 +193,10 @@ Example usage of the helper classes:
 <p class="color-white">
   Eveniet neque velit <span class="color-black">asperiores</span>. Dolores…
 </p>
+
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg">
+  <path d="M…" class="fill-white stroke-black" />
+</svg>
 ```
 
 #### [`framework/_displays.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_displays.scss)
