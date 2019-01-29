@@ -32,6 +32,7 @@ $colors: (
     $name: nth($color, 1);
     $value: c($name);
 
+    // Global helpers
     .color-#{$name} {
       color: $value;
     }
@@ -39,18 +40,8 @@ $colors: (
     .color-#{$name}--force {
       color: $value !important;
     }
-  }
-}
 
-/*============================================================================*\
-   SVG Color helpers
-\*============================================================================*/
-
-@if $has-classes {
-  @each $color in $colors {
-    $name: nth($color, 1);
-    $value: c($name);
-
+    // SVG helpers
     .fill-#{$name} {
       fill: $value;
     }

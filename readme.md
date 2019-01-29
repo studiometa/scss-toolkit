@@ -103,8 +103,6 @@ The micro-framework is composed of 8 different files which defines each a set of
 
 #### [`framework/_breakpoints.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_breakpoints.scss)
 
-**Description**
-
 In this file are defined a `$breapoints` map a `media($breakpoint, $type, $unit)` function and its alias `md($breakpoint, $type, $unit)`.
 
 **Defaults**
@@ -140,7 +138,50 @@ $breakpoints: (
 
 #### [`framework/_colors.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_colors.scss)
 
-TODO
+In this file are defined the following:
+
+- `$colors`: a map of name and values for your projet's colors
+- `@function color($color)`: a function to get a color value by its name defined in the previous map
+- `@function c($color)`: an alias for the `color($color)` function
+- Class helpers:
+  + `.color-#{$colorName}`: set the `color` property to the color's value 
+  + `.color-#{$colorName}--force`: set the `color` property with the `!important` flag
+  + `.fill-#{$colorName}`: set the `fill` property to the color's value
+  + `.fill-#{$colorName}--force`: set the `fill` property with the `!important` flag
+  + `.stroke-#{$colorName}`: set the `stroke` property to the color's value
+  + `.stroke-#{$colorName}--force`: set the `stroke` property with the `!important` flag
+
+**Defaults**
+
+```scss
+$colors: (
+  'white': #fff,
+  'black': #000,
+) !default;
+```
+
+**Usage**
+
+Example usage for the `color($color)` function:
+
+```scss
+.foo {
+  color: color('white');
+}
+
+.bar {
+  background-color: c('black');
+  color: c('white');
+}
+```
+
+Example usage of the helper classes:
+
+```html
+<p class="color-white">
+  Eveniet neque velit <span class="color-black">asperiores</span>. Dolores…
+</p>
+```
 
 #### [`framework/_displays.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_displays.scss)
 
