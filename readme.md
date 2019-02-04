@@ -116,7 +116,7 @@ The micro-framework is composed of 8 different files which defines each a set of
 
 **Definitions**
 
-- `$breapoints`: a map of names and values of breakpoints
+- `$breakpoints`: a map of names and values of breakpoints
 - `@function media($breakpoint, $type, $unit)`: a function to get a breakpoint declaration given a name
 - `@function md($breakpoint, $type, $unit)`: an alias for the `media(...)` function
 
