@@ -41,6 +41,14 @@ $colors: (
       color: $value !important;
     }
 
+    .background-#{$name} {
+      background-color: $value;
+    }
+
+    .background-#{$name}--force {
+      background-color: $value !important;
+    }
+
     // SVG helpers
     .fill-#{$name} {
       fill: $value;

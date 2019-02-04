@@ -160,7 +160,7 @@ $breakpoints: (
 - `@function c($color)`: an alias for the `color(...)` function
 - Class helpers:
   + `.<property>-<color>[--force]`: set the given `<property>` to the given `<color>`'s value, with the `--force` modifier adding an `!important` flag
-    * `<property>`: `color`, `fill`, `stroke`
+    * `<property>`: `background`, `color`, `fill`, `stroke`
     * `<color>`: one of the [defined colors](#framework_colorsscss)
 
 **Defaults**
