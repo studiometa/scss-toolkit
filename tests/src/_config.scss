@@ -1,0 +1,23 @@
+$spaces-base: 8px / 16px * 1rem !default;
+$spaces: (
+  '0': 0,
+  'x1': $spaces-base,
+  'x2': $spaces-base * 2,
+  'auto': 'auto',
+);
+
+$layers: (
+  'goku': 9000,
+  'default': 1,
+  'limbo': -9000,
+);
+
+$breakpoints: (
+  'extra-small': 0,
+  'small': 500,
+  'medium': 1000,
+  'large': 1500,
+  'extra-large': 2000,
+);
+
+@import '../../src/index.scss';

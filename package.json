@@ -4,7 +4,7 @@
   "description": "SCSS Toolkit",
   "main": "src/index.scss",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "gulp styles-build",
     "lint-scss": "stylelint ./src/"
   },
   "repository": {
@@ -22,6 +22,7 @@
     "stylelint": "^9.8.0"
   },
   "dependencies": {
+    "@studiometa/gulp-config": "^1.1.5-beta.1",
     "reset-css": "^4.0.1"
   }
 }
