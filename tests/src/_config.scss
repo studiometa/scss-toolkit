@@ -20,4 +20,12 @@ $breakpoints: (
   'extra-large': 2000,
 );
 
-@import '../../src/index.scss';
+@import '../../src/framework/index.scss';
+
+$grid-gutters: (
+  'extra-small': space('x1'),
+  'small': space('x1'),
+  'medium': space('x1'),
+  'large': space('x2'),
+  'extra-large': space('x2'),
+);
