@@ -46,4 +46,24 @@ $layers: (
       z-index: $value !important;
     }
   }
+
+  // Media queries
+  @each $breakpoint in $breakpoints {
+    $breakpoint: nth($breakpoint, 1);
+
+    @media all and #{md($breakpoint)} {
+      @each $layer in $layers {
+        $name: nth($layer, 1);
+        $value: z($name);
+
+        .layer-#{$name}--#{$breakpoint} {
+          z-index: $value;
+        }
+
+        .layer-#{$name}--force-#{$breakpoint} {
+          z-index: $value !important;
+        }
+      }
+    }
+  }
 }
