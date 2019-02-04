@@ -163,30 +163,30 @@ $font-sizes: (
  * @author Mike Riethmuller http://codepen.io/MadeByMike/pen/YPJJYv
  * @param  {integer} $min-width The minimum breakpoint
  * @param  {integer} $max-width The maximum breakpoint
- * @param  {integer} $min-font  The minimum font-size
- * @param  {integer} $max-font  The maximum font-size
+ * @param  {integer} $min-size  The minimum font-size
+ * @param  {integer} $max-size  The maximum font-size
  * @return {void}
  */
 @mixin responsive-type(
   $min-width: 0,
   $max-width: 2560,
-  $min-font: 12,
-  $max-font: 16
+  $min-size: 12,
+  $max-size: 16
 ) {
   // Set min size
-  font-size: $min-font * 1px;
+  font-size: $min-size * 1px;
 
   // Adjust size between `$min-width` et `$max-width`
-  @media (min-width: #{$min_width}px) and (max-width: #{$max_width}px) {
+  @media (min-width: #{$min-width}px) and (max-width: #{$max-width}px) {
     font-size: calc(
-      #{$min_font}px + (#{$max_font} - #{$min_font}) *
-        ((100vw - #{$min_width}px) / (#{$max_width} - #{$min_width}))
+      #{$min-size}px + (#{$max-size} - #{$min-size}) *
+        ((100vw - #{$min-width}px) / (#{$max-width} - #{$min-width}))
     );
   }
 
   // Set max size
-  @media (min-width: #{$max_width}px) {
-    font-size: #{$max_font}px;
+  @media (min-width: #{$max-width}px) {
+    font-size: #{$max-size}px;
   }
 }
 
