@@ -8,6 +8,7 @@ $font-name-serif: Georgia !default;
 $font-name-sans: Arial !default;
 $font-family-serif: $font-name-serif, serif !default;
 $font-family-sans: $font-name-sans, sans-serif !default;
+$font-display: auto !default;
 
 $font-faces: (
   $font-name-serif 'type-serif-regular' 400 normal,
@@ -150,6 +151,7 @@ $font-sizes: (
         url('#{$font-dir + $file}.woff') format('woff');
       font-weight: $weight;
       font-style: $style;
+      font-display: $font-display;
     }
   }
 }
