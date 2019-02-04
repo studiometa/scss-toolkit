@@ -208,15 +208,15 @@ Example usage of the helper classes:
   + `.display-<type>[--<breakpoint>|--force[-<breakpoint>]]` : classes setting the property `display` to the given `<type>`, with the `--force` modifier adding the `!important` flag to the declaration, and the `<breakpoint>` modifier applying the style to the corresponding breakpoint
     * `<type>`: `none`, `block`, `flex`, `inline`, `inline-block`
     * `<breakpoint>`: any of the [defined breakpoint](#framework_breakpointsscss)
-  + `.hidden-accessible` : a class using the `hidden-accessible()` mixin
+  + `.display-hidden-accessible` : a class using the `display-hidden-accessible()` mixin
 
 **Usage**
 
-Example usage for the `hidden-accessible` mixin:
+Example usage for the `display-hidden-accessible` mixin:
 
 ```scss
 .foo {
-  @include hidden-accessible; // Hide this element while keeping it accessible
+  @include display-hidden-accessible; // Hide this element while keeping it accessible
 }
 ```
 
