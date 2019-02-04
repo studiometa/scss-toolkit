@@ -41,9 +41,11 @@ $spaces: (
 }
 
 /**
- * Space gutter
+ * Alias for the `space($space)` function above
  */
-$space-gutter: space('x6');
+@function s($space) {
+  @return space($space);
+}
 
 /*============================================================================*\
    Spaces class helpers

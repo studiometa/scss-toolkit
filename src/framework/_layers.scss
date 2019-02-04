@@ -19,11 +19,11 @@ $layers: (
  * A function helper to avoid having to type `map-get($layers, ...)`
  * Based on http://css-tricks.com/handling-z-index/
  *
- * @param  {string} $layer The name of the z-index
- * @param  {number} $var   The modifier if needed
- * @return {number}        The corresponding z-index based on the $layers var
+ * @param  {string} $layer    The name of the z-index
+ * @param  {number} $modifier The modifier if needed
+ * @return {number}           The corresponding z-index based on the $layers var
  */
-@function z($layer, $var: 0) {
+@function layer($layer, $modifier: 0) {
   @if not map-has-key($layers, $layer) {
     @warn 'No z-index found in $layers map for `#{$layer}`. Property omitted.';
     @return 'initial';
@@ -33,8 +33,29 @@ $layers: (
   @return $value + $var;
 }
 
+/**
+ * Alias for the `layer($layer, $modifier)` function above
+ */
+@function l($layer, $modifier: 0) {
+  @return layer($layer, $modifier);
+}
+
+/**
+ * Deprecated alias for the `layer($layer, $modifier)` function
+ */
+@function z($layer, $modifier: 0) {
+  @warn 'The `z($layer, $modifier)` function is deprecated.';
+  @warn 'Use `l($layer, $modifier)` instead.';
+
+  @return l($layer, $modifier);
+}
+
+/*============================================================================*\
+   Layers class helpers
+\*============================================================================*/
+
 @if $has-classes {
-	@each $layer in $layers {
+  @each $layer in $layers {
     $name: nth($layer, 1);
     $value: z($name);
 

@@ -15,12 +15,19 @@ $colors: (
  * @param  {string} $color The name of the color
  * @return {number}        The value corresponding to the color's name
  */
-@function c($color) {
+@function color($color) {
   @if not map-has-key($colors, $color) {
     @warn 'No color found in $colors map for `#{$color}`. Property omitted.';
   }
 
   @return map-get($colors, $color);
+}
+
+/**
+ * Alias for the `color($color)` function above
+ */
+@function c($color) {
+  @return color($color);
 }
 
 /*============================================================================*\
