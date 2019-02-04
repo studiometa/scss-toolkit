@@ -207,7 +207,7 @@ Example usage of the helper classes:
 - Class helpers:
   + `.display-<type>[--<breakpoint>|--force[-<breakpoint>]]` : classes setting the property `display` to the given `<type>`, with the `--force` modifier adding the `!important` flag to the declaration, and the `<breakpoint>` modifier applying the style to the corresponding breakpoint
     * `<type>`: `none`, `block`, `flex`, `inline`, `inline-block`
-    * `<breakpoint>`: any of the [defined breakpoint](#framework_breakpointsscss)
+    * `<breakpoint>`: any of the [defined breakpoints](#framework_breakpointsscss)
   + `.display-hidden-accessible` : a class using the `display-hidden-accessible()` mixin
 
 **Usage**
@@ -306,8 +306,8 @@ Imports all the framework files with the `$has-classes` variable set to `false !
 - `@function z($layer, $modifier)`: a legacy alias for the `layer(...)` function
 - Class helpers:
   + `.layer-<layer>[--<breakpoint>|--force[-<breakpoint>]]`: classes setting the `z-index` property to the corresponding value, with the `--force` modifier adding an `!important` flag, and the `<breakpoint>` modifier applying the style to the corresponding breakpoint
-    * `<layer>`: one of the [defined colors](#framework_layersscss)
-    * `<breakpoint>`: any of the [defined breakpoint](#framework_breakpointsscss)
+    * `<layer>`: one of the [defined layers](#framework_layersscss)
+    * `<breakpoint>`: any of the [defined breakpoints](#framework_breakpointsscss)
 
 **Defaults**
 
@@ -360,8 +360,8 @@ Example usage of the helper classes:
 - Class helpers:
   + `.space-<direction>-<size>[--<breakpoint>]` : classes setting the property defined by `<direction>` to the given `<size>`, with the `<breakpoint>` modifier applying the style to the corresponding breakpoint
     * `<direction>`: `my`, `mx`, `mt`, `mr`, `mb`, `ml`, `py`, `px`, `pt`, `pr`, `pb` and `pl`
-    * `<size>`: any of the [defined space](#framework_spacesscss)
-    * `<breakpoint>`: any of the [defined breakpoint](#framework_breakpointsscss)
+    * `<size>`: any of the [defined spaces](#framework_spacesscss)
+    * `<breakpoint>`: any of the [defined breakpoints](#framework_breakpointsscss)
 
 
 **Defaults**
