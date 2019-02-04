@@ -2,6 +2,8 @@
    Layers (z-index) definitions
 \*============================================================================*/
 
+$has-classes: false !default;
+
 $layers: (
   'goku': 9000,
   'modal': 6000,
@@ -29,4 +31,19 @@ $layers: (
 
   $value: map-get($layers, $layer);
   @return $value + $var;
+}
+
+@if $has-classes {
+	@each $layer in $layers {
+    $name: nth($layer, 1);
+    $value: z($name);
+
+    .layer-#{$name} {
+      z-index: $value;
+    }
+
+    .layer-#{$name}--force {
+      z-index: $value !important;
+    }
+  }
 }
