@@ -29,8 +29,31 @@
 
 // Local variables
 $grid-columns: 12;
-$grid-gutter: space('x6'); // 48px converted in em
+$grid-gutters: (
+  'xxs': space('x3'),
+  'xs': space('x3'),
+  's': space('x4'),
+  'm': space('x4'),
+  'l': space('x4'),
+  'xl': space('x4'),
+  'xxl': space('x4'),
+) !default;
 $grid-breakpoints: $breakpoints;
+
+/**
+ * A function helper to avoid having to type `map-get($grid-gutters, ...)`
+ * Based on http://css-tricks.com/handling-z-index/
+ *
+ * @param  {string} $breakpoint The name of the breakpoint
+ * @return {number}        The value corresponding to the breakpoint's name
+ */
+@function gutter($breakpoint) {
+  @if not map-has-key($grid-gutters, $breakpoint) {
+    @warn 'No gutter found in $grid-gutters map for `#{$breakpoint}`. Property omitted.';
+  }
+
+  @return map-get($grid-gutters, $breakpoint);
+}
 
 /*============================================================================*\
    Grid block
@@ -47,8 +70,8 @@ $grid-breakpoints: $breakpoints;
     $key: nth($grid-breakpoint, 1);
 
     @media #{md($key)} {
-      padding-right: $grid-gutter * 0.5;
-      padding-left: $grid-gutter * 0.5;
+      padding-right: gutter($key) * 0.5;
+      padding-left: gutter($key) * 0.5;
     }
   }
 }
@@ -72,8 +95,8 @@ $grid-breakpoints: $breakpoints;
     $key: nth($grid-breakpoint, 1);
 
     @media #{md($key)} {
-      margin-right: $grid-gutter * -0.5;
-      margin-left: $grid-gutter * -0.5;
+      margin-right: gutter($key) * -0.5;
+      margin-left: gutter($key) * -0.5;
     }
   }
 }
@@ -129,8 +152,8 @@ $grid-breakpoints: $breakpoints;
     $key: nth($grid-breakpoint, 1);
 
     @media #{md($key)} {
-      padding-right: $grid-gutter * 0.5;
-      padding-left: $grid-gutter * 0.5;
+      padding-right: gutter($key) * 0.5;
+      padding-left: gutter($key) * 0.5;
     }
   }
 }
