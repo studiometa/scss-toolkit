@@ -2,6 +2,8 @@
    Layers (z-index) definitions
 \*============================================================================*/
 
+$has-classes: false !default;
+
 $layers: (
   'goku': 9000,
   'modal': 6000,
@@ -29,4 +31,39 @@ $layers: (
 
   $value: map-get($layers, $layer);
   @return $value + $var;
+}
+
+@if $has-classes {
+	@each $layer in $layers {
+    $name: nth($layer, 1);
+    $value: z($name);
+
+    .layer-#{$name} {
+      z-index: $value;
+    }
+
+    .layer-#{$name}--force {
+      z-index: $value !important;
+    }
+  }
+
+  // Media queries
+  @each $breakpoint in $breakpoints {
+    $breakpoint: nth($breakpoint, 1);
+
+    @media all and #{md($breakpoint)} {
+      @each $layer in $layers {
+        $name: nth($layer, 1);
+        $value: z($name);
+
+        .layer-#{$name}--#{$breakpoint} {
+          z-index: $value;
+        }
+
+        .layer-#{$name}--force-#{$breakpoint} {
+          z-index: $value !important;
+        }
+      }
+    }
+  }
 }
