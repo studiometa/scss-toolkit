@@ -44,9 +44,8 @@ $layers: (
  * Deprecated alias for the `layer($layer, $modifier)` function
  */
 @function z($layer, $modifier: 0) {
-  @warn 'The `z($layer, $modifier)` function is deprecated.';
-  @warn 'Use `l($layer, $modifier)` instead.';
-
+  /* stylelint-disable-next-line */
+  @warn 'The `z($layer, $modifier)` function is deprecated. Use `l($layer, $modifier)` instead.';
   @return l($layer, $modifier);
 }
 
@@ -57,7 +56,7 @@ $layers: (
 @if $has-classes {
   @each $layer in $layers {
     $name: nth($layer, 1);
-    $value: z($name);
+    $value: l($name);
 
     .layer-#{$name} {
       z-index: $value;
@@ -75,7 +74,7 @@ $layers: (
     @media all and #{md($breakpoint)} {
       @each $layer in $layers {
         $name: nth($layer, 1);
-        $value: z($name);
+        $value: l($name);
 
         .layer-#{$name}--#{$breakpoint} {
           z-index: $value;
