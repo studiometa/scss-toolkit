@@ -30,7 +30,7 @@ $layers: (
   }
 
   $value: map-get($layers, $layer);
-  @return $value + $var;
+  @return $value + $modifier;
 }
 
 /**
