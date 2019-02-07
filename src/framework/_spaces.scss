@@ -11,12 +11,8 @@ $spaces: (
   '0': 0,
   'x1': $spaces-base,
   'x2': $spaces-base * 2,
-  'x3': $spaces-base * 3,
   'x4': $spaces-base * 4,
-  'x6': $spaces-base * 6,
   'x8': $spaces-base * 8,
-  'x10': $spaces-base * 10,
-  'x13': $spaces-base * 13,
   'x16': $spaces-base * 16,
   'auto': 'auto',
 ) !default;
@@ -39,11 +35,6 @@ $spaces: (
 
   @return map-get($spaces, $space);
 }
-
-/**
- * Space gutter
- */
-$space-gutter: space('x6');
 
 /*============================================================================*\
    Spaces class helpers

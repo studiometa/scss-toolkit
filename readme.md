@@ -366,33 +366,137 @@ Example usage of the helper classes:
 
 **Defaults**
 
+The default spaces values are based on the power of two, with a base unit starting at 8px (0.5rem).
+
+```scss
+// Default unit is 8px, often used by designers as a basic unit
+$spaces-base: 8px / 16px * 1rem !default;
+// All spaces
+$spaces: (
+  '0': 0,
+  'x1': $spaces-base,
+  'x2': $spaces-base * 2,
+  'x4': $spaces-base * 4,
+  'x8': $spaces-base * 8,
+  'x16': $spaces-base * 16,
+  'auto': 'auto',
+) !default;
+```
+
 **Usage**
+
+```scss
+.foo {
+  margin: space('x2');
+}
+
+.bar {
+  padding-bottom: s('x4');
+}
+```
+
+```html
+<!-- Horizontal padding of 2 times the base unit and 4 times on bigger screens -->
+<div class="space-px-x2 space-px-x4--s"></div>
+
+<!-- Centering an element -->
+<div class="space-mx-auto"></div>
+```
 
 #### [`framework/_typography.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_typography.scss)
 
 **Definitions**
 
-- `$font-dir`
-- `$font-name-serif`
-- `$font-name-sans`
-- `$font-family-serif`
-- `$font-family-sans`
-- `$font-faces`
-- `$font-sizes`
-- `@function font-size($font-size, $unit)`
-- `@function fz($font-size, $unit)`
-- `@function line-height($font-size)`
-- `@function lh($font-size)`
-- `@mixin font-size($font-size, $unit)`
-- `@mixin fz($font-size, $unit)`
-- `@mixin reponsize-type($min-width, $max-width, $min-size, $max-size)`
-- `@mixin type-antialiased`
+- `$font-dir`: path to the folder of your webfont files, must be of `*.woff` and `*.woff2` formats
+- `$font-name-serif`: the name of the serif font, to be used in `font-family` property
+- `$font-name-sans`: the name of the sans-serif font, to be used in `font-family` property
+- `$font-family-serif`: the serif `font-family` declaration
+- `$font-family-sans`: the sans-serif `font-family` declaration
+- `$font-faces`: a map of font-faces declaration structured as `<font-name> <filename> <font-weight> <font-style>`
+  + `<font-name>`: can be one of the `$font-name-serif` or `$font-name-sans` variables
+  + `<filename>`: the name of the file stored in the `$font-dir` folder
+  + `<font-weight>`: the weight of the font, from `100` to `900`
+  + `<font-style>`: a `font-style` value
+- `$font-sizes`: a map of font-sizes lists to be used in your project structured as `<name>: (<font-size> <line-height>)`
+  + `<name>`: the name of the size
+  + `<font-size>`: the `font-size` value in pixels
+  + `<line-height>`: the `line-height` value in pixels
+- `@function font-size($font-size, $unit: 'em')`: a function to get a font-size value in the given unit by its name defined in the `$font-sizes` map
+- `@function fz($font-size, $unit)`: alias for the `font-size($font-size, $unit)` function
+- `@function line-height($font-size)`: a function to get a unitless line-height value by its name defined in the `$font-sizes` map
+- `@function lh($font-size)`: alias for the `line-height($font-size)` function
+- `@mixin font-size($font-size, $unit: 'em')`: a mixin to get both font-size in the given unit and line-height for a given name defined in the `$font-size` map
+- `@mixin fz($font-size, $unit)`: alias for the `@include font-size($font-size, $unit)` mixin
+- `@mixin reponsize-type($min-width: 0, $max-width: 2560, $min-size: 12, $max-size: 16)`: a mixin to generate declaration for responsive font-sizes
+- `@mixin type-antialiased`: a mixin to generate properties for antialiased font rendering
 - Class helpers:
   + An `@font-face` declaration based on the `$font-faces` list
+  + `.type-antialiased`: a class implementing the `type-antialiased` mixin
+  + `.type[-rem]-<size>[--<breakpoint>]`: set the `font-size` in `em` and `line-height` properties to the given `<size>` defined values, with the `-rem` variation setting the `font-size` unit in `rem` and the `<breakpoint>` modifier applying the styles to the corresponding breakpoint
+    * `<size>`: a name defined in the `$font-sizes` map
+    * `<breakpoint>`: a breakpoint's name defined in the `$breakpoints` map
+  + `.type-<position>[--<breakpoint>]`: set the `text-align` property, with the `<breakpoint>` modifier applying the styles to the corresponding breakpoint
+    * `<position>`: one of `center`, `left`, `right`
+    * `<breakpoint>`: a breakpoint's name defined in the `$breakpoints` map
+  + `.type-serif`: set the font-family property to the `$font-family-serif` value
+  + `.type-sans`: set the font-family property to the `$font-family-sans` value
+  + `.type-<weight>[--<breakpoin>]`: set the `font-weight` property to the given `<weight>`, with the `<breakpoint>` modifier applying the style to the corresponding breakpoint
+    * `<weight>`: one of `thin`, `extralight`, `light`, `regular`, `medium`, `semibold`, `bold`, `extrabold`, `black`
+    * `<breakpoint>`: a breakpoint's name defined in the `$breakpoints` map
+  + `.type-spacing-<value>[--<breakpoint>]`: set the `letter-spacing` property to the given value, with the `<breakpoint>` modifier applying the style to the corresponding breakpoint
+    * `<value>`: one of `25`, `50`, `100`, `200`
+    * `<breakpoint>`: a breakpoint's name defined in the `$breakpoints` map
+  + `.type-uppercase`: set the `text-transform` property to `uppercase`
+  + `.type-lowercase`: set the `text-transform` property to `lowercase`
+  + `.type-capitalize`: set the `text-transform` property to `capitalize`
+  + `.type-no-underline`: set the `text-decoration` property to `none`
+  + `.type-underline`: set the `text-decoration` property to `underline`
+  + `body`: set the `font-family` property on the `body` to the value of the `$font-family-sans` variable
+  + `h1, h2, h3, h4`: set the `font-family` property on the first 4 levels of heading to the value of the `$font-family-serif` variable
+  + `a`: set the `color` property on the `a` HTML element to `inherit`
 
 **Defaults**
 
+```scss
+$font-dir: '/source/fonts/' !default;
+$font-name-serif: Georgia !default;
+$font-name-sans: Arial !default;
+$font-family-serif: $font-name-serif, serif !default;
+$font-family-sans: $font-name-sans, sans-serif !default;
+
+$font-faces: (
+  $font-name-serif 'type-serif-regular' 400 normal,
+  $font-name-sans 'type-sans-regular' 400 normal
+) !default;
+
+$font-sizes: (
+  display-3: ( 44px, 66px ),
+  display-2: ( 36px, 54px ),
+  display-1: ( 24px, 32px ),
+  display-0: ( 18px, 27px ),
+  body:      ( 16px, 30px ),
+  medium:    ( 14px, 26px ),
+  small:     ( 12px, 22px ),
+  smaller:   ( 10px, 18px ),
+) !default;
+```
+
 **Usage**
+
+```scss
+.foo__title {
+  @include fz('display-3');
+  @include type-antialiased;
+}
+```
+
+```html
+<!-- Adjust the size of a title on different breakpoints -->
+<h1 class="type-display-1--xxs type-display-2--s type-display-3--l">Foo Bar</h1>
+
+<!-- Center a text -->
+<p class="type-center">Lorem ipsum dolor…</p>
+```
 
 
 ### Components
@@ -401,12 +505,31 @@ This toolkit come with some useful components : a grid, a reset and a debug help
 
 #### [`components/debug.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/components/debug.scss)
 
-TODO
+**Definitions**
+This component defines colored outlines on every HTML element, useful to debug layout on a page.
+
+**Usage**
+To use it, simply import the component in your project:
+
+```scss
+// You can import it globally
+@import '@studiometa/scss-toolkit/src/components/debug';
+
+// Or locally to enable debug only on a component
+.my-component {
+  @import '@studiometa/scss-toolkit/src/components/debug';
+}
+```
 
 #### [`components/grid.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/components/grid.scss)
 
-TODO
+**Definitions**
+
+**Defaults**
+
+**Usage**
 
 #### [`components/reset.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/components/reset.scss)
 
-TODO
+**Definitions**
+The reset component only import the classic [reset.css](https://meyerweb.com/eric/tools/css/reset/).
