@@ -186,30 +186,30 @@ $font-sizes: (
  * @author Mike Riethmuller http://codepen.io/MadeByMike/pen/YPJJYv
  * @param  {integer} $min-width The minimum breakpoint
  * @param  {integer} $max-width The maximum breakpoint
- * @param  {integer} $min-font  The minimum font-size
- * @param  {integer} $max-font  The maximum font-size
+ * @param  {integer} $min-size  The minimum font-size
+ * @param  {integer} $max-size  The maximum font-size
  * @return {void}
  */
 @mixin responsive-type(
   $min-width: 0,
   $max-width: 2560,
-  $min-font: 12,
-  $max-font: 16
+  $min-size: 12,
+  $max-size: 16
 ) {
   // Set min size
-  font-size: $min-font * 1px;
+  font-size: $min-size * 1px;
 
   // Adjust size between `$min-width` et `$max-width`
-  @media (min-width: #{$min_width}px) and (max-width: #{$max_width}px) {
+  @media (min-width: #{$min-width}px) and (max-width: #{$max-width}px) {
     font-size: calc(
-      #{$min_font}px + (#{$max_font} - #{$min_font}) *
-        ((100vw - #{$min_width}px) / (#{$max_width} - #{$min_width}))
+      #{$min-size}px + (#{$max-size} - #{$min-size}) *
+        ((100vw - #{$min-width}px) / (#{$max-width} - #{$min-width}))
     );
   }
 
   // Set max size
-  @media (min-width: #{$max_width}px) {
-    font-size: #{$max_font}px;
+  @media (min-width: #{$max-width}px) {
+    font-size: #{$max-size}px;
   }
 }
 
@@ -333,12 +333,24 @@ $font-sizes: (
 \*============================================================================*/
 
 @if $has-classes {
+  .type-thin {
+    font-weight: 100;
+  }
+
+  .type-extralight {
+    font-weight: 200;
+  }
+
   .type-light {
     font-weight: 300;
   }
 
   .type-regular {
     font-weight: 400;
+  }
+
+  .type-medium {
+    font-weight: 500;
   }
 
   .type-semibold {
@@ -353,6 +365,10 @@ $font-sizes: (
     font-weight: 800;
   }
 
+  .type-black {
+    font-weight: 900;
+  }
+
   /**
    * Generate helpers for each defined breakpoints
    */
@@ -360,12 +376,24 @@ $font-sizes: (
     $breakpoint: nth($breakpoint, 1);
 
     @media #{md($breakpoint)} {
+      .type-thin--#{$breakpoint} {
+        font-weight: 100;
+      }
+
+      .type-extralight--#{$breakpoint} {
+        font-weight: 200;
+      }
+
       .type-light--#{$breakpoint} {
         font-weight: 300;
       }
 
       .type-regular--#{$breakpoint} {
         font-weight: 400;
+      }
+
+      .type-medium--#{$breakpoint} {
+        font-weight: 500;
       }
 
       .type-semibold--#{$breakpoint} {
@@ -379,6 +407,10 @@ $font-sizes: (
       .type-extrabold--#{$breakpoint} {
         font-weight: 800;
       }
+
+      .type-black--#{$breakpoint} {
+        font-weight: 900;
+      }
     }
   }
 }
@@ -388,8 +420,45 @@ $font-sizes: (
 \*============================================================================*/
 
 @if $has-classes {
-  .type-spacing--200 {
-    letter-spacing: 0.285ch;
+  .type-spacing-25 {
+    letter-spacing: 0.025em;
+  }
+
+  .type-spacing-50 {
+    letter-spacing: 0.05em;
+  }
+
+  .type-spacing-100 {
+    letter-spacing: 0.1em;
+  }
+
+  .type-spacing-200 {
+    letter-spacing: 0.2em;
+  }
+
+  /**
+   * Generate helpers for each defined breakpoints
+   */
+  @each $breakpoint in $breakpoints {
+    $breakpoint: nth($breakpoint, 1);
+
+    @media #{md($breakpoint)} {
+      .type-spacing-25--#{$breakoint} {
+        letter-spacing: 0.025em;
+      }
+
+      .type-spacing-50--#{$breakoint} {
+        letter-spacing: 0.05em;
+      }
+
+      .type-spacing-100--#{$breakoint} {
+        letter-spacing: 0.1em;
+      }
+
+      .type-spacing-200--#{$breakoint} {
+        letter-spacing: 0.2em;
+      }
+    }
   }
 }
 
@@ -402,12 +471,20 @@ $font-sizes: (
     text-transform: uppercase;
   }
 
+  .type-lowercase {
+    text-transform: lowercase;
+  }
+
   .type-capitalize {
     text-transform: capitalize;
   }
 
   .type-no-underline {
     text-decoration: none;
+  }
+
+  .type-underline {
+    text-decoration: underline;
   }
 }
 

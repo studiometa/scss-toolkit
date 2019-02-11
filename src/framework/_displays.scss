@@ -10,9 +10,8 @@
  * A mixin to hide elements but keep them accessible
  *
  * @author Facebook Accessibility Team
- * @source http://cloud.meta.fr/8fdbea50b775
  */
-@mixin hidden-accessible {
+@mixin display-hidden-accessible {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -67,7 +66,7 @@
     display: inline-block !important;
   }
 
-  .hidden-accessible {
+  .display-hidden-accessible {
     @include hidden-accessible();
   }
 
@@ -119,7 +118,7 @@
         display: inline-block !important;
       }
 
-      .hidden-accessible--#{$key} {
+      .display-hidden-accessible--#{$key} {
         @include hidden-accessible();
       }
     }

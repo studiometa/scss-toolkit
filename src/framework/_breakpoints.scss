@@ -42,6 +42,11 @@ $breakpoints: (
       @return '(min-width: #{$size})';
     }
 
+    // For the `max` variation, we do not use `(max-width: …)` but we use
+    // instead a negation of the `(min-width: …)` declaration to allow for a
+    // better cohabitation between the usage of `min` and `max` media queries.
+    // See https://codepen.io/vincent-valentin/pen/ObBJae for a working example
+    // of how this works for the best.
     @if $type == 'max' {
       @return 'not all and (min-width: #{$size})';
     }

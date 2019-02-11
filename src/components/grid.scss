@@ -19,8 +19,6 @@
  *
  * When nesting grid, you'll need to add the `.grid--nested` modifier to the
  * block element.
- *
- * See https://codepen.io/titouanmathis/full/Bpjoew for more examples.
  */
 
 // Import dependencies
@@ -28,7 +26,7 @@
 @import '../framework/spaces';
 
 // Local variables
-$grid-columns: 12;
+$grid-columns: 12 !default;
 $grid-gutters: (
   'xxs': space('x3'),
   'xs': space('x3'),
@@ -38,7 +36,7 @@ $grid-gutters: (
   'xl': space('x4'),
   'xxl': space('x4'),
 ) !default;
-$grid-breakpoints: $breakpoints;
+$grid-breakpoints: $breakpoints !default;
 
 /**
  * A function helper to avoid having to type `map-get($grid-gutters, ...)`
@@ -76,6 +74,48 @@ $grid-breakpoints: $breakpoints;
   }
 }
 
+/* No gutter modifier
+\*============================================================================*/
+
+.grid--no-gutter {
+  padding-right: 0;
+  padding-left: 0;
+
+  // Media queries
+  @each $grid-breakpoint in $grid-breakpoints {
+    $key: nth($grid-breakpoint, 1);
+
+    @media #{md($key)} {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+}
+
+/* Nested grid modifier
+\*============================================================================*/
+
+/**
+ * Nested grid must not have left and right paddings to avoid weird alignment
+ * when nesting multiple times. The nested grid is different from the
+ * "no-gutter" one by only resetting the padding on the grid block, and not on
+ * its row or columns.
+ */
+.grid--nested {
+  padding-right: 0;
+  padding-left: 0;
+
+  // Media queries
+  @each $grid-breakpoint in $grid-breakpoints {
+    $key: nth($grid-breakpoint, 1);
+
+    @media #{md($key)} {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+}
+
 /*============================================================================*\
    Row element
 \*============================================================================*/
@@ -97,11 +137,16 @@ $grid-breakpoints: $breakpoints;
     @media #{md($key)} {
       margin-right: gutter($key) * -0.5;
       margin-left: gutter($key) * -0.5;
+
+      .grid--no-gutter > & {
+        margin-right: 0;
+        margin-left: 0;
+      }
     }
   }
 }
 
-/* Row modifiers
+/* Row flex modifiers
 \*============================================================================*/
 
 .grid__row--end,
@@ -110,11 +155,10 @@ $grid-breakpoints: $breakpoints;
   display: flex;
   flex-wrap: wrap;
 
-  // Loop over breakpoints
+  // Media queries
   @each $grid-breakpoint in $grid-breakpoints {
     $key: nth($grid-breakpoint, 1);
 
-    // Media queries
     @media #{md($key)} {
       .grid__col-left--#{$key} {
         order: 0;
@@ -143,9 +187,13 @@ $grid-breakpoints: $breakpoints;
    Columns elements
 \*============================================================================*/
 
-.grid,
 [class*='grid__col-'] {
   min-height: 1px;
+
+  .grid__row--stretch > & {
+    display: flex;
+    align-items: stretch;
+  }
 
   // Media queries
   @each $grid-breakpoint in $grid-breakpoints {
@@ -154,34 +202,25 @@ $grid-breakpoints: $breakpoints;
     @media #{md($key)} {
       padding-right: gutter($key) * 0.5;
       padding-left: gutter($key) * 0.5;
+
+      .grid--no-gutter > .grid__row > & {
+        padding-right: 0;
+        padding-left: 0;
+      }
     }
   }
 }
 
-[class*='grid__col-'] {
-  .grid__row--stretch > & {
-    display: flex;
-    align-items: stretch;
-  }
-}
-
-// Generates the columns class for
-// each breakpoints defined
+// Generates the columns class for each breakpoints defined
 @each $grid-breakpoint in $grid-breakpoints {
   $key: nth($grid-breakpoint, 1);
 
   // Media queries
-  // We need the `all` specification to prevent
-  // the cleanCSS Gulp plugin to merge these
-  // media queries with others and screw the
-  // order, which is important in this case
   @media #{md($key)} {
-    // sass-lint:disable force-attribute-nesting
     [class*='grid__col-'][class*='--#{$key}'] {
       float: left;
       display: block;
     }
-    // sass-lint:enable force-attribute-nesting
 
     .grid__col-center--#{$key} {
       float: none;
@@ -228,36 +267,6 @@ $grid-breakpoints: $breakpoints;
       .grid__push-#{$i}--#{$key} {
         margin-left: $i * 100% / $grid-columns;
       }
-    }
-  }
-}
-
-.grid__col-center {
-  float: none;
-  clear: both;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-/* Grid block modifiers
- * NOTE At the end to respect the cascade and be more specific
-\*============================================================================*/
-
-/**
- * Nested grid must not have left and right paddings
- * to avoid weird alignment when nesting multiple times.
- */
-.grid--nested {
-  padding-right: 0;
-  padding-left: 0;
-
-  // Media queries
-  @each $grid-breakpoint in $grid-breakpoints {
-    $key: nth($grid-breakpoint, 1);
-
-    @media #{md($key)} {
-      padding-right: 0;
-      padding-left: 0;
     }
   }
 }
