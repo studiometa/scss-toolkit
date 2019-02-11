@@ -26,7 +26,7 @@ $breakpoints: (
  */
 @function media($breakpoint, $type: 'min', $unit: 'em') {
   @if not map-has-key($breakpoints, $breakpoint) {
-    @error 'No breakpoint found in $breakpoints map for `#{$breakpoint}`.';
+    @error 'No breakpoint found in the `$breakpoints` map for `#{$breakpoint}`.';
   }
 
   $value: map-get($breakpoints, $breakpoint);

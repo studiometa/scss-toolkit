@@ -25,7 +25,7 @@ $layers: (
  */
 @function layer($layer, $modifier: 0) {
   @if not map-has-key($layers, $layer) {
-    @warn 'No z-index found in $layers map for `#{$layer}`. Property omitted.';
+    @error 'No z-index found in the `$layers` map for `#{$layer}`.';
     @return 'initial';
   }
 

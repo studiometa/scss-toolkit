@@ -47,7 +47,8 @@ $grid-breakpoints: $breakpoints !default;
  */
 @function gutter($breakpoint) {
   @if not map-has-key($grid-gutters, $breakpoint) {
-    @warn 'No gutter found in $grid-gutters map for `#{$breakpoint}`. Property omitted.';
+    @error 'No gutter found in the `$grid-gutters` map for `#{$breakpoint}`.';
+    @return '';
   }
 
   @return map-get($grid-gutters, $breakpoint);
