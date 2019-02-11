@@ -69,8 +69,8 @@ $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
  * ```
  *
  * For example, to set a global bottom double margin you can use the
- * `.space-mb-x2` class. And to set a x-axis quadruple padding for the `xxl`
- * breakpoint you can use the `.space-px-x4--xxl` class.
+ * `.space-mb-2` class. And to set a x-axis quadruple padding for the `xxl`
+ * breakpoint you can use the `.space-px-4--xxl` class.
  *
  */
 
@@ -110,7 +110,6 @@ $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
 
     // We do not want `auto` as a `padding` value
     @if $space != 'auto' {
-
       .space-p-#{$space} {
         padding: $value;
       }
@@ -140,7 +139,6 @@ $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
       .space-pl-#{$space} {
         padding-left: $value;
       }
-
     }
   }
 
@@ -184,7 +182,6 @@ $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
 
         // Again, we do not want `auto` as a value of `padding`
         @if $space != 'auto' {
-
           .space-p-#{$space}--#{$breakpoint} {
             padding: $value;
           }
