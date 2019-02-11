@@ -28,13 +28,13 @@
 // Local variables
 $grid-columns: 12 !default;
 $grid-gutters: (
-  'xxs': space('x3'),
-  'xs': space('x3'),
-  's': space('x4'),
-  'm': space('x4'),
-  'l': space('x4'),
-  'xl': space('x4'),
-  'xxl': space('x4'),
+  'xxs': space(2),
+  'xs': space(2),
+  's': space(4),
+  'm': space(4),
+  'l': space(4),
+  'xl': space(8),
+  'xxl': space(8),
 ) !default;
 $grid-breakpoints: $breakpoints !default;
 

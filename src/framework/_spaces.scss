@@ -7,15 +7,7 @@
  */
 $has-classes: false !default;
 $spaces-base: 8px / 16px * 1rem !default;
-$spaces: (
-  '0': 0,
-  'x1': $spaces-base,
-  'x2': $spaces-base * 2,
-  'x4': $spaces-base * 4,
-  'x8': $spaces-base * 8,
-  'x16': $spaces-base * 16,
-  'auto': 'auto',
-) !default;
+$spaces: (0, 1, 2, 4, 8, 16, auto) !default;
 
 /*============================================================================*\
    Helper function
@@ -29,11 +21,25 @@ $spaces: (
  * @return {string}       The corresponding size
  */
 @function space($space) {
-  @if not map-has-key($spaces, $space) {
-    @warn 'No size found in $spaces map for `#{$space}`. Property omitted.';
+  // Find the index of the given space
+  $index: index($spaces, $space);
+
+  // If no index, there is no space defined with this name, we throw an error
+  @if not $index {
+    @error 'No space of size `#{$space}` found in `$spaces`';
+    @return '';
   }
 
-  @return map-get($spaces, $space);
+  // Get the value of the space
+  $value: nth($spaces, $index);
+
+  // Return the value times the base value if our space is a number, or else we
+  // return the whole value, allowing us to set `auto` in our `$spaces` list.
+  @if (type-of($value) == 'number') {
+    @return $value * $spaces-base;
+  } @else {
+    @return $value;
+  }
 }
 
 /**
@@ -70,67 +76,71 @@ $spaces: (
 
 @if $has-classes {
   @each $space in $spaces {
-    $key: nth($space, 1);
-    $value: space($key);
+    $value: space($space);
 
-    /**
-     * Margin spacers
-     */
+    .space-m-#{$space} {
+      margin: $value;
+    }
 
-    .space-mx-#{$key} {
+    .space-mx-#{$space} {
       margin-right: $value;
       margin-left: $value;
     }
 
-    .space-my-#{$key} {
+    .space-my-#{$space} {
       margin-top: $value;
       margin-bottom: $value;
     }
 
-    .space-mt-#{$key} {
+    .space-mt-#{$space} {
       margin-top: $value;
     }
 
-    .space-mr-#{$key} {
+    .space-mr-#{$space} {
       margin-right: $value;
     }
 
-    .space-mb-#{$key} {
+    .space-mb-#{$space} {
       margin-bottom: $value;
     }
 
-    .space-ml-#{$key} {
+    .space-ml-#{$space} {
       margin-left: $value;
     }
 
-    /**
-     * Padding spacers
-     */
+    // We do not want `auto` as a `padding` value
+    @if $space != 'auto' {
 
-    .space-px-#{$key} {
-      padding-right: $value;
-      padding-left: $value;
-    }
+      .space-p-#{$space} {
+        padding: $value;
+      }
 
-    .space-py-#{$key} {
-      padding-top: $value;
-      padding-bottom: $value;
-    }
+      .space-px-#{$space} {
+        padding-right: $value;
+        padding-left: $value;
+      }
 
-    .space-pt-#{$key} {
-      padding-top: $value;
-    }
+      .space-py-#{$space} {
+        padding-top: $value;
+        padding-bottom: $value;
+      }
 
-    .space-pr-#{$key} {
-      padding-right: $value;
-    }
+      .space-pt-#{$space} {
+        padding-top: $value;
+      }
 
-    .space-pb-#{$key} {
-      padding-bottom: $value;
-    }
+      .space-pr-#{$space} {
+        padding-right: $value;
+      }
 
-    .space-pl-#{$key} {
-      padding-left: $value;
+      .space-pb-#{$space} {
+        padding-bottom: $value;
+      }
+
+      .space-pl-#{$space} {
+        padding-left: $value;
+      }
+
     }
   }
 
@@ -140,67 +150,70 @@ $spaces: (
 
     @media #{md($breakpoint)} {
       @each $space in $spaces {
-        $key: nth($space, 1);
-        $value: space($key);
+        $value: space($space);
 
-        /**
-         * Margin spacers
-         */
+        .space-m-#{$space}--#{$breakpoint} {
+          margin: $value;
+        }
 
-        .space-mx-#{$key}--#{$breakpoint} {
+        .space-mx-#{$space}--#{$breakpoint} {
           margin-right: $value;
           margin-left: $value;
         }
 
-        .space-my-#{$key}--#{$breakpoint} {
+        .space-my-#{$space}--#{$breakpoint} {
           margin-top: $value;
           margin-bottom: $value;
         }
 
-        .space-mt-#{$key}--#{$breakpoint} {
+        .space-mt-#{$space}--#{$breakpoint} {
           margin-top: $value;
         }
 
-        .space-mr-#{$key}--#{$breakpoint} {
+        .space-mr-#{$space}--#{$breakpoint} {
           margin-right: $value;
         }
 
-        .space-mb-#{$key}--#{$breakpoint} {
+        .space-mb-#{$space}--#{$breakpoint} {
           margin-bottom: $value;
         }
 
-        .space-ml-#{$key}--#{$breakpoint} {
+        .space-ml-#{$space}--#{$breakpoint} {
           margin-left: $value;
         }
 
-        /**
-         * Padding spacers
-         */
+        // Again, we do not want `auto` as a value of `padding`
+        @if $space != 'auto' {
 
-        .space-px-#{$key}--#{$breakpoint} {
-          padding-right: $value;
-          padding-left: $value;
-        }
+          .space-p-#{$space}--#{$breakpoint} {
+            padding: $value;
+          }
 
-        .space-py-#{$key}--#{$breakpoint} {
-          padding-top: $value;
-          padding-bottom: $value;
-        }
+          .space-px-#{$space}--#{$breakpoint} {
+            padding-right: $value;
+            padding-left: $value;
+          }
 
-        .space-pt-#{$key}--#{$breakpoint} {
-          padding-top: $value;
-        }
+          .space-py-#{$space}--#{$breakpoint} {
+            padding-top: $value;
+            padding-bottom: $value;
+          }
 
-        .space-pr-#{$key}--#{$breakpoint} {
-          padding-right: $value;
-        }
+          .space-pt-#{$space}--#{$breakpoint} {
+            padding-top: $value;
+          }
 
-        .space-pb-#{$key}--#{$breakpoint} {
-          padding-bottom: $value;
-        }
+          .space-pr-#{$space}--#{$breakpoint} {
+            padding-right: $value;
+          }
 
-        .space-pl-#{$key}--#{$breakpoint} {
-          padding-left: $value;
+          .space-pb-#{$space}--#{$breakpoint} {
+            padding-bottom: $value;
+          }
+
+          .space-pl-#{$space}--#{$breakpoint} {
+            padding-left: $value;
+          }
         }
       }
     }

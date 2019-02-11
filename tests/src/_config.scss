@@ -1,10 +1,5 @@
-$spaces-base: 8px / 16px * 1rem !default;
-$spaces: (
-  '0': 0,
-  'x1': $spaces-base,
-  'x2': $spaces-base * 2,
-  'auto': 'auto',
-);
+$spaces-base: 8px / 16px * 1rem;
+$spaces: (0, 1, 2, 4, 8, 16, auto);
 
 $layers: (
   'goku': 9000,
@@ -23,9 +18,9 @@ $breakpoints: (
 @import '../../src/framework/index.scss';
 
 $grid-gutters: (
-  'extra-small': space('x1'),
-  'small': space('x1'),
-  'medium': space('x1'),
-  'large': space('x2'),
-  'extra-large': space('x2'),
+  'extra-small': space(1),
+  'small': space(2),
+  'medium': space(2),
+  'large': space(4),
+  'extra-large': space(4),
 );
