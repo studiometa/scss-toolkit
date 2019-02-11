@@ -361,7 +361,7 @@ Example usage of the helper classes:
 - `@function s($space)`
 - Class helpers:
   + `.space-<direction>-<size>[--<breakpoint>]` : classes setting the property defined by `<direction>` to the given `<size>`, with the `<breakpoint>` modifier applying the style to the corresponding breakpoint
-    * `<direction>`: `my`, `mx`, `mt`, `mr`, `mb`, `ml`, `py`, `px`, `pt`, `pr`, `pb` and `pl`
+    * `<direction>`: `m`, `my`, `mx`, `mt`, `mr`, `mb`, `ml`, `p`, `py`, `px`, `pt`, `pr`, `pb` and `pl`
     * `<size>`: any of the [defined spaces](#framework_spacesscss)
     * `<breakpoint>`: any of the [defined breakpoints](#framework_breakpointsscss)
 
@@ -374,32 +374,29 @@ The default spaces values are based on the power of two, with a base unit starti
 // Default unit is 8px, often used by designers as a basic unit
 $spaces-base: 8px / 16px * 1rem !default;
 // All spaces
-$spaces: (
-  '0': 0,
-  'x1': $spaces-base,
-  'x2': $spaces-base * 2,
-  'x4': $spaces-base * 4,
-  'x8': $spaces-base * 8,
-  'x16': $spaces-base * 16,
-  'auto': 'auto',
-) !default;
+$spaces: (0, 1, 2, 4, 8, 16, auto) !default;
 ```
 
 **Usage**
 
 ```scss
 .foo {
-  margin: space('x2');
+  margin: space(2);
 }
 
 .bar {
-  padding-bottom: s('x4');
+  padding-bottom: s(4);
+}
+
+.baz {
+  margin-right: s(auto);
+  margin-left: s(auto);
 }
 ```
 
 ```html
 <!-- Horizontal padding of 2 times the base unit and 4 times on bigger screens -->
-<div class="space-px-x2 space-px-x4--s"></div>
+<div class="space-px-2 space-px-4--s"></div>
 
 <!-- Centering an element -->
 <div class="space-mx-auto"></div>
@@ -563,7 +560,7 @@ To use it, simply import the component in your project:
 
 ```scss
 $grid-columns: 12 !default;
-$grid-gutter: space('x4') !default;
+$grid-gutter: space(4) !default;
 $grid-breakpoints: $breakpoints !default;
 ```
 
