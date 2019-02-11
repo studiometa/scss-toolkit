@@ -67,7 +67,7 @@
   }
 
   .display-hidden-accessible {
-    @include hidden-accessible();
+    @include display-hidden-accessible();
   }
 
   /*==========================================================================*\
@@ -119,7 +119,7 @@
       }
 
       .display-hidden-accessible--#{$key} {
-        @include hidden-accessible();
+        @include display-hidden-accessible();
       }
     }
   }
