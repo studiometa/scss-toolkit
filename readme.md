@@ -506,9 +506,11 @@ This toolkit come with some useful components : a grid, a reset and a debug help
 #### [`components/debug.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/components/debug.scss)
 
 **Definitions**
+
 This component defines colored outlines on every HTML element, useful to debug layout on a page.
 
 **Usage**
+
 To use it, simply import the component in your project:
 
 ```scss
@@ -525,11 +527,80 @@ To use it, simply import the component in your project:
 
 **Definitions**
 
+- `$grid-columns`: the number of columns your grid should have, default is `12`
+- `$grid-gutters`: a map defining the gutter for each breakpoint of your grid component
+- `$grid-breakoints`: a map defining all breakpoints available for your grid, default to the value of [`$breakpoints`](#framework_spacesscss) defined in the framework
+- Component classes:
+  + `.grid[--<modifier>]`: the component's BEM block, with modifier being one of `nested` or `no-gutter`
+    * `.grid--nested`: modifier used to nest grid components
+    * `.grid--no-gutter`: modifier used to have a grid without any gutter
+  + `.grid__row[--<modifier>]`: used to set up a row in you grid, with some `<modifier>` to take advantage of some flex alignment properties
+    * `.grid__row--end`: apply the property `align-items` with the value `flex-end` to the row, used to align all columns in a row to the bottom
+    * `.grid__row--center`: apply the property `align-items` with the value `center` to the row, used to center all columns in a row
+    * `.grid__row--stretch`: apply the property `align-items` withe the value `stretch` to the row, used to stretch all columns in a row to the same height
+  + `.grid__col-<columns>--<breakpoint>`: the component's column classes
+    * `<columns>`: a number from 1 to the total number of columns defined in the `$grid-columns` variable
+    * `<breakpoin>`: name of one of the breakpoint defined in the `$grid-breakpoints` variable
+  + `grid__pull-<columns>--<breakpoint>`: negative offset classes, used to pull columns to the left by the given `<columns>` count
+    * `<columns>`: a number from 1 to the total number of columns defined in the `$grid-columns` variable
+    * `<breakpoint>`: name of one of the breakpoint defined in the `$grid-breakpoints` variable
+  + `grid__push-<columns>--<breakpoint>`: offset classes, used to push columns from the left by the given `<columns>` count
+    * `<columns>`: a number from 1 to the total number of columns defined in the `$grid-columns` variable
+    * `<breakpoint>`: name of one of the breakpoint defined in the `$grid-breakpoints` variable
+  + `.grid__col-<type>--<breakpoint>`
+    * `<type>`: 
+      - `.grid__col-center--<breakpoint>`: center the column in its row
+      - `.grid__col-clear--<breakpoint>`: clear the float of the previous column, creates a line-break in your grid
+      - `.grid__col-no-clear--<breakpoint>`: reverse the effect of the previous class
+      - `.grid__col-left--<breakpoint>`: float a column to the left from the given breakpoint and up
+      - `.grid__col-right--<breakpoint>`: float a column to the right from the given breakpoint and up
+      - `.grid__col-0--<breakpoint>`: hide a column from the given breakpoint and up
+    * `<breakpoint>`: name of one of the breakpoint defined in the `$grid-breakpoints` variable
+
 **Defaults**
 
+```scss
+$grid-columns: 12 !default;
+$grid-gutter: space('x4') !default;
+$grid-breakpoints: $breakpoints !default;
+```
+
 **Usage**
+
+```html
+<!-- One column on mobile, two on tablets and three on desktop -->
+<div class="grid">
+  <div class="grid__row">
+    <div class="grid__col-12--xxs grid__col-6--s grid__col-4--l">…</div>
+    <div class="grid__col-12--xxs grid__col-6--s grid__col-4--l">…</div>
+  </div>
+</div>
+
+<!-- A nested grid in a centered main column -->
+<div class="grid">
+  <div class="grid__row">
+    <div class="
+      grid__col-12--xxs 
+      grid__col-10--xs 
+      grid__push-1--xs
+      grid__col-8--m 
+      grid__push-2--m
+      grid__col-6--l
+      grid__push-3--l
+    ">
+      <div class="grid grid--nested">
+        <div class="grid__row">
+          <div class="grid__col-6--xxs">…</div>
+          <div class="grid__col-6--xxs">…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+```
 
 #### [`components/reset.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/components/reset.scss)
 
 **Definitions**
+
 The reset component only import the classic [reset.css](https://meyerweb.com/eric/tools/css/reset/).
