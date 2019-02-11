@@ -1,5 +1,7 @@
 # SCSS Toolkit
 
+A small and configurable SCSS Toolkit to boost your project! 🚀
+
 - [Installation](#installation)
 - [Usage](#usage)
   + [Simple usage](#simple-usage)
