@@ -17,7 +17,8 @@ $colors: (
  */
 @function color($color) {
   @if not map-has-key($colors, $color) {
-    @warn 'No color found in $colors map for `#{$color}`. Property omitted.';
+    @error 'No color found in the `$colors` map for `#{$color}`.';
+    @return '';
   }
 
   @return map-get($colors, $color);

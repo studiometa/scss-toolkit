@@ -443,19 +443,19 @@ $font-sizes: (
     $breakpoint: nth($breakpoint, 1);
 
     @media #{md($breakpoint)} {
-      .type-spacing-25--#{$breakoint} {
+      .type-spacing-25--#{$breakpoint} {
         letter-spacing: 0.025em;
       }
 
-      .type-spacing-50--#{$breakoint} {
+      .type-spacing-50--#{$breakpoint} {
         letter-spacing: 0.05em;
       }
 
-      .type-spacing-100--#{$breakoint} {
+      .type-spacing-100--#{$breakpoint} {
         letter-spacing: 0.1em;
       }
 
-      .type-spacing-200--#{$breakoint} {
+      .type-spacing-200--#{$breakpoint} {
         letter-spacing: 0.2em;
       }
     }
