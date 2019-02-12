@@ -1,10 +1,10 @@
 {
   "name": "@studiometa/scss-toolkit",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "SCSS Toolkit",
   "main": "src/index.scss",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "gulp styles-build",
     "lint-scss": "stylelint ./src/"
   },
   "repository": {
@@ -18,7 +18,11 @@
   },
   "homepage": "https://github.com/studiometa/scss-toolkit#readme",
   "devDependencies": {
-    "@studiometa/stylelint-config": "^1.0.0",
+    "@studiometa/stylelint-config": "^1.0.1",
     "stylelint": "^9.8.0"
+  },
+  "dependencies": {
+    "@studiometa/gulp-config": "^1.1.5-beta.1",
+    "reset-css": "^4.0.1"
   }
 }

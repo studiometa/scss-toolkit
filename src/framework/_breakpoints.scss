@@ -24,9 +24,9 @@ $breakpoints: (
  * @param  {string} $unit            The unit for the media queries (em or px)
  * @return {string}                  A media query expression
  */
-@function md($breakpoint, $type: 'min', $unit: 'em') {
+@function media($breakpoint, $type: 'min', $unit: 'em') {
   @if not map-has-key($breakpoints, $breakpoint) {
-    @error 'No breakpoint found in $breakpoints map for `#{$breakpoint}`.';
+    @error 'No breakpoint found in the `$breakpoints` map for `#{$breakpoint}`.';
   }
 
   $value: map-get($breakpoints, $breakpoint);
@@ -42,6 +42,11 @@ $breakpoints: (
       @return '(min-width: #{$size})';
     }
 
+    // For the `max` variation, we do not use `(max-width: …)` but we use
+    // instead a negation of the `(min-width: …)` declaration to allow for a
+    // better cohabitation between the usage of `min` and `max` media queries.
+    // See https://codepen.io/vincent-valentin/pen/ObBJae for a working example
+    // of how this works for the best.
     @if $type == 'max' {
       @return 'not all and (min-width: #{$size})';
     }
@@ -58,4 +63,11 @@ $breakpoints: (
       @return 'not all and (min-width: #{$size})';
     }
   }
+}
+
+/**
+ * Alias of the `media($breakpoint, $type, $unit)` function above
+ */
+@function md($breakpoint, $type: 'min', $unit: 'em') {
+  @return media($breakpoint, $type, $unit);
 }

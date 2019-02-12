@@ -10,9 +10,8 @@
  * A mixin to hide elements but keep them accessible
  *
  * @author Facebook Accessibility Team
- * @source http://cloud.meta.fr/8fdbea50b775
  */
-@mixin hidden-accessible {
+@mixin display-hidden-accessible {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -27,48 +26,48 @@
 \*============================================================================*/
 
 @if $has-classes {
-  .hidden {
+  .display-none {
     display: none;
   }
 
-  .hidden--force {
+  .display-none--force {
     display: none !important;
   }
 
-  .visible-block {
+  .display-block {
     display: block;
   }
 
-  .visible-block--force {
+  .display-block--force {
     display: block !important;
   }
 
-  .visible-flex {
+  .display-flex {
     display: flex;
   }
 
-  .visible-flex--force {
+  .display-flex--force {
     display: flex !important;
   }
 
-  .visible-inline {
+  .display-inline {
     display: inline;
   }
 
-  .visible-inline--force {
+  .display-inline--force {
     display: inline !important;
   }
 
-  .visible-inline-block {
+  .display-inline-block {
     display: inline-block;
   }
 
-  .visible-inline-block--force {
+  .display-inline-block--force {
     display: inline-block !important;
   }
 
-  .hidden-accessible {
-    @include hidden-accessible();
+  .display-hidden-accessible {
+    @include display-hidden-accessible();
   }
 
   /*==========================================================================*\
@@ -79,48 +78,48 @@
     $key: nth($breakpoint, 1);
 
     @media #{md($key)} {
-      .hidden--#{$key} {
+      .display-none--#{$key} {
         display: none;
       }
 
-      .hidden--force-#{$key} {
+      .display-none--force-#{$key} {
         display: none !important;
       }
 
-      .hidden-accessible--#{$key} {
-        @include hidden-accessible();
-      }
-
-      .visible-block--#{$key} {
+      .display-block--#{$key} {
         display: block;
       }
 
-      .visible-block--force-#{$key} {
+      .display-block--force-#{$key} {
         display: block !important;
       }
 
-      .visible-flex--#{$key} {
+      .display-flex--#{$key} {
         display: flex;
       }
 
-      .visible-flex--force-#{$key} {
+      .display-flex--force-#{$key} {
         display: flex !important;
       }
 
-      .visible-inline--#{$key} {
+      .display-inline--#{$key} {
         display: inline;
       }
 
-      .visible-inline--force-#{$key} {
+      .display-inline--force-#{$key} {
         display: inline !important;
       }
 
-      .visible-inline-block--#{$key} {
+      .display-inline-block--#{$key} {
         display: inline-block;
       }
 
-      .visible-inline-block--force-#{$key} {
+      .display-inline-block--force-#{$key} {
         display: inline-block !important;
+      }
+
+      .display-hidden-accessible--#{$key} {
+        @include display-hidden-accessible();
       }
     }
   }

@@ -15,12 +15,20 @@ $colors: (
  * @param  {string} $color The name of the color
  * @return {number}        The value corresponding to the color's name
  */
-@function c($color) {
+@function color($color) {
   @if not map-has-key($colors, $color) {
-    @warn 'No color found in $colors map for `#{$color}`. Property omitted.';
+    @error 'No color found in the `$colors` map for `#{$color}`.';
+    @return '';
   }
 
   @return map-get($colors, $color);
+}
+
+/**
+ * Alias for the `color($color)` function above
+ */
+@function c($color) {
+  @return color($color);
 }
 
 /*============================================================================*\
@@ -32,6 +40,7 @@ $colors: (
     $name: nth($color, 1);
     $value: c($name);
 
+    // Global helpers
     .color-#{$name} {
       color: $value;
     }
@@ -39,18 +48,16 @@ $colors: (
     .color-#{$name}--force {
       color: $value !important;
     }
-  }
-}
 
-/*============================================================================*\
-   SVG Color helpers
-\*============================================================================*/
+    .background-#{$name} {
+      background-color: $value;
+    }
 
-@if $has-classes {
-  @each $color in $colors {
-    $name: nth($color, 1);
-    $value: c($name);
+    .background-#{$name}--force {
+      background-color: $value !important;
+    }
 
+    // SVG helpers
     .fill-#{$name} {
       fill: $value;
     }

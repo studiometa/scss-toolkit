@@ -1,5 +1,3 @@
 module.exports = {
-  extends: [
-    '@studiometa/stylelint-config',
-  ],
+  extends: '@studiometa/stylelint-config/prettier',
 };
