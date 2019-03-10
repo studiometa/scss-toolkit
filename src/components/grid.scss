@@ -223,26 +223,26 @@ $grid-breakpoints: $breakpoints !default;
       display: block;
     }
 
-    .grid__col-center--#{$key} {
+    [class*='grid__col-'].grid__col-center--#{$key} {
       float: none;
       clear: both;
       margin-right: auto;
       margin-left: auto;
     }
 
-    .grid__col-clear--#{$key} {
+    [class*='grid__col-'].grid__col-clear--#{$key} {
       clear: both;
     }
 
-    .grid__col-no-clear--#{$key} {
+    [class*='grid__col-'].grid__col-no-clear--#{$key} {
       clear: none;
     }
 
-    .grid__col-left--#{$key} {
+    [class*='grid__col-'].grid__col-left--#{$key} {
       float: left;
     }
 
-    .grid__col-right--#{$key} {
+    [class*='grid__col-'].grid__col-right--#{$key} {
       float: right;
     }
 
