@@ -18,11 +18,11 @@
   },
   "homepage": "https://github.com/studiometa/scss-toolkit#readme",
   "devDependencies": {
+    "@studiometa/gulp-config": "^1.2.0-beta.7",
     "@studiometa/stylelint-config": "^1.0.1",
     "stylelint": "^9.8.0"
   },
   "dependencies": {
-    "@studiometa/gulp-config": "^1.1.5-beta.1",
     "reset-css": "^4.0.1"
   }
 }
