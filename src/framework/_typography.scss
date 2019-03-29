@@ -331,7 +331,7 @@ $font-sizes: (
 /*============================================================================*\
    Type font weight helpers
 \*============================================================================*/
-$font-weights: (300, 500, 800) !default;
+$font-weights: (300, 400, 700) !default;
 
 @if $has-classes {
   @each $font-weight in $font-weights {
