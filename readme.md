@@ -165,6 +165,11 @@ $breakpoints-height: (
   @media #{md('s', 'min', 'em', 'height')} { // @media (min-height: 36em) { ... }
     min-height: 50vh;
   }
+
+  // Using SASS arglist
+  @media #{md((breakpoint: 's', orientation: 'height')...)} { // @media (min-height: 36em) { ... }
+    min-height: 50vh;
+  }
 }
 ```
 
