@@ -440,7 +440,7 @@ $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
   + `.type-serif`: set the font-family property to the `$font-family-serif` value
   + `.type-sans`: set the font-family property to the `$font-family-sans` value
   + `.type-<weight>[--<breakpoin>]`: set the `font-weight` property to the given `<weight>`, with the `<breakpoint>` modifier applying the style to the corresponding breakpoint
-    * `<weight>`: one of `thin`, `extralight`, `light`, `regular`, `medium`, `semibold`, `bold`, `extrabold`, `black`
+    * `<weight>`: one of `100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`
     * `<breakpoint>`: a breakpoint's name defined in the `$breakpoints` map
   + `.type-spacing-<value>[--<breakpoint>]`: set the `letter-spacing` property to the given value, with the `<breakpoint>` modifier applying the style to the corresponding breakpoint
     * `<value>`: one of `25`, `50`, `100`, `200`
