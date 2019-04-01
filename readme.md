@@ -119,8 +119,9 @@ The micro-framework is composed of 8 different files which defines each a set of
 **Definitions**
 
 - `$breakpoints`: a map of names and values (in pixels) of breakpoints
-- `@function media($breakpoint, $type, $unit)`: a function to get a breakpoint declaration given a name
-- `@function md($breakpoint, $type, $unit)`: an alias for the `media(...)` function
+- `$breakpoints-height`: a map of names and values (in pixels) of height based breakpoints
+- `@function media($breakpoint, $type, $unit, $orientation)`: a function to get a breakpoint declaration given a name
+- `@function md($breakpoint, $type, $unit, $orientation)`: an alias for the `media(...)` function
 
 **Defaults**
 
@@ -133,6 +134,16 @@ $breakpoints: (
   'l': 1280,
   'xl': 1440,
   'xxl': 1920,
+) !default;
+
+$breakpoints-height: (
+  'xxs': 0,
+  'xs': 360,
+  's': 576,
+  'm': 768,
+  'l': 960,
+  'xl': 1080,
+  'xxl': 1440,
 ) !default;
 ```
 
@@ -149,6 +160,15 @@ $breakpoints: (
 
   @media #{md('xs', 'max')} { // @media not all and (min-width: 48em) { ... }
     display: flex;
+  }
+
+  @media #{md('s', 'min', 'em', 'height')} { // @media (min-height: 36em) { ... }
+    min-height: 50vh;
+  }
+
+  // Using SASS arglist
+  @media #{md((breakpoint: 's', orientation: 'height')...)} { // @media (min-height: 36em) { ... }
+    min-height: 50vh;
   }
 }
 ```
