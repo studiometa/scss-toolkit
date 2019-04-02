@@ -74,53 +74,49 @@
      Visibility breakpoints modifiers
   \*==========================================================================*/
 
-  @each $breakpoint in $breakpoints {
-    $key: nth($breakpoint, 1);
+  @include for-each-breakpoints using ($breakpoint) {
+    .display-none--#{$breakpoint} {
+      display: none;
+    }
 
-    @media #{md($key)} {
-      .display-none--#{$key} {
-        display: none;
-      }
+    .display-none--force-#{$breakpoint} {
+      display: none !important;
+    }
 
-      .display-none--force-#{$key} {
-        display: none !important;
-      }
+    .display-block--#{$breakpoint} {
+      display: block;
+    }
 
-      .display-block--#{$key} {
-        display: block;
-      }
+    .display-block--force-#{$breakpoint} {
+      display: block !important;
+    }
 
-      .display-block--force-#{$key} {
-        display: block !important;
-      }
+    .display-flex--#{$breakpoint} {
+      display: flex;
+    }
 
-      .display-flex--#{$key} {
-        display: flex;
-      }
+    .display-flex--force-#{$breakpoint} {
+      display: flex !important;
+    }
 
-      .display-flex--force-#{$key} {
-        display: flex !important;
-      }
+    .display-inline--#{$breakpoint} {
+      display: inline;
+    }
 
-      .display-inline--#{$key} {
-        display: inline;
-      }
+    .display-inline--force-#{$breakpoint} {
+      display: inline !important;
+    }
 
-      .display-inline--force-#{$key} {
-        display: inline !important;
-      }
+    .display-inline-block--#{$breakpoint} {
+      display: inline-block;
+    }
 
-      .display-inline-block--#{$key} {
-        display: inline-block;
-      }
+    .display-inline-block--force-#{$breakpoint} {
+      display: inline-block !important;
+    }
 
-      .display-inline-block--force-#{$key} {
-        display: inline-block !important;
-      }
-
-      .display-hidden-accessible--#{$key} {
-        @include display-hidden-accessible();
-      }
+    .display-hidden-accessible--#{$breakpoint} {
+      @include display-hidden-accessible();
     }
   }
 }

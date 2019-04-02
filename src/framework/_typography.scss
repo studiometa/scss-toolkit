@@ -252,20 +252,16 @@ $font-sizes: (
   }
 
   // Media queries
-  @each $breakpoint in $breakpoints {
-    $breakpoint: nth($breakpoint, 1);
+  @include for-each-breakpoints using ($breakpoint) {
+    @each $font-size in $font-sizes {
+      $size: nth($font-size, 1);
 
-    @media all and #{md($breakpoint)} {
-      @each $font-size in $font-sizes {
-        $key: nth($font-size, 1);
+      .type-#{$size}--#{$breakpoint} {
+        @include fz($size);
+      }
 
-        .type-#{$key}--#{$breakpoint} {
-          @include fz($key);
-        }
-
-        .type-rem-#{$key}--#{$breakpoint} {
-          @include fz($key);
-        }
+      .type-rem-#{$size}--#{$breakpoint} {
+        @include fz($size);
       }
     }
   }
@@ -291,25 +287,17 @@ $font-sizes: (
   /**
    * Generate helpers for each defined breakpoints
    */
-  @each $breakpoint in $breakpoints {
-    $breakpoint: nth($breakpoint, 1);
+  @include for-each-breakpoints using ($breakpoint) {
+    .type-center--#{$breakpoint} {
+      text-align: center;
+    }
 
-    @media #{md($breakpoint)} {
-      /**
-       * Margin spacers
-       */
+    .type-left--#{$breakpoint} {
+      text-align: left;
+    }
 
-      .type-center--#{$breakpoint} {
-        text-align: center;
-      }
-
-      .type-left--#{$breakpoint} {
-        text-align: left;
-      }
-
-      .type-right--#{$breakpoint} {
-        text-align: right;
-      }
+    .type-right--#{$breakpoint} {
+      text-align: right;
     }
   }
 }
@@ -343,14 +331,10 @@ $font-weights: (300, 400, 700) !default;
   /**
    * Generate helpers for each defined breakpoints
    */
-  @each $breakpoint in $breakpoints {
-    $breakpoint: nth($breakpoint, 1);
-
-    @media all and #{md($breakpoint)} {
-      @each $font-weight in $font-weights {
-        .type-weight-#{$font-weight}--#{$breakpoint} {
-          font-weight: $font-weight;
-        }
+  @include for-each-breakpoints using ($breakpoint) {
+    @each $font-weight in $font-weights {
+      .type-weight-#{$font-weight}--#{$breakpoint} {
+        font-weight: $font-weight;
       }
     }
   }
@@ -380,25 +364,21 @@ $font-weights: (300, 400, 700) !default;
   /**
    * Generate helpers for each defined breakpoints
    */
-  @each $breakpoint in $breakpoints {
-    $breakpoint: nth($breakpoint, 1);
+  @include for-each-breakpoints using ($breakpoint) {
+    .type-spacing-25--#{$breakpoint} {
+      letter-spacing: 0.025em;
+    }
 
-    @media #{md($breakpoint)} {
-      .type-spacing-25--#{$breakpoint} {
-        letter-spacing: 0.025em;
-      }
+    .type-spacing-50--#{$breakpoint} {
+      letter-spacing: 0.05em;
+    }
 
-      .type-spacing-50--#{$breakpoint} {
-        letter-spacing: 0.05em;
-      }
+    .type-spacing-100--#{$breakpoint} {
+      letter-spacing: 0.1em;
+    }
 
-      .type-spacing-100--#{$breakpoint} {
-        letter-spacing: 0.1em;
-      }
-
-      .type-spacing-200--#{$breakpoint} {
-        letter-spacing: 0.2em;
-      }
+    .type-spacing-200--#{$breakpoint} {
+      letter-spacing: 0.2em;
     }
   }
 }

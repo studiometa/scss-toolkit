@@ -10,7 +10,7 @@ $spaces-base: 8px / 16px * 1rem !default;
 $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
 
 /*============================================================================*\
-   Helper function
+   Functions
 \*============================================================================*/
 
 /**
@@ -50,6 +50,28 @@ $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
 }
 
 /*============================================================================*\
+   Mixins
+\*============================================================================*/
+
+/**
+ * Abstract loop over all spaces with the possibility to exclude some
+ *
+ * @param  {ArgList} $excludes The colors to exclude from the loop
+ *
+ * @author Titouan Mathis <titouan@studiometa.fr>
+ * @since  1.2.0
+ */
+@mixin for-each-spaces($excludes...) {
+  @each $space in $spaces {
+    $value: space($space);
+
+    @if not index($excludes, $space) {
+      @content ($space, $value);
+    }
+  }
+}
+
+/*============================================================================*\
    Spaces class helpers
 \*============================================================================*/
 
@@ -75,9 +97,7 @@ $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
  */
 
 @if $has-classes {
-  @each $space in $spaces {
-    $value: space($space);
-
+  @include for-each-spaces using ($space, $value) {
     .space-m-#{$space} {
       margin: $value;
     }
@@ -143,74 +163,68 @@ $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
   }
 
   // Media queries
-  @each $breakpoint in $breakpoints {
-    $breakpoint: nth($breakpoint, 1);
+  @include for-each-breakpoints using ($breakpoint) {
+    @include for-each-spaces using ($space, $value) {
+      .space-m-#{$space}--#{$breakpoint} {
+        margin: $value;
+      }
 
-    @media #{md($breakpoint)} {
-      @each $space in $spaces {
-        $value: space($space);
+      .space-mx-#{$space}--#{$breakpoint} {
+        margin-right: $value;
+        margin-left: $value;
+      }
 
-        .space-m-#{$space}--#{$breakpoint} {
-          margin: $value;
+      .space-my-#{$space}--#{$breakpoint} {
+        margin-top: $value;
+        margin-bottom: $value;
+      }
+
+      .space-mt-#{$space}--#{$breakpoint} {
+        margin-top: $value;
+      }
+
+      .space-mr-#{$space}--#{$breakpoint} {
+        margin-right: $value;
+      }
+
+      .space-mb-#{$space}--#{$breakpoint} {
+        margin-bottom: $value;
+      }
+
+      .space-ml-#{$space}--#{$breakpoint} {
+        margin-left: $value;
+      }
+
+      // Again, we do not want `auto` as a value of `padding`
+      @if $space != 'auto' {
+        .space-p-#{$space}--#{$breakpoint} {
+          padding: $value;
         }
 
-        .space-mx-#{$space}--#{$breakpoint} {
-          margin-right: $value;
-          margin-left: $value;
+        .space-px-#{$space}--#{$breakpoint} {
+          padding-right: $value;
+          padding-left: $value;
         }
 
-        .space-my-#{$space}--#{$breakpoint} {
-          margin-top: $value;
-          margin-bottom: $value;
+        .space-py-#{$space}--#{$breakpoint} {
+          padding-top: $value;
+          padding-bottom: $value;
         }
 
-        .space-mt-#{$space}--#{$breakpoint} {
-          margin-top: $value;
+        .space-pt-#{$space}--#{$breakpoint} {
+          padding-top: $value;
         }
 
-        .space-mr-#{$space}--#{$breakpoint} {
-          margin-right: $value;
+        .space-pr-#{$space}--#{$breakpoint} {
+          padding-right: $value;
         }
 
-        .space-mb-#{$space}--#{$breakpoint} {
-          margin-bottom: $value;
+        .space-pb-#{$space}--#{$breakpoint} {
+          padding-bottom: $value;
         }
 
-        .space-ml-#{$space}--#{$breakpoint} {
-          margin-left: $value;
-        }
-
-        // Again, we do not want `auto` as a value of `padding`
-        @if $space != 'auto' {
-          .space-p-#{$space}--#{$breakpoint} {
-            padding: $value;
-          }
-
-          .space-px-#{$space}--#{$breakpoint} {
-            padding-right: $value;
-            padding-left: $value;
-          }
-
-          .space-py-#{$space}--#{$breakpoint} {
-            padding-top: $value;
-            padding-bottom: $value;
-          }
-
-          .space-pt-#{$space}--#{$breakpoint} {
-            padding-top: $value;
-          }
-
-          .space-pr-#{$space}--#{$breakpoint} {
-            padding-right: $value;
-          }
-
-          .space-pb-#{$space}--#{$breakpoint} {
-            padding-bottom: $value;
-          }
-
-          .space-pl-#{$space}--#{$breakpoint} {
-            padding-left: $value;
-          }
+        .space-pl-#{$space}--#{$breakpoint} {
+          padding-left: $value;
         }
       }
     }
