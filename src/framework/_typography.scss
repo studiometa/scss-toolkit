@@ -421,17 +421,6 @@ $type-spacings: (
 \*============================================================================*/
 
 @if $has-classes {
-  body {
-    font-family: $font-family-sans;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4 {
-    font-family: $font-family-serif;
-  }
-
   a {
     color: inherit;
   }
