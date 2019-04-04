@@ -1,0 +1,29 @@
+@import 'config';
+
+/*============================================================================*\
+   Create modifiers for all breakpoints
+\*============================================================================*/
+
+.foo {
+  display: block;
+}
+
+@include for-each-breakpoints using ($key) {
+  .foo--#{$key} {
+    display: block;
+  }
+}
+
+/*============================================================================*\
+   Create modifiers for all breakpoints while excluding some
+\*============================================================================*/
+
+.foo-mobile {
+  display: block;
+}
+
+@include for-each-breakpoints('medium', 'large', 'extra-large') using ($key) {
+  .foo-mobile--#{$key} {
+    display: block;
+  }
+}

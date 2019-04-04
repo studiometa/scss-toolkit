@@ -88,3 +88,27 @@ $breakpoints-height: (
 @function md($breakpoint, $type: 'min', $unit: 'em', $orientation: 'width') {
   @return media($breakpoint, $type, $unit, $orientation);
 }
+
+/*============================================================================*\
+   Mixins
+\*============================================================================*/
+
+/**
+ * Abstract the loop over each breakpoints
+ *
+ * @param  {ArgList} $excludes The breakpoints to exclude
+ *
+ * @author Titouan Mathis <titouan@studiometa.fr>
+ * @since  1.2.0
+ */
+@mixin for-each-breakpoints($excludes...) {
+  @each $breakpoint in $breakpoints {
+    $breakpoint: nth($breakpoint, 1);
+
+    @if not index($excludes, $breakpoint) {
+      @media #{md($breakpoint)} {
+        @content ($breakpoint);
+      }
+    }
+  }
+}

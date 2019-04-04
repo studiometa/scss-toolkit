@@ -8,6 +8,10 @@ $colors: (
   'black': #000,
 ) !default;
 
+/*============================================================================*\
+   Functions
+\*============================================================================*/
+
 /**
  * A function helper to avoid having to type `map-get($colors, ...)`
  * Based on http://css-tricks.com/handling-z-index/
@@ -32,45 +36,65 @@ $colors: (
 }
 
 /*============================================================================*\
+   Mixins
+\*============================================================================*/
+
+/**
+ * Abstract loop over all colors with the possibility to exclude some
+ *
+ * @param  {ArgList} $excludes The colors to exclude from the loop
+ *
+ * @author Titouan Mathis <titouan@studiometa.fr>
+ * @since  1.2.0
+ */
+@mixin for-each-colors($excludes...) {
+  @each $color in $colors {
+    $color: nth($color, 1);
+    $value: c($color);
+
+    @if not index($excludes, $color) {
+      @content ($color, $value);
+    }
+  }
+}
+
+/*============================================================================*\
    Color helpers
 \*============================================================================*/
 
 @if $has-classes {
-  @each $color in $colors {
-    $name: nth($color, 1);
-    $value: c($name);
-
+  @include for-each-colors using ($color, $value) {
     // Global helpers
-    .color-#{$name} {
+    .color-#{$color} {
       color: $value;
     }
 
-    .color-#{$name}--force {
+    .color-#{$color}--force {
       color: $value !important;
     }
 
-    .background-#{$name} {
+    .background-#{$color} {
       background-color: $value;
     }
 
-    .background-#{$name}--force {
+    .background-#{$color}--force {
       background-color: $value !important;
     }
 
     // SVG helpers
-    .fill-#{$name} {
+    .fill-#{$color} {
       fill: $value;
     }
 
-    .fill-#{$name}--force {
+    .fill-#{$color}--force {
       fill: $value !important;
     }
 
-    .stroke-#{$name} {
+    .stroke-#{$color} {
       stroke: $value;
     }
 
-    .stroke-#{$name}--force {
+    .stroke-#{$color}--force {
       stroke: $value !important;
     }
   }
