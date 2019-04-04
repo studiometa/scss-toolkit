@@ -20,15 +20,16 @@ A small and configurable SCSS Toolkit to boost your project! 🚀
     * [Debug](#componentsdebugscss)
     * [Grid](#componentsgridscss)
     * [Reset](#componentsresetscss)
+- [Contributing](#contributing)
 
 ## Installation
 
 Install it with your favorite package manager:
 
 ```bash
-yarn add @studiometa/scss-toolkit
-# OR
-npm install @studiometa/scss-toolkit
+$ yarn add @studiometa/scss-toolkit
+# or
+$ npm install @studiometa/scss-toolkit
 ```
 
 ## Usage
@@ -623,3 +624,19 @@ $grid-breakpoints: $breakpoints !default;
 **Definitions**
 
 The reset component only import the classic [reset.css](https://meyerweb.com/eric/tools/css/reset/).
+
+## Contributing
+
+This project uses [Git Flow](https://github.com/petervanderdoes/gitflow-avh) as a branching model and a combo of [Stylelint](https://stylelint.io/) and [Prettier](https://prettier.io/) to lint the SCSS files. You can lint your modifications when contributing with the following commands:
+
+```bash
+# Lint all files in the src/ folder
+$ yarn lint
+# or
+$ npm run lint
+
+# Try to fix all lint errors/warnings
+$ yarn fix
+# or
+$ npm run fix
+```
