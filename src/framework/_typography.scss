@@ -360,12 +360,7 @@ $font-weights: (300, 400, 700) !default;
    Type spacing
 \*============================================================================*/
 
-$type-spacings: (
-  25,
-  50,
-  100,
-  200
-) !default;
+$type-spacings: (25, 50, 100, 200) !default;
 
 @if $has-classes {
   @each $spacing in $type-spacings {

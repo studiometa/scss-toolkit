@@ -5,7 +5,8 @@
   "main": "src/index.scss",
   "scripts": {
     "test": "gulp styles-build",
-    "lint-scss": "stylelint ./src/"
+    "lint": "stylelint ./src/",
+    "fix": "stylelint ./src/ --fix"
   },
   "repository": {
     "type": "git",
