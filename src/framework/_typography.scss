@@ -158,7 +158,6 @@ $font-sizes: (
 /*============================================================================*\
    Fontaces declarations
 \*============================================================================*/
-
 @if $has-classes {
   @each $font-face in $font-faces {
     $name: nth($font-face, 1);
@@ -359,22 +358,19 @@ $font-weights: (300, 400, 700) !default;
 /*============================================================================*\
    Type spacing
 \*============================================================================*/
+$type-spacings: (
+  25,
+  50,
+  100,
+  200
+) !default;
 
 @if $has-classes {
-  .type-spacing-25 {
-    letter-spacing: 0.025em;
-  }
-
-  .type-spacing-50 {
-    letter-spacing: 0.05em;
-  }
-
-  .type-spacing-100 {
-    letter-spacing: 0.1em;
-  }
-
-  .type-spacing-200 {
-    letter-spacing: 0.2em;
+  @each $spacing in $type-spacings {
+    $value: $spacing / 1000;
+    .type-spacing-#{$spacing} {
+      letter-spacing: #{$value}em;
+    }
   }
 
   /**
@@ -384,20 +380,11 @@ $font-weights: (300, 400, 700) !default;
     $breakpoint: nth($breakpoint, 1);
 
     @media #{md($breakpoint)} {
-      .type-spacing-25--#{$breakpoint} {
-        letter-spacing: 0.025em;
-      }
-
-      .type-spacing-50--#{$breakpoint} {
-        letter-spacing: 0.05em;
-      }
-
-      .type-spacing-100--#{$breakpoint} {
-        letter-spacing: 0.1em;
-      }
-
-      .type-spacing-200--#{$breakpoint} {
-        letter-spacing: 0.2em;
+      @each $spacing in $type-spacings {
+        $value: $spacing / 1000;
+        .type-spacing-#{$spacing}--#{$breakpoint} {
+          letter-spacing: #{$value}em;
+        }
       }
     }
   }
