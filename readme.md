@@ -427,95 +427,119 @@ $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
 
 **Definitions**
 
-- `$font-dir`: path to the folder of your webfont files, must be of `*.woff` and `*.woff2` formats
-- `$font-name-serif`: the name of the serif font, to be used in `font-family` property
-- `$font-name-sans`: the name of the sans-serif font, to be used in `font-family` property
-- `$font-family-serif`: the serif `font-family` declaration
-- `$font-family-sans`: the sans-serif `font-family` declaration
-- `$font-faces`: a map of font-faces declaration structured as `<font-name> <filename> <font-weight> <font-style>`
-  + `<font-name>`: can be one of the `$font-name-serif` or `$font-name-sans` variables
-  + `<filename>`: the name of the file stored in the `$font-dir` folder
-  + `<font-weight>`: the weight of the font, from `100` to `900`
-  + `<font-style>`: a `font-style` value
-- `$font-sizes`: a map of font-sizes lists to be used in your project structured as `<name>: (<font-size> <line-height>)`
+- `@mixin reponsize-type($min-width: 0, $max-width: 2560, $min-size: 12, $max-size: 16)`: a mixin to generate declaration for responsive font-sizes
+- `@mixin type-antialiased`: a mixin to generate properties for antialiased font rendering
+- `$type-sizes`: a map of font-sizes lists to be used in your project structured as `<name>: ( size: <font-size>[, line-height: <line-height>][, weight: <font-weight>])`
   + `<name>`: the name of the size
   + `<font-size>`: the `font-size` value in pixels
   + `<line-height>`: the `line-height` value in pixels
-- `@function font-size($font-size, $unit: 'em')`: a function to get a font-size value in the given unit by its name defined in the `$font-sizes` map
-- `@function fz($font-size, $unit)`: alias for the `font-size($font-size, $unit)` function
-- `@function line-height($font-size)`: a function to get a unitless line-height value by its name defined in the `$font-sizes` map
-- `@function lh($font-size)`: alias for the `line-height($font-size)` function
-- `@mixin font-size($font-size, $unit: 'em')`: a mixin to get both font-size in the given unit and line-height for a given name defined in the `$font-size` map
-- `@mixin fz($font-size, $unit)`: alias for the `@include font-size($font-size, $unit)` mixin
-- `@mixin reponsize-type($min-width: 0, $max-width: 2560, $min-size: 12, $max-size: 16)`: a mixin to generate declaration for responsive font-sizes
-- `@mixin type-antialiased`: a mixin to generate properties for antialiased font rendering
+  + `<font-weight>`: the unitless `font-weight` value
+- `@mixin font-size($font-size, $unit: 'em')`: a mixin to get CSS properties of the given name defined in the `$font-size` map
+- `@mixin fz($font-size, $unit: 'em')`: alias for the `@include font-size($font-size, $unit)` mixin
+- `$type-webfont-dir`: path to the folder of your webfont files (which must be of `*.woff` and `*.woff2` formats)
+- `$type-webfont-display`: the `font-display` property that will be applied to the `@font-faces` declarations
+- `$type-fonts: (<identifier>: <definition>)`: a map of font identifiers
+  + `<identifier>`: a unique font name, will be used to generate helper classes
+  + `<definition>: (stack: <font-family>, [name: <font-name>, webfonts: <webfonts>)`: a map defining the font stack and its webfonts if needed 
+    * `<stack>`: the full stack of fonts and their fallbacks, will be used to declare the `font-family` property
+    * `<font-name>`: the name of the font, used to set the `font-family` property in the `@font-faces` declaration
+    * `<webfonts>: (filename: <filename>, weight: <font-weight>, style: <font-style>)`: a list of maps containing the filename, weight and style of each wbefont to declare in an `@font-faces` statement
+      - `<filename>`: the name of the `woff` and `woff2` files of your webfont, without extension
+      - `<font-weight>`: the weight corresponding to the given filename (a number from `100` to `900`)
+      - `<font-style>`: the style of the given filename (`normal`, `italic`, etc.)
 - Class helpers:
-  + An `@font-face` declaration based on the `$font-faces` list
   + `.type-antialiased`: a class implementing the `type-antialiased` mixin
   + `.type[-rem]-<size>[--<breakpoint>]`: set the `font-size` in `em` and `line-height` properties to the given `<size>` defined values, with the `-rem` variation setting the `font-size` unit in `rem` and the `<breakpoint>` modifier applying the styles to the corresponding breakpoint
     * `<size>`: a name defined in the `$font-sizes` map
     * `<breakpoint>`: a breakpoint's name defined in the `$breakpoints` map
-  + `.type-<position>[--<breakpoint>]`: set the `text-align` property, with the `<breakpoint>` modifier applying the styles to the corresponding breakpoint
-    * `<position>`: one of `center`, `left`, `right`
+  + `.type-<font-name>`: set the `font-family` property to the corresponding stack in the `$type-fonts` map
+    * `<font-name>`: the unique identifier given to the font
+  + `.type-align-<alignment>[--<breakpoint>]`: set the `text-align` property, with the `<breakpoint>` modifier applying the styles to the corresponding breakpoint
+    * `<alignment>`: one of the value defined in the `$type-alignments` map, `center`, `left`, or `right` by defaults
     * `<breakpoint>`: a breakpoint's name defined in the `$breakpoints` map
-  + `.type-serif`: set the font-family property to the `$font-family-serif` value
-  + `.type-sans`: set the font-family property to the `$font-family-sans` value
   + `.type-<weight>[--<breakpoint>]`: set the `font-weight` property to the given `<weight>`, with the `<breakpoint>` modifier applying the style to the corresponding breakpoint
-    * `<weight>`: one of `100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`
+    * `<weight>`: one of the value defined in the `$type-weights` map, `300`, `400` or `700` by defaults
     * `<breakpoint>`: a breakpoint's name defined in the `$breakpoints` map
   + `.type-spacing-<value>[--<breakpoint>]`: set the `letter-spacing` property to the given value, with the `<breakpoint>` modifier applying the style to the corresponding breakpoint
-    * `<value>`: one of `25`, `50`, `100`, `200`
+    * `<value>`: one of the value defined in the `$type-spacings` map, `25`, `50`, `100`, `200` by defaults
     * `<breakpoint>`: a breakpoint's name defined in the `$breakpoints` map
-  + `.type-uppercase`: set the `text-transform` property to `uppercase`
-  + `.type-lowercase`: set the `text-transform` property to `lowercase`
-  + `.type-capitalize`: set the `text-transform` property to `capitalize`
-  + `.type-no-underline`: set the `text-decoration` property to `none`
-  + `.type-underline`: set the `text-decoration` property to `underline`
-  + `body`: set the `font-family` property on the `body` to the value of the `$font-family-sans` variable
-  + `h1, h2, h3, h4`: set the `font-family` property on the first 4 levels of heading to the value of the `$font-family-serif` variable
-  + `a`: set the `color` property on the `a` HTML element to `inherit`
+  + `.type-transform-<transform>`: set the `text-transform` property to the given `<transform>`
+    * `<transform>`: one of the value defined in the `$type-transforms` map, `uppercase`, `lowercase` or `capitalize` by defaults
+  + `.typ-decoration-<decoration>`: set the `text-decoration` property to the given `<decoration>` value
+    * `<decoration>`: one of the value defined in the `$type-decorations` map, `none` or `underline` by defaults
 
 **Defaults**
 
 ```scss
-$font-dir: '/source/fonts/' !default;
-$font-name-serif: Georgia !default;
-$font-name-sans: Arial !default;
-$font-family-serif: $font-name-serif, serif !default;
-$font-family-sans: $font-name-sans, sans-serif !default;
-
-$font-faces: (
-  $font-name-serif 'type-serif-regular' 400 normal,
-  $font-name-sans 'type-sans-regular' 400 normal
+$type-sizes: (
+  display-1: (
+    size: 32px,
+    line-height: 48px,
+    weight: 700,
+  ),
+  display-2: (
+    size: 24px,
+    line-height: 36px,
+    weight: 700,
+  ),
+  body: (
+    size: 16px,
+  ),
+  small: (
+    size: 12px,
+  ),
 ) !default;
 
-$font-sizes: (
-  display-3: ( 44px, 66px ),
-  display-2: ( 36px, 54px ),
-  display-1: ( 24px, 32px ),
-  display-0: ( 18px, 27px ),
-  body:      ( 16px, 30px ),
-  medium:    ( 14px, 26px ),
-  small:     ( 12px, 22px ),
-  smaller:   ( 10px, 18px ),
+$type-webfont-dir: '/source/fonts/' !default;
+$type-webfont-display: auto !default;
+
+$type-fonts: (
+  serif: (
+    name: Georgia,
+    stack: 'Georgia, serif',
+    webfonts: (
+      (
+        filename: 'georgia-regular',
+        weight: 400,
+        style: normal,
+      ),
+    ),
+  ),
+  sans-serif: (
+    name: Arial,
+    stack: 'Arial, sans-serif',
+    webfonts: (
+      (
+        filename: 'arial-regular',
+        weight: 400,
+        style: normal,
+      ),
+    ),
+  ),
 ) !default;
+
+$type-alignments: (left, center, right) !default;
+$type-weights: (300, 400, 700) !default;
+$type-spacings: (25, 50, 100, 200) !default;
+$type-transforms: (uppercase, lowercase, capitalize) !default;
+$type-decorations: (none, underline) !default;
 ```
 
 **Usage**
 
 ```scss
-.foo__title {
-  @include fz('display-3');
+.title {
+  @include fz('display-1');
   @include type-antialiased;
 }
 ```
 
 ```html
 <!-- Adjust the size of a title on different breakpoints -->
-<h1 class="type-display-1--xxs type-display-2--s type-display-3--l">Foo Bar</h1>
+<h1 class="type-display-1--xxs type-display-2--s">Foo Bar</h1>
 
 <!-- Center a text -->
-<p class="type-center">Lorem ipsum dolor…</p>
+<p class="type-align-center">Lorem ipsum dolor…</p>
 ```
 
 
