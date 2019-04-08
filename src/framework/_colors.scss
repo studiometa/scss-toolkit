@@ -20,6 +20,11 @@ $colors: (
  * @return {number}        The value corresponding to the color's name
  */
 @function color($color) {
+  // Make sure that `$color` is a string
+  @if type-of($color) != 'string' {
+    $color: inspect($color);
+  }
+
   @if not map-has-key($colors, $color) {
     @error 'No color found in the `$colors` map for `#{$color}`.';
     @return '';
