@@ -2,6 +2,9 @@
    Displays helpers
 \*============================================================================*/
 
+$has-classes: false !default;
+$displays: (none, block, inline, inline-block) !default;
+
 /*============================================================================*\
    Helper mixins
 \*============================================================================*/
@@ -26,44 +29,14 @@
 \*============================================================================*/
 
 @if $has-classes {
-  .display-none {
-    display: none;
-  }
+  @each $display in $displays {
+    .display-#{$display} {
+      display: $display;
+    }
 
-  .display-none--force {
-    display: none !important;
-  }
-
-  .display-block {
-    display: block;
-  }
-
-  .display-block--force {
-    display: block !important;
-  }
-
-  .display-flex {
-    display: flex;
-  }
-
-  .display-flex--force {
-    display: flex !important;
-  }
-
-  .display-inline {
-    display: inline;
-  }
-
-  .display-inline--force {
-    display: inline !important;
-  }
-
-  .display-inline-block {
-    display: inline-block;
-  }
-
-  .display-inline-block--force {
-    display: inline-block !important;
+    .display-#{$display}--force {
+      display: $display !important;
+    }
   }
 
   .display-hidden-accessible {
@@ -75,47 +48,17 @@
   \*==========================================================================*/
 
   @include for-each-breakpoints using ($breakpoint) {
-    .display-none--#{$breakpoint} {
-      display: none;
+    @each $display in $displays {
+      .display-#{$display}--#{$breakpoint} {
+        display: $display;
+      }
+
+      .display-#{$display}--force-#{$breakpoint} {
+        display: $display !important;
+      }
     }
 
-    .display-none--force-#{$breakpoint} {
-      display: none !important;
-    }
-
-    .display-block--#{$breakpoint} {
-      display: block;
-    }
-
-    .display-block--force-#{$breakpoint} {
-      display: block !important;
-    }
-
-    .display-flex--#{$breakpoint} {
-      display: flex;
-    }
-
-    .display-flex--force-#{$breakpoint} {
-      display: flex !important;
-    }
-
-    .display-inline--#{$breakpoint} {
-      display: inline;
-    }
-
-    .display-inline--force-#{$breakpoint} {
-      display: inline !important;
-    }
-
-    .display-inline-block--#{$breakpoint} {
-      display: inline-block;
-    }
-
-    .display-inline-block--force-#{$breakpoint} {
-      display: inline-block !important;
-    }
-
-    .display-hidden-accessible--#{$breakpoint} {
+    .display-hidden-accessible {
       @include display-hidden-accessible();
     }
   }
