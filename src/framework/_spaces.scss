@@ -27,7 +27,6 @@ $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
   // If no index, there is no space defined with this name, we throw an error
   @if not $index {
     @error 'No space of size `#{$space}` found in the `$spaces` list.';
-    @return '';
   }
 
   // Get the value of the space
