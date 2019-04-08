@@ -1,0 +1,185 @@
+/*============================================================================*\
+   Flex definitions
+\*============================================================================*/
+@if $has-classes {
+  .flex {
+    display: flex;
+  }
+
+  @include for-each-breakpoints using ($breakpoint) {
+    .flex--#{$breakpoint} {
+      display: flex;
+    }
+  }
+}
+
+/*============================================================================*\
+   Align (items / self / content)
+\*============================================================================*/
+@if $has-classes {
+  .flex-align-start {
+    align-items: flex-start;
+  }
+
+  .flex-align-center {
+    align-items: center;
+  }
+
+  .flex-align-end {
+    align-items: flex-end;
+  }
+
+  .flex-align-stretch {
+    align-items: stretch;
+  }
+
+  .flex-align-self-start {
+    align-self: flex-start;
+  }
+
+  .flex-align-self-center {
+    align-self: center;
+  }
+
+  .flex-align-self-end {
+    align-self: flex-end;
+  }
+
+  .flex-align-self-stretch {
+    align-self: stretch;
+  }
+
+  .flex-align-content-start {
+    align-content: flex-start;
+  }
+
+  .flex-align-content-center {
+    align-content: center;
+  }
+
+  .flex-align-content-end {
+    align-content: flex-end;
+  }
+
+  .flex-align-content-stretch {
+    align-content: stretch;
+  }
+
+  .flex-align-content-around {
+    align-content: space-around;
+  }
+
+  .flex-align-content-between {
+    align-content: space-between;
+  }
+
+  // breakpoint
+}
+
+/*============================================================================*\
+   Justify (content / items)
+\*============================================================================*/
+@if $has-classes {
+  .flex-justify-start {
+    justify-content: flex-start;
+  }
+
+  .flex-justify-center {
+    justify-content: center;
+  }
+
+  .flex-justify-end {
+    justify-content: flex-end;
+  }
+
+  .flex-justify-around {
+    justify-content: space-around;
+  }
+
+  .flex-justify-between {
+    justify-content: space-between;
+  }
+
+  .flex-justify-evenly {
+    justify-content: space-evenly;
+  }
+
+  // breakpoint
+}
+
+/*============================================================================*\
+   Direction
+\*============================================================================*/
+@if $has-classes {
+  .flex-row {
+    flex-direction: row;
+  }
+
+  .flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+
+  .flex-column {
+    flex-direction: column;
+  }
+
+  .flex-column-reverse {
+    flex-direction: column-reverse;
+  }
+
+  // breakpoint
+}
+
+/*============================================================================*\
+   Wrap
+\*============================================================================*/
+@if $has-classes {
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
+
+  .flex-nowrap {
+    flex-wrap: nowrap;
+  }
+
+  .flex-wrap-reverse {
+    flex-wrap: wrap-reverse;
+  }
+
+  // breakpoint
+}
+
+/*============================================================================*\
+   Grow / Shrink
+\*============================================================================*/
+@if $has-classes {
+  .flex-grow {
+    flex-grow: 1;
+  }
+
+  .flex-no-grow {
+    flex-grow: 0;
+  }
+
+  .flex-shrink {
+    flex-shrink: 1;
+  }
+
+  .flex-no-shrink {
+    flex-shrink: 0;
+  }
+
+  .flex-1 {
+    flex: 1;
+  }
+
+  .flex-auto {
+    flex: auto;
+  }
+
+  .flex-none {
+    flex: none;
+  }
+
+  // breakpoint
+}
