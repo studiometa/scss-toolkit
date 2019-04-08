@@ -226,12 +226,19 @@ Example usage of the helper classes:
 
 **Definitions**
 
+- `$displays`: a list of display value from which to create helper classes
 - `@mixin hidden-accessible`: a set of properties to hide an element while keeping it accessible
 - Class helpers:
   + `.display-<type>[--<breakpoint>|--force[-<breakpoint>]]` : classes setting the property `display` to the given `<type>`, with the `--force` modifier adding the `!important` flag to the declaration, and the `<breakpoint>` modifier applying the style to the corresponding breakpoint
     * `<type>`: `none`, `block`, `flex`, `inline`, `inline-block`
     * `<breakpoint>`: any of the [defined breakpoints](#framework_breakpointsscss)
   + `.display-hidden-accessible` : a class using the `display-hidden-accessible()` mixin
+
+**Defaults**
+
+```sass
+$displays: (none, block, inline, inline-block) !default;
+```
 
 **Usage**
 
