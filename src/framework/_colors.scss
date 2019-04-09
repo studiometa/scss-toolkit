@@ -3,6 +3,8 @@
 \*============================================================================*/
 
 $has-classes: false !default;
+$colors-with-force: false !default;
+$colors-with-breakpoints: false !default;
 $colors: (
   'white': #fff,
   'black': #000,
@@ -68,38 +70,78 @@ $colors: (
 
 @if $has-classes {
   @include for-each-colors using ($color, $value) {
-    // Global helpers
     .color-#{$color} {
       color: $value;
-    }
-
-    .color-#{$color}--force {
-      color: $value !important;
     }
 
     .background-#{$color} {
       background-color: $value;
     }
 
-    .background-#{$color}--force {
-      background-color: $value !important;
-    }
-
-    // SVG helpers
     .fill-#{$color} {
       fill: $value;
-    }
-
-    .fill-#{$color}--force {
-      fill: $value !important;
     }
 
     .stroke-#{$color} {
       stroke: $value;
     }
 
-    .stroke-#{$color}--force {
-      stroke: $value !important;
+    @if $colors-with-force {
+      .color-#{$color}--force {
+        color: $value !important;
+      }
+
+      .background-#{$color}--force {
+        background-color: $value !important;
+      }
+
+      .fill-#{$color}--force {
+        fill: $value !important;
+      }
+
+      .stroke-#{$color}--force {
+        stroke: $value !important;
+      }
+    }
+  }
+
+  @if $colors-with-breakpoints {
+    @include for-each-breakpoints using ($breakpoint) {
+      @include for-each-colors using ($color, $value) {
+        .color-#{$color}--#{$breakpoint} {
+          color: $value;
+        }
+
+        .background-#{$color}--#{$breakpoint} {
+          background-color: $value;
+        }
+
+        .fill-#{$color}--#{$breakpoint} {
+          fill: $value;
+        }
+
+        .stroke-#{$color}--#{$breakpoint} {
+          stroke: $value;
+        }
+
+        @if $colors-with-force {
+          .color-#{$color}--force-#{$breakpoint} {
+            color: $value !important;
+          }
+
+          .background-#{$color}--force-#{$breakpoint} {
+            background-color: $value !important;
+          }
+
+          .fill-#{$color}--force-#{$breakpoint} {
+            fill: $value !important;
+          }
+
+          .stroke-#{$color}--force-#{$breakpoint} {
+            stroke: $value !important;
+          }
+        }
+      }
     }
   }
 }

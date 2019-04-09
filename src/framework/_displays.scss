@@ -3,6 +3,8 @@
 \*============================================================================*/
 
 $has-classes: false !default;
+$displays-with-force: false !default;
+$displays-with-breakpoints: false !default;
 $displays: (none, block, inline, inline-block) !default;
 
 /*============================================================================*\
@@ -34,8 +36,10 @@ $displays: (none, block, inline, inline-block) !default;
       display: $display;
     }
 
-    .display-#{$display}--force {
-      display: $display !important;
+    @if $displays-with-force {
+      .display-#{$display}--force {
+        display: $display !important;
+      }
     }
   }
 
@@ -47,19 +51,23 @@ $displays: (none, block, inline, inline-block) !default;
      Visibility breakpoints modifiers
   \*==========================================================================*/
 
-  @include for-each-breakpoints using ($breakpoint) {
-    @each $display in $displays {
-      .display-#{$display}--#{$breakpoint} {
-        display: $display;
+  @if $displays-with-breakpoints {
+    @include for-each-breakpoints using ($breakpoint) {
+      @each $display in $displays {
+        .display-#{$display}--#{$breakpoint} {
+          display: $display;
+        }
+
+        @if $displays-with-force {
+          .display-#{$display}--force-#{$breakpoint} {
+            display: $display !important;
+          }
+        }
       }
 
-      .display-#{$display}--force-#{$breakpoint} {
-        display: $display !important;
+      .display-hidden-accessible {
+        @include display-hidden-accessible();
       }
-    }
-
-    .display-hidden-accessible {
-      @include display-hidden-accessible();
     }
   }
 }
