@@ -6,9 +6,17 @@
     display: flex;
   }
 
+  .flex-inline {
+    display: inline-flex;
+  }
+
   @include for-each-breakpoints using ($breakpoint) {
     .flex--#{$breakpoint} {
       display: flex;
+    }
+
+    .flex-inline--#{$breakpoint} {
+      display: inline-flex;
     }
   }
 }
@@ -35,43 +43,43 @@ $align: (start, center, end);
     align-items: stretch;
   }
 
-  .align-self-start {
+  .align-start-self {
     align-self: flex-start;
   }
 
-  .align-self-center {
+  .align-center-self {
     align-self: center;
   }
 
-  .align-self-end {
+  .align-end-self {
     align-self: flex-end;
   }
 
-  .align-self-stretch {
+  .align-stretch-self {
     align-self: stretch;
   }
 
-  .align-content-start {
+  .align-start-content {
     align-content: flex-start;
   }
 
-  .align-content-center {
+  .align-center-content {
     align-content: center;
   }
 
-  .align-content-end {
+  .align-end-content {
     align-content: flex-end;
   }
 
-  .align-content-stretch {
+  .align-stretch-content {
     align-content: stretch;
   }
 
-  .align-content-around {
+  .align-around-content {
     align-content: space-around;
   }
 
-  .align-content-between {
+  .align-between-content {
     align-content: space-between;
   }
 
@@ -92,20 +100,44 @@ $align: (start, center, end);
       align-items: stretch;
     }
 
-    .align-self-start--#{$breakpoint} {
+    .align-start-self--#{$breakpoint} {
       align-self: flex-start;
     }
 
-    .align-self-center--#{$breakpoint} {
+    .align-center-self--#{$breakpoint} {
       align-self: center;
     }
 
-    .align-self-end--#{$breakpoint} {
+    .align-end-self--#{$breakpoint} {
       align-self: flex-end;
     }
 
-    .align-self-stretch--#{$breakpoint} {
+    .align-stretch-self--#{$breakpoint} {
       align-self: stretch;
+    }
+
+    .align-start-content--#{$breakpoint} {
+      align-content: flex-start;
+    }
+
+    .align-center-content--#{$breakpoint} {
+      align-content: center;
+    }
+
+    .align-end-content--#{$breakpoint} {
+      align-content: flex-end;
+    }
+
+    .align-stretch-content--#{$breakpoint} {
+      align-content: stretch;
+    }
+
+    .align-around-content--#{$breakpoint} {
+      align-content: space-around;
+    }
+
+    .align-between-content--#{$breakpoint} {
+      align-content: space-between;
     }
   }
 }
@@ -138,6 +170,30 @@ $align: (start, center, end);
     justify-content: space-evenly;
   }
 
+  .justify-start-self {
+    justify-content: flex-start;
+  }
+
+  .justify-center-self {
+    justify-content: center;
+  }
+
+  .justify-end-self {
+    justify-content: flex-end;
+  }
+
+  .justify-around-self {
+    justify-content: space-around;
+  }
+
+  .justify-between-self {
+    justify-content: space-between;
+  }
+
+  .justify-evenly-self {
+    justify-content: space-evenly;
+  }
+
   @include for-each-breakpoints using ($breakpoint) {
     .justify-start--#{$breakpoint} {
       justify-content: flex-start;
@@ -160,6 +216,30 @@ $align: (start, center, end);
     }
 
     .justify-evenly--#{$breakpoint} {
+      justify-content: space-evenly;
+    }
+
+    .justify-start-self--#{$breakpoint} {
+      justify-content: flex-start;
+    }
+
+    .justify-center-self--#{$breakpoint} {
+      justify-content: center;
+    }
+
+    .justify-end-self--#{$breakpoint} {
+      justify-content: flex-end;
+    }
+
+    .justify-around-self--#{$breakpoint} {
+      justify-content: space-around;
+    }
+
+    .justify-between-self--#{$breakpoint} {
+      justify-content: space-between;
+    }
+
+    .justify-evenly-self--#{$breakpoint} {
       justify-content: space-evenly;
     }
   }
@@ -238,6 +318,8 @@ $align: (start, center, end);
 /*============================================================================*\
    Grow / Shrink
 \*============================================================================*/
+$flex-grow: (0, 1) !default;
+
 @if $has-classes {
   .flex-grow {
     flex-grow: 1;
