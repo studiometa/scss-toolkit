@@ -15,7 +15,7 @@ $breakpoints: (
   'extra-large': 2000,
 );
 
-@import '../../src/framework/index.scss';
+@import '../../src/framework/index';
 
 $grid-gutters: (
   'extra-small': space(1),

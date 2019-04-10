@@ -2,9 +2,16 @@
    Positions
 \*============================================================================*/
 
+/** @type {Boolean} Do we need classes? */
 $has-classes: false !default;
+
+/** @type {Boolean} Do we need the `--force` modifiers? */
 $positions-with-force: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
 $positions-with-breakpoints: false !default;
+
+/** @type {List} List of position values to use */
 $positions: (static, relative, absolute) !default;
 
 /*============================================================================*\
@@ -61,7 +68,7 @@ $positions: (static, relative, absolute) !default;
 }
 
 /*============================================================================*\
-   Helper classes
+   Class helpers
 \*============================================================================*/
 
 @if $has-classes {

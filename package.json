@@ -2,7 +2,7 @@
   "name": "@studiometa/scss-toolkit",
   "version": "2.0.0-beta.3",
   "description": "SCSS Toolkit",
-  "main": "src/index.scss",
+  "main": "src/framework/index.scss",
   "scripts": {
     "test": "gulp styles-build",
     "lint": "stylelint ./src/",

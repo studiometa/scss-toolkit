@@ -2,9 +2,20 @@
    Layers (z-index) definitions
 \*============================================================================*/
 
+/** @type {Boolean} Do we need classes? */
 $has-classes: false !default;
+
+/** @type {Boolean} Do we need the `--force` modifiers? */
 $layers-with-force: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
 $layers-with-breakpoints: false !default;
+
+/**
+ * Map of layer names and values to use
+ *
+ * @type {Map}
+ */
 $layers: (
   goku: 9000,
   modal: 6000,
@@ -24,9 +35,9 @@ $layers: (
  * A function helper to avoid having to type `map-get($layers, ...)`
  * Based on http://css-tricks.com/handling-z-index/
  *
- * @param  {string} $layer    The name of the z-index
- * @param  {number} $modifier The modifier if needed
- * @return {number}           The corresponding z-index based on the $layers var
+ * @param  {String} $layer    The name of the z-index
+ * @param  {Number} $modifier The modifier if needed
+ * @return {Number}           The corresponding z-index based on the $layers var
  */
 @function layer($layer, $modifier: 0) {
   @if not map-has-key($layers, $layer) {
@@ -40,6 +51,10 @@ $layers: (
 
 /**
  * Alias for the `layer($layer, $modifier)` function above
+ *
+ * @param  {String} $layer    The name of the z-index
+ * @param  {Number} $modifier The modifier if needed
+ * @return {Number}           The corresponding z-index based on the $layers var
  */
 @function l($layer, $modifier: 0) {
   @return layer($layer, $modifier);
@@ -47,6 +62,10 @@ $layers: (
 
 /**
  * Deprecated alias for the `layer($layer, $modifier)` function
+ *
+ * @param  {String} $layer    The name of the z-index
+ * @param  {Number} $modifier The modifier if needed
+ * @return {Number}           The corresponding z-index based on the $layers var
  */
 @function z($layer, $modifier: 0) {
   /* stylelint-disable-next-line */
@@ -78,7 +97,7 @@ $layers: (
 }
 
 /*============================================================================*\
-   Layers class helpers
+   Class helpers
 \*============================================================================*/
 
 @if $has-classes {

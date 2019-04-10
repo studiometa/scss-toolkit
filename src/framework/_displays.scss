@@ -2,13 +2,20 @@
    Displays helpers
 \*============================================================================*/
 
+/** @type {Boolean} Do we need classes? */
 $has-classes: false !default;
+
+/** @type {Boolean} Do we need the `--force` modifiers? */
 $displays-with-force: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
 $displays-with-breakpoints: false !default;
+
+/** @type {List} List of display values to use */
 $displays: (none, block, inline, inline-block) !default;
 
 /*============================================================================*\
-   Helper mixins
+   Mixins
 \*============================================================================*/
 
 /**
@@ -27,7 +34,7 @@ $displays: (none, block, inline, inline-block) !default;
 }
 
 /*============================================================================*\
-   Helper classes
+   Class helpers
 \*============================================================================*/
 
 @if $has-classes {

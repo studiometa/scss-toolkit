@@ -2,10 +2,12 @@
    Flex helpers
 \*============================================================================*/
 
+/** @type {Boolean} Do we need classes? */
+$has-classes: false !default;
+
 /*============================================================================*\
    Flex display
 \*============================================================================*/
-$has-classes: false !default;
 
 @if $has-classes {
   .flex {
@@ -30,6 +32,7 @@ $has-classes: false !default;
 /*============================================================================*\
    Align (items / self / content)
 \*============================================================================*/
+
 @if $has-classes {
   .align-start {
     align-items: flex-start;
@@ -149,6 +152,7 @@ $has-classes: false !default;
 /*============================================================================*\
    Justify (content / self)
 \*============================================================================*/
+
 @if $has-classes {
   .justify-start {
     justify-content: flex-start;
@@ -252,6 +256,7 @@ $has-classes: false !default;
 /*============================================================================*\
    Direction
 \*============================================================================*/
+
 @if $has-classes {
   .flex-row {
     flex-direction: row;
@@ -291,6 +296,7 @@ $has-classes: false !default;
 /*============================================================================*\
    Wrap
 \*============================================================================*/
+
 @if $has-classes {
   .flex-wrap {
     flex-wrap: wrap;
@@ -322,9 +328,18 @@ $has-classes: false !default;
 /*============================================================================*\
    Grow / Shrink
 \*============================================================================*/
+
+/** @type {List} List of flex-grow values to use */
 $flex-grows: (0, 1) !default;
+
+/** @type {List} List of flex-shrink values to use */
 $flex-shrinks: (0, 1) !default;
+
+/** @type {List} List of flex values to use */
 $flexes: (0, auto, none) !default;
+
+/* Class helpers
+\*============================================================================*/
 
 @if $has-classes {
   @each $value in $flex-grows {

@@ -2,11 +2,13 @@
    Spaces variables
 \*============================================================================*/
 
-/**
- * Definition of the space rules
- */
+/** @type {Boolean} Do we need classes? */
 $has-classes: false !default;
+
+/** @type {Number} The base value of all spacings */
 $spaces-base: 8px / 16px * 1rem !default;
+
+/** @type {List} List of all space factors */
 $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
 
 /*============================================================================*\
@@ -43,6 +45,9 @@ $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
 
 /**
  * Alias for the `space($space)` function above
+ *
+ * @param  {string} $size The name of the wanted size in the $spaces map
+ * @return {string}       The corresponding size
  */
 @function s($space) {
   @return space($space);

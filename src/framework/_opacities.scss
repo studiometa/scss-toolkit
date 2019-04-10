@@ -2,8 +2,13 @@
    Opacities
 \*============================================================================*/
 
+/** @type {Boolean} Do we need classes? */
 $has-classes: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
 $opacities-with-breakpoints: true !default;
+
+/** @type {List} List of opacity values to use */
 $opacities: (0, 25, 50, 75, 100) !default;
 
 /*============================================================================*\
@@ -60,7 +65,7 @@ $opacities: (0, 25, 50, 75, 100) !default;
 }
 
 /*============================================================================*\
-   Helper classes
+   Class helpers
 \*============================================================================*/
 
 @if $has-classes {

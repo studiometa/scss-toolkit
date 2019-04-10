@@ -3,6 +3,12 @@
 \*============================================================================*/
 
 $has-classes: false !default;
+
+/**
+ * Map of width based breakpoints names and values in pixels
+ *
+ * @type {Map}
+ */
 $breakpoints: (
   'xxs': 0,
   'xs': 480,
@@ -13,6 +19,11 @@ $breakpoints: (
   'xxl': 1920,
 ) !default;
 
+/**
+ * Map of height based breakpoints names and values in pixels
+ *
+ * @type {Map}
+ */
 $breakpoints-height: (
   'xxs': 0,
   'xs': 360,
@@ -24,7 +35,7 @@ $breakpoints-height: (
 ) !default;
 
 /*============================================================================*\
-   Function helper
+   Functions
 \*============================================================================*/
 
 /**

@@ -2,9 +2,20 @@
    Colors
 \*============================================================================*/
 
+/** @type {Boolean} Do we need classes? */
 $has-classes: false !default;
+
+/** @type {Boolean} Do we need the `--force` modifiers? */
 $colors-with-force: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
 $colors-with-breakpoints: false !default;
+
+/**
+ * Map of color names and values
+ *
+ * @type {Map}
+ */
 $colors: (
   'white': #fff,
   'black': #000,
@@ -65,7 +76,7 @@ $colors: (
 }
 
 /*============================================================================*\
-   Color helpers
+   Class helpers
 \*============================================================================*/
 
 @if $has-classes {

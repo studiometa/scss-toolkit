@@ -2,10 +2,11 @@
    Main typography styles
 \*============================================================================*/
 
+/** @type {Boolean} Do we need classes? */
 $has-classes: false !default;
 
 /*============================================================================*\
-   Typography mixins
+   Generic mixins
 \*============================================================================*/
 
 /**
@@ -57,6 +58,10 @@ $has-classes: false !default;
     }
   }
 }
+
+/*============================================================================*\
+   Type sizes definitions
+\*============================================================================*/
 
 /**
  * A map to define all type-sizes and their corresponding line-heights, the
@@ -120,8 +125,7 @@ $type-sizes: (
   @include font-size($type-size, $unit);
 }
 
-/*============================================================================*\
-   Type font-size helpers
+/* Class helpers
 \*============================================================================*/
 
 @if $has-classes {
@@ -154,12 +158,35 @@ $type-sizes: (
 }
 
 /*============================================================================*\
-   Type font families helpers
+   Type font families definitions
 \*============================================================================*/
 
-$type-webfont-dir: '/source/fonts/' !default;
+/** @type {String} The path to the webfonts directory */
+$type-webfont-dir: '/static/fonts/' !default;
+
+/** @type {String} The value for all `font-display` properties */
 $type-webfont-display: auto !default;
 
+/**
+ * A map to define all font-families specifications which we might refer to by a
+ * named identifier. The map is formatted as follow:
+ *
+ * (
+ *   <identifier>: (
+ *     name: <font-family-name>,
+ *     stack: <font-family-stack>,
+ *     webfonts: (
+ *       (
+ *         filename: <webfont-filename>,
+ *         weight: <webfont-weight>,
+ *         style: <webfont-style>,
+ *       ),
+ *     ),
+ *   ),
+ * )
+ *
+ * @type {Map}
+ */
 $type-fonts: (
   serif: (
     name: Georgia,
@@ -184,6 +211,9 @@ $type-fonts: (
     ),
   ),
 ) !default;
+
+/* Class helpers
+\*============================================================================*/
 
 @if $has-classes {
   @each $font in $type-fonts {
@@ -217,10 +247,14 @@ $type-fonts: (
 }
 
 /*============================================================================*\
-   Type alignement helpers
+   Type alignement definition
 \*============================================================================*/
 
+/** @type {List} List of alignment values to use */
 $type-alignments: (left, center, right) !default;
+
+/* Class helpers
+\*============================================================================*/
 
 @if $has-classes {
   @each $alignment in $type-alignments {
@@ -242,7 +276,11 @@ $type-alignments: (left, center, right) !default;
    Type font weight helpers
 \*============================================================================*/
 
+/** @type {List} List of font weights values to use */
 $type-weights: (300, 400, 700) !default;
+
+/* Class helpers
+\*============================================================================*/
 
 @if $has-classes {
   @each $weight in $type-weights {
@@ -264,10 +302,14 @@ $type-weights: (300, 400, 700) !default;
 }
 
 /*============================================================================*\
-   Type spacing
+   Type spacings definitions
 \*============================================================================*/
 
+/** @type {List} List of letter spacings values to use */
 $type-spacings: (25, 50, 100, 200) !default;
+
+/* Class helpers
+\*============================================================================*/
 
 @if $has-classes {
   @each $spacing in $type-spacings {
@@ -293,10 +335,14 @@ $type-spacings: (25, 50, 100, 200) !default;
 }
 
 /*============================================================================*\
-   Type transform
+   Type transforms definitions
 \*============================================================================*/
 
+/** @type {List} List of text transform values to use */
 $type-transforms: (uppercase, lowercase, capitalize) !default;
+
+/* Class helpers
+\*============================================================================*/
 
 @if $has-classes {
   @each $transform in $type-transforms {
@@ -307,10 +353,14 @@ $type-transforms: (uppercase, lowercase, capitalize) !default;
 }
 
 /*============================================================================*\
-   Type decoration
+   Type decorations definitions
 \*============================================================================*/
 
+/** @type {List} List of text decoration values to use */
 $type-decorations: (none, underline) !default;
+
+/* Class helpers
+\*============================================================================*/
 
 @if $has-classes {
   @each $decoration in $type-decorations {
