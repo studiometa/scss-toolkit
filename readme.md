@@ -52,13 +52,6 @@ Import the toolkit in your project to have access to all helpers functions, mixi
 @import '~@studiometa/scss-toolkit';
 ```
 
-If you need some mixins or functions of a specific framework file, you can import it separately:
-
-```sass
-@import '~@studiometa/scss-toolkit/src/framework/breakpoints';
-@import '~@studiometa/scss-toolkit/src/framework/easings';
-```
-
 > If your current Sass implementation does not support `@import`s from Node modules, have a look at the [`node-sass-magic-importer`](https://www.npmjs.com/package/node-sass-magic-importer) custom importer.
 
 ### Advanced usage
@@ -70,19 +63,6 @@ If you need to specify a custom configuration — you probably will, the best wa
 /*==========================================================================*\
    Global SCSS configuration
 \*==========================================================================*/
-
-// Assets directories configuration
-$img-dir: '/assets/img/';
-$svg-dir: '/assets/svg/';
-$font-dir: '/assets/fonts/';
-
-// Typography configuration
-$font-name-serif: 'Meta Serif';
-$font-name-sans: 'Meta OT';
-$font-faces: (
-  $font-name-serif 'meta-serif-regular' 400 normal,
-  $font-name-sans 'meta-ot-regular' 400 normal,
-);
 
 // Colors definition
 $colors: (
