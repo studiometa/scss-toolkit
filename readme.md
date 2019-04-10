@@ -116,7 +116,7 @@ You can then import your `_config.scss` file wherever you need to access a funct
 
 // Import the toolkit latst with the `$has-classes` variable set to `true`
 // for the functions, mixins and classes helpers. Importing it last will let
-// you use the classes without the `--force` modifier to override some 
+// you use the classes without the `--force` modifier to override some
 // of your components behaviours.
 $has-classes: true;
 @import '~@studiometa/scss-toolkit';
@@ -183,7 +183,7 @@ $breakpoints-height: (
     min-height: 50vh;
   }
 
-  // Using SASS arglist
+  // Using Sass ArgList
   @media #{md((breakpoint: 's', orientation: 'height')...)} { // @media (min-height: 36em) { ... }
     min-height: 50vh;
   }
@@ -194,9 +194,12 @@ $breakpoints-height: (
 
 **Definitions**
 
+- `$colors-with-force`: wether to create `…--force` modifiers with the `!important` flag or not
+- `$colors-with-breakpoints`: wether to create `…--<breakpoint>` modifiers or not
 - `$colors`: a map of names and values of colors
 - `@function color($color)`: a function to get a color value by its name defined in the previous map
 - `@function c($color)`: an alias for the `color(...)` function
+- `@mixin for-each-colors($excludes)`: a mixin to abstract the loop over the `$colors` map, with the color name and its value as mixin props
 - Class helpers:
   + `.<property>-<color>[--force]`: set the given `<property>` to the given `<color>`'s value, with the `--force` modifier adding an `!important` flag
     * `<property>`: `background`, `color`, `fill`, `stroke`
@@ -205,6 +208,17 @@ $breakpoints-height: (
 **Defaults**
 
 ```sass
+/** @type {Boolean} Do we need the `--force` modifiers? */
+$colors-with-force: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
+$colors-with-breakpoints: false !default;
+
+/**
+ * Map of color names and values
+ *
+ * @type {Map}
+ */
 $colors: (
   'white': #fff,
   'black': #000,
@@ -242,6 +256,8 @@ Example usage of the helper classes:
 
 **Definitions**
 
+- `$displays-with-force`: wether to create `…--force` modifiers with the `!important` flag or not
+- `$displays-with-breakpoints`: wether to create `…--<breakpoint>` modifiers or not
 - `$displays`: a list of display value from which to create helper classes
 - `@mixin hidden-accessible`: a set of properties to hide an element while keeping it accessible
 - Class helpers:
@@ -253,6 +269,13 @@ Example usage of the helper classes:
 **Defaults**
 
 ```sass
+/** @type {Boolean} Do we need the `--force` modifiers? */
+$displays-with-force: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
+$displays-with-breakpoints: false !default;
+
+/** @type {List} List of display values to use */
 $displays: (none, block, inline, inline-block) !default;
 ```
 
@@ -329,7 +352,7 @@ $in-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55) !default;
 }
 ```
 
-#### [`framework/_index.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_index.scss)
+#### [`framework/index.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/index.scss)
 
 **Definitions**
 
@@ -339,17 +362,20 @@ Imports all the framework files with the `$has-classes` variable set to `false !
 
 ```sass
 // Import all the framework files at once
-@import '@studiometa/scss-toolkit/src/framework/index';
+@import '@studiometa/scss-toolkit';
 ```
 
 #### [`framework/_layers.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_layers.scss)
 
 **Definitions**
 
-- `$layers`: a map of names and values of layers 
+- `$layers-with-force`: wether to create `…--force` modifiers with the `!important` flag or not
+- `$layers-with-breakpoints`: wether to create `…--<breakpoint>` modifiers or not
+- `$layers`: a map of names and values of layers
 - `@function layer($layer, $modifier)`: a function to get a layer value by its name defined in the previous map
 - `@function l($layer, $modifier)`: an alias for the `layer(...)` function
 - `@function z($layer, $modifier)`: a legacy alias for the `layer(...)` function
+- `@mixin for-each-layers($excludes)`: a mixin to abstract the loop over the `$colors` map, with the color name and its value as mixin props
 - Class helpers:
   + `.layer-<layer>[--<breakpoint>|--force[-<breakpoint>]]`: classes setting the `z-index` property to the corresponding value, with the `--force` modifier adding an `!important` flag, and the `<breakpoint>` modifier applying the style to the corresponding breakpoint
     * `<layer>`: one of the [defined layers](#framework_layersscss)
@@ -358,15 +384,21 @@ Imports all the framework files with the `$has-classes` variable set to `false !
 **Defaults**
 
 ```sass
+/** @type {Boolean} Do we need the `--force` modifiers? */
+$layers-with-force: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
+$layers-with-breakpoints: false !default;
+
+/**
+ * Map of layer names and values to use
+ *
+ * @type {Map}
+ */
 $layers: (
-  'goku': 9000,
-  'modal': 6000,
-  'sticky': 2000,
-  'menu': 300,
-  'tooltip': 200,
-  'dropdown': 100,
-  'default': 1,
-  'limbo': -999,
+  goku: 9000,
+  default: 1,
+  limbo: -999,
 ) !default;
 ```
 
@@ -384,7 +416,7 @@ Example usage of the functions:
 }
 
 .bar {
-  z-index: z('default', 2);
+  z-index: l('default', 2); // z-index: 3;
 }
 ```
 
@@ -403,6 +435,7 @@ Example usage of the helper classes:
 - `$spaces`: a list of factor of the base value for the different spaces value in your project
 - `@function space($space)`: a function returning the computed value for a given `$space` defined in the `$spaces` list
 - `@function s($space)`: alias for the above `space($space)` function
+- `@mixin for-each-spaces($excludes)`: a mixin to abstract the loop over the `$spaces` list with the space name and its value passed as props
 - Class helpers:
   + `.space-<direction>-<size>[--<breakpoint>]` : classes setting the property defined by `<direction>` to the given `<size>`, with the `<breakpoint>` modifier applying the style to the corresponding breakpoint
     * `<direction>`: one of `m`, `my`, `mx`, `mt`, `mr`, `mb`, `ml`, `p`, `py`, `px`, `pt`, `pr`, `pb` and `pl`
@@ -415,9 +448,10 @@ Example usage of the helper classes:
 The default spaces values are based on the power of two, with a base unit starting at 8px (0.5rem).
 
 ```sass
-// Default unit is 8px, often used by designers as a basic unit
+/** @type {Number} The base value of all spacings */
 $spaces-base: 8px / 16px * 1rem !default;
-// All spaces
+
+/** @type {List} List of all space factors */
 $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
 ```
 
@@ -469,7 +503,7 @@ $spaces: (0, 1, 2, 4, 8, 16, auto);
 - `$type-webfont-display`: the `font-display` property that will be applied to the `@font-faces` declarations
 - `$type-fonts: (<identifier>: <definition>)`: a map of font identifiers
   + `<identifier>`: a unique font name, will be used to generate helper classes
-  + `<definition>: (stack: <font-family>, [name: <font-name>, webfonts: <webfonts>)`: a map defining the font stack and its webfonts if needed 
+  + `<definition>: (stack: <font-family>, [name: <font-name>, webfonts: <webfonts>)`: a map defining the font stack and its webfonts if needed
     * `<stack>`: the full stack of fonts and their fallbacks, will be used to declare the `font-family` property
     * `<font-name>`: the name of the font, used to set the `font-family` property in the `@font-faces` declaration
     * `<webfonts>: (filename: <filename>, weight: <font-weight>, style: <font-style>)`: a list of maps containing the filename, weight and style of each wbefont to declare in an `@font-faces` statement
@@ -500,6 +534,12 @@ $spaces: (0, 1, 2, 4, 8, 16, auto);
 **Defaults**
 
 ```scss
+/**
+ * A map to define all type-sizes and their corresponding line-heights, the
+ * first value is the font-size, the seconde the line-height.
+ *
+ * @type {Map}
+ */
 $type-sizes: (
   display-1: (
     size: 32px,
@@ -519,9 +559,33 @@ $type-sizes: (
   ),
 ) !default;
 
-$type-webfont-dir: '/source/fonts/' !default;
+
+/** @type {String} The path to the webfonts directory */
+$type-webfont-dir: '/static/fonts/' !default;
+
+/** @type {String} The value for all `font-display` properties */
 $type-webfont-display: auto !default;
 
+/**
+ * A map to define all font-families specifications which we might refer to by a
+ * named identifier. The map is formatted as follow:
+ *
+ * (
+ *   <identifier>: (
+ *     name: <font-family-name>,
+ *     stack: <font-family-stack>,
+ *     webfonts: (
+ *       (
+ *         filename: <webfont-filename>,
+ *         weight: <webfont-weight>,
+ *         style: <webfont-style>,
+ *       ),
+ *     ),
+ *   ),
+ * )
+ *
+ * @type {Map}
+ */
 $type-fonts: (
   serif: (
     name: Georgia,
@@ -547,10 +611,19 @@ $type-fonts: (
   ),
 ) !default;
 
+/** @type {List} List of alignment values to use */
 $type-alignments: (left, center, right) !default;
+
+/** @type {List} List of font weights values to use */
 $type-weights: (300, 400, 700) !default;
+
+/** @type {List} List of letter spacings values to use */
 $type-spacings: (25, 50, 100, 200) !default;
+
+/** @type {List} List of text transform values to use */
 $type-transforms: (uppercase, lowercase, capitalize) !default;
+
+/** @type {List} List of text decoration values to use */
 $type-decorations: (none, underline) !default;
 ```
 
@@ -621,7 +694,7 @@ To use it, simply import the component in your project:
     * `<columns>`: a number from 1 to the total number of columns defined in the `$grid-columns` variable
     * `<breakpoint>`: name of one of the breakpoint defined in the `$grid-breakpoints` variable
   + `.grid__col-<type>--<breakpoint>`
-    * `<type>`: 
+    * `<type>`:
       - `.grid__col-center--<breakpoint>`: center the column in its row
       - `.grid__col-clear--<breakpoint>`: clear the float of the previous column, creates a line-break in your grid
       - `.grid__col-no-clear--<breakpoint>`: reverse the effect of the previous class
@@ -653,10 +726,10 @@ $grid-breakpoints: $breakpoints !default;
 <div class="grid">
   <div class="grid__row">
     <div class="
-      grid__col-12--xxs 
-      grid__col-10--xs 
+      grid__col-12--xxs
+      grid__col-10--xs
       grid__push-1--xs
-      grid__col-8--m 
+      grid__col-8--m
       grid__push-2--m
       grid__col-6--l
       grid__push-3--l
