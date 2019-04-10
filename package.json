@@ -1,6 +1,6 @@
 {
   "name": "@studiometa/scss-toolkit",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "description": "SCSS Toolkit",
   "main": "src/index.scss",
   "scripts": {
@@ -20,6 +20,7 @@
   "homepage": "https://github.com/studiometa/scss-toolkit#readme",
   "devDependencies": {
     "@studiometa/gulp-config": "^1.3.0-beta.1",
+    "@studiometa/prettier-config": "^1.0.0",
     "@studiometa/stylelint-config": "^1.0.1",
     "stylelint": "^9.8.0"
   },

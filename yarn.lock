@@ -276,6 +276,13 @@
     webpack "^4.29.6"
     webpack-stream "^5.2.1"
 
+"@studiometa/prettier-config@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@studiometa/prettier-config/-/prettier-config-1.0.0.tgz#4522b43b14e897b83d5867b7d1f781e39676b4c8"
+  integrity sha512-rpXJ78QZmGomYr3OgYvWrh7xmrxdHrBAEle1sRdcgDHh+sBeAo6C3F8DPJ8fcNAmfgMtJUhgrqT6HEJccpAGMA==
+  dependencies:
+    prettier "^1.16.4"
+
 "@studiometa/stylelint-config@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@studiometa/stylelint-config/-/stylelint-config-1.0.1.tgz#e881af6d1598f272119e073e10735c6bcdc72ddb"
@@ -5878,6 +5885,11 @@ prettier@^1.15.2:
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.15.2.tgz#d31abe22afa4351efa14c7f8b94b58bb7452205e"
   integrity sha512-YgPLFFA0CdKL4Eg2IHtUSjzj/BWgszDHiNQAe0VAIBse34148whfdzLagRL+QiKS+YfK5ftB6X4v/MBw8yCoug==
+
+prettier@^1.16.4:
+  version "1.16.4"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.16.4.tgz#73e37e73e018ad2db9c76742e2647e21790c9717"
+  integrity sha512-ZzWuos7TI5CKUeQAtFd6Zhm2s6EpAD/ZLApIhsF9pRvRtM1RFo61dM/4MSRUA0SuLugA/zgrZD8m0BaY46Og7g==
 
 pretty-error@^2.1.1:
   version "2.1.1"
