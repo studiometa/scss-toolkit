@@ -47,13 +47,13 @@ $ npm install @studiometa/scss-toolkit
 
 Import the toolkit in your project to have access to all helpers functions, mixins, variables and classes:
 
-```scss
+```sass
 @import '~@studiometa/scss-toolkit';
 ```
 
 If you need some mixins or functions of a specific framework file, you can import it separately:
 
-```scss
+```sass
 @import '~@studiometa/scss-toolkit/src/framework/breakpoints';
 @import '~@studiometa/scss-toolkit/src/framework/easings';
 ```
@@ -65,7 +65,7 @@ If you need some mixins or functions of a specific framework file, you can impor
 If you need to specify a custom configuration — you probably will, the best way to use the micro framework in your application is to create a separate `_config.scss` file which will override the configurations of the framework.
 
 **_config.scss**
-```scss
+```sass
 /*==========================================================================*\
    Global SCSS configuration
 \*==========================================================================*/
@@ -97,7 +97,7 @@ $colors: (
 You can then import your `_config.scss` file wherever you need to access a function, mixin or variable from the toolkit. You can import both your configuration file and the SCSS Toolkit package in your main SCSS file with a variable `$has-classes` set to `true` to import all the class helpers from the toolkit.
 
 **app.scss**
-```scss
+```sass
 /*==========================================================================*\
    Main styles
 \*==========================================================================*/
@@ -141,7 +141,7 @@ The micro-framework is composed of 8 different files which defines each a set of
 
 **Defaults**
 
-```scss
+```sass
 $breakpoints: (
   'xxs': 0,
   'xs': 480,
@@ -165,7 +165,7 @@ $breakpoints-height: (
 
 **Usage**
 
-```scss
+```sass
 .foo {
   display: none;
 
@@ -203,7 +203,7 @@ $breakpoints-height: (
 
 **Defaults**
 
-```scss
+```sass
 $colors: (
   'white': #fff,
   'black': #000,
@@ -214,7 +214,7 @@ $colors: (
 
 Example usage for the `color($color)` function:
 
-```scss
+```sass
 .foo {
   color: color('white');
 }
@@ -259,7 +259,7 @@ $displays: (none, block, inline, inline-block) !default;
 
 Example usage for the `display-hidden-accessible` mixin:
 
-```scss
+```sass
 .foo {
   @include display-hidden-accessible; // Hide this element while keeping it accessible
 }
@@ -286,7 +286,7 @@ Defines a set of defaults easing variables, from `$in-quad` to `$in-out-back`.
 
 **Defaults**
 
-```scss
+```sass
 $in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53) !default;
 $out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94) !default;
 $in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955) !default;
@@ -322,7 +322,7 @@ $in-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55) !default;
 
 **Usage**
 
-```scss
+```sass
 .foo {
   transition: transform 0.6s $in-out-expo;
 }
@@ -336,7 +336,7 @@ Imports all the framework files with the `$has-classes` variable set to `false !
 
 **Usage**
 
-```scss
+```sass
 // Import all the framework files at once
 @import '@studiometa/scss-toolkit/src/framework/index';
 ```
@@ -356,7 +356,7 @@ Imports all the framework files with the `$has-classes` variable set to `false !
 
 **Defaults**
 
-```scss
+```sass
 $layers: (
   'goku': 9000,
   'modal': 6000,
@@ -373,7 +373,7 @@ $layers: (
 
 Example usage of the functions:
 
-```scss
+```sass
 .foo {
   z-index: layer('goku');
 
@@ -413,7 +413,7 @@ Example usage of the helper classes:
 
 The default spaces values are based on the power of two, with a base unit starting at 8px (0.5rem).
 
-```scss
+```sass
 // Default unit is 8px, often used by designers as a basic unit
 $spaces-base: 8px / 16px * 1rem !default;
 // All spaces
@@ -422,7 +422,7 @@ $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
 
 **Usage**
 
-```scss
+```sass
 $spaces-base: 0.5rem;
 $spaces: (0, 1, 2, 4, 8, 16, auto);
 
@@ -505,7 +505,7 @@ $spaces: (0, 1, 2, 4, 8, 16, auto);
 
 **Defaults**
 
-```scss
+```sass
 $font-dir: '/source/fonts/' !default;
 $font-name-serif: Georgia !default;
 $font-name-sans: Arial !default;
@@ -531,7 +531,7 @@ $font-sizes: (
 
 **Usage**
 
-```scss
+```sass
 .foo__title {
   @include fz('display-3');
   @include type-antialiased;
@@ -561,7 +561,7 @@ This component defines colored outlines on every HTML element, useful to debug l
 
 To use it, simply import the component in your project:
 
-```scss
+```sass
 // You can import it globally
 @import '@studiometa/scss-toolkit/src/components/debug';
 
@@ -607,7 +607,7 @@ To use it, simply import the component in your project:
 
 **Defaults**
 
-```scss
+```sass
 $grid-columns: 12 !default;
 $grid-gutter: space(4) !default;
 $grid-breakpoints: $breakpoints !default;
