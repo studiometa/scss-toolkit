@@ -24,11 +24,14 @@ A small and configurable SCSS Toolkit to boost your project! 🚀
 
 ## Installation
 
-Install it with your favorite package manager:
+Install it with Yarn:
 
 ```bash
 $ yarn add @studiometa/scss-toolkit
-# or
+```
+Or with NPM:
+
+```bash
 $ npm install @studiometa/scss-toolkit
 ```
 
@@ -96,15 +99,21 @@ You can then import your `_config.scss` file wherever you need to access a funct
 // Import dependencies:
 // - _config.scss to override the SCSS toolkit's defaults
 // - @studiometa/scss-toolkit/components/reset to get some nice defaults
-// - @studiometa/scss-toolkit with the `$has-classes` variable set to `true`
-//   for the functions, mixins and classes helpers
 @import './config';
 @import '~@studiometa/scss-toolkit/components/reset';
+
+// Import your project files
+@import './components/foo';
+@import './components/bar';
+// ...
+
+// Import the toolkit latst with the `$has-classes` variable set to `true`
+// for the functions, mixins and classes helpers. Importing it last will let
+// you use the classes without the `--force` modifier to override some 
+// of your components behaviours.
 $has-classes: true;
 @import '~@studiometa/scss-toolkit';
 $has-classes: false;
-
-// ...
 ```
 
 > ⚠️ We reset the `$has-classes` variable to `false` right after the toolkit import to make sure future import in any SCSS file will only import the mixins, functions and variables declarations without the class helpers.
@@ -383,13 +392,13 @@ Example usage of the helper classes:
 
 **Definitions**
 
-- `$spaces-base`
-- `$spaces`
-- `@function space($space)`
-- `@function s($space)`
+- `$spaces-base`: the base value of your spaces, can be of any unit, but `rem` is advised
+- `$spaces`: a list of factor of the base value for the different spaces value in your project
+- `@function space($space)`: a function returning the computed value for a given `$space` defined in the `$spaces` list
+- `@function s($space)`: alias for the above `space($space)` function
 - Class helpers:
   + `.space-<direction>-<size>[--<breakpoint>]` : classes setting the property defined by `<direction>` to the given `<size>`, with the `<breakpoint>` modifier applying the style to the corresponding breakpoint
-    * `<direction>`: `m`, `my`, `mx`, `mt`, `mr`, `mb`, `ml`, `p`, `py`, `px`, `pt`, `pr`, `pb` and `pl`
+    * `<direction>`: one of `m`, `my`, `mx`, `mt`, `mr`, `mb`, `ml`, `p`, `py`, `px`, `pt`, `pr`, `pb` and `pl`
     * `<size>`: any of the [defined spaces](#framework_spacesscss)
     * `<breakpoint>`: any of the [defined breakpoints](#framework_breakpointsscss)
 
@@ -408,14 +417,20 @@ $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
 **Usage**
 
 ```scss
+$spaces-base: 0.5rem;
+$spaces: (0, 1, 2, 4, 8, 16, auto);
+
+// SCSS
 .foo {
-  margin: space(2);
+  margin: space(4); // 4 * 0.5rem
 }
 
-.bar {
-  padding-bottom: s(4);
+// CSS
+.foo {
+  margin: 2rem;
 }
 
+// SCSS
 .baz {
   margin-right: s(auto);
   margin-left: s(auto);
