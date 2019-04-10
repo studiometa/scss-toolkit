@@ -1,10 +1,11 @@
 {
   "name": "@studiometa/scss-toolkit",
-  "version": "2.0.0-beta.4",
+  "version": "2.0.0-beta.5",
   "description": "SCSS Toolkit",
   "main": "src/framework/index.scss",
   "scripts": {
-    "test": "npm run lint && npm run test-build && echo 'All test passed! 🎉' && exit 0",
+    "test": "npm run lint && npm run test-build && echo 'All test passed! 🎉\n' && exit 0",
+    "prepare": "npm run test",
     "postinstall": "ln -s ./src/components ./components",
     "test-build": "if gulp styles-build -q 2>&1 >/dev/null | tee tmp | grep -q 'Error'; then cat tmp && rm tmp && exit 1; else rm tmp && exit 0; fi;",
     "lint": "stylelint ./src/",
