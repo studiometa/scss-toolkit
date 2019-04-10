@@ -3,7 +3,8 @@
 \*============================================================================*/
 
 $has-classes: false !default;
-
+$layers-with-force: false !default;
+$layers-with-breakpoints: false !default;
 $layers: (
   goku: 9000,
   modal: 6000,
@@ -86,20 +87,26 @@ $layers: (
       z-index: $value;
     }
 
-    .layer-#{$layer}--force {
-      z-index: $value !important;
+    @if $layers-with-force {
+      .layer-#{$layer}--force {
+        z-index: $value !important;
+      }
     }
   }
 
   // Media queries
-  @include for-each-breakpoints using ($breakpoint) {
-    @include for-each-layers using ($layer, $value) {
-      .layer-#{$layer}--#{$breakpoint} {
-        z-index: $value;
-      }
+  @if $layers-with-breakpoints {
+    @include for-each-breakpoints using ($breakpoint) {
+      @include for-each-layers using ($layer, $value) {
+        .layer-#{$layer}--#{$breakpoint} {
+          z-index: $value;
+        }
 
-      .layer-#{$layer}--force-#{$breakpoint} {
-        z-index: $value !important;
+        @if $layers-with-force {
+          .layer-#{$layer}--force-#{$breakpoint} {
+            z-index: $value !important;
+          }
+        }
       }
     }
   }
