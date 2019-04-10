@@ -1,6 +1,7 @@
 # SCSS Toolkit
 
-[![NPM Version](https://img.shields.io/npm/v/@studiometa/scss-toolkit.svg?style=flat-square)](https://www.npmjs.com/package/scss-toolkit)
+[![NPM Version](https://img.shields.io/npm/v/@studiometa/scss-toolkit.svg?style=flat-square)](https://www.npmjs.com/package/@studiometa/scss-toolkit)
+[![NPM Beta Version](https://img.shields.io/npm/v/@studiometa/scss-toolkit/beta.svg?style=flat-square)](https://www.npmjs.com/package/@studiometa/scss-toolkit/v/beta)
 [![Dependency Status](https://img.shields.io/david/studiometa/scss-toolkit.svg?label=deps&style=flat-square)](https://david-dm.org/studiometa/scss-toolkit)
 [![devDependency Status](https://img.shields.io/david/dev/studiometa/scss-toolkit.svg?label=devDeps&style=flat-square)](https://david-dm.org/studiometa/scss-toolkit?type=dev)
 

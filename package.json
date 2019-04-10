@@ -1,6 +1,6 @@
 {
   "name": "@studiometa/scss-toolkit",
-  "version": "1.2.0-beta.2",
+  "version": "2.0.0-beta.0",
   "description": "SCSS Toolkit",
   "main": "src/index.scss",
   "scripts": {
