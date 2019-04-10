@@ -36,7 +36,6 @@ $grid-gutters: (
   'xl': space(8),
   'xxl': space(8),
 ) !default;
-$grid-breakpoints: $breakpoints !default;
 
 /**
  * A function helper to avoid having to type `map-get($grid-gutters, ...)`
@@ -65,13 +64,9 @@ $grid-breakpoints: $breakpoints !default;
   margin-left: auto;
 
   // Media queries
-  @each $grid-breakpoint in $grid-breakpoints {
-    $key: nth($grid-breakpoint, 1);
-
-    @media #{md($key)} {
-      padding-right: gutter($key) * 0.5;
-      padding-left: gutter($key) * 0.5;
-    }
+  @include for-each-breakpoints using ($breakpoint) {
+    padding-right: gutter($breakpoint) * 0.5;
+    padding-left: gutter($breakpoint) * 0.5;
   }
 }
 
@@ -83,13 +78,9 @@ $grid-breakpoints: $breakpoints !default;
   padding-left: 0;
 
   // Media queries
-  @each $grid-breakpoint in $grid-breakpoints {
-    $key: nth($grid-breakpoint, 1);
-
-    @media #{md($key)} {
-      padding-right: 0;
-      padding-left: 0;
-    }
+  @include for-each-breakpoints using ($breakpoint) {
+    padding-right: 0;
+    padding-left: 0;
   }
 }
 
@@ -107,13 +98,9 @@ $grid-breakpoints: $breakpoints !default;
   padding-left: 0;
 
   // Media queries
-  @each $grid-breakpoint in $grid-breakpoints {
-    $key: nth($grid-breakpoint, 1);
-
-    @media #{md($key)} {
-      padding-right: 0;
-      padding-left: 0;
-    }
+  @include for-each-breakpoints using ($breakpoint) {
+    padding-right: 0;
+    padding-left: 0;
   }
 }
 
@@ -132,17 +119,13 @@ $grid-breakpoints: $breakpoints !default;
   }
 
   // Media queries
-  @each $grid-breakpoint in $grid-breakpoints {
-    $key: nth($grid-breakpoint, 1);
+  @include for-each-breakpoints using ($breakpoint) {
+    margin-right: gutter($breakpoint) * -0.5;
+    margin-left: gutter($breakpoint) * -0.5;
 
-    @media #{md($key)} {
-      margin-right: gutter($key) * -0.5;
-      margin-left: gutter($key) * -0.5;
-
-      .grid--no-gutter > & {
-        margin-right: 0;
-        margin-left: 0;
-      }
+    .grid--no-gutter > & {
+      margin-right: 0;
+      margin-left: 0;
     }
   }
 }
@@ -157,17 +140,13 @@ $grid-breakpoints: $breakpoints !default;
   flex-wrap: wrap;
 
   // Media queries
-  @each $grid-breakpoint in $grid-breakpoints {
-    $key: nth($grid-breakpoint, 1);
+  @include for-each-breakpoints using ($breakpoint) {
+    .grid__col-left--#{$breakpoint} {
+      order: 0;
+    }
 
-    @media #{md($key)} {
-      .grid__col-left--#{$key} {
-        order: 0;
-      }
-
-      .grid__col-right--#{$key} {
-        order: 1;
-      }
+    .grid__col-right--#{$breakpoint} {
+      order: 1;
     }
   }
 }
@@ -197,77 +176,68 @@ $grid-breakpoints: $breakpoints !default;
   }
 
   // Media queries
-  @each $grid-breakpoint in $grid-breakpoints {
-    $key: nth($grid-breakpoint, 1);
+  @include for-each-breakpoints using ($breakpoint) {
+    padding-right: gutter($breakpoint) * 0.5;
+    padding-left: gutter($breakpoint) * 0.5;
 
-    @media #{md($key)} {
-      padding-right: gutter($key) * 0.5;
-      padding-left: gutter($key) * 0.5;
-
-      .grid--no-gutter > .grid__row > & {
-        padding-right: 0;
-        padding-left: 0;
-      }
+    .grid--no-gutter > .grid__row > & {
+      padding-right: 0;
+      padding-left: 0;
     }
   }
 }
 
 // Generates the columns class for each breakpoints defined
-@each $grid-breakpoint in $grid-breakpoints {
-  $key: nth($grid-breakpoint, 1);
+@include for-each-breakpoints using ($breakpoint) {
+  [class*='grid__col-'][class*='--#{$breakpoint}'] {
+    float: left;
+    display: block;
+  }
 
-  // Media queries
-  @media #{md($key)} {
-    [class*='grid__col-'][class*='--#{$key}'] {
-      float: left;
-      display: block;
+  [class*='grid__col-'].grid__col-center--#{$breakpoint} {
+    float: none;
+    clear: both;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  [class*='grid__col-'].grid__col-clear--#{$breakpoint} {
+    clear: both;
+  }
+
+  [class*='grid__col-'].grid__col-no-clear--#{$breakpoint} {
+    clear: none;
+  }
+
+  [class*='grid__col-'].grid__col-left--#{$breakpoint} {
+    float: left;
+  }
+
+  [class*='grid__col-'].grid__col-right--#{$breakpoint} {
+    float: right;
+  }
+
+  .grid__col-0--#{$breakpoint} {
+    display: none;
+  }
+
+  .grid__pull-0--#{$breakpoint},
+  .grid__push-0--#{$breakpoint} {
+    margin-left: 0;
+  }
+
+  // Generate all columns classes
+  @for $i from 1 through $grid-columns {
+    .grid__col-#{$i}--#{$breakpoint} {
+      width: $i * 100% / $grid-columns;
     }
 
-    [class*='grid__col-'].grid__col-center--#{$key} {
-      float: none;
-      clear: both;
-      margin-right: auto;
-      margin-left: auto;
+    .grid__pull-#{$i}--#{$breakpoint} {
+      margin-left: $i * -100% / $grid-columns;
     }
 
-    [class*='grid__col-'].grid__col-clear--#{$key} {
-      clear: both;
-    }
-
-    [class*='grid__col-'].grid__col-no-clear--#{$key} {
-      clear: none;
-    }
-
-    [class*='grid__col-'].grid__col-left--#{$key} {
-      float: left;
-    }
-
-    [class*='grid__col-'].grid__col-right--#{$key} {
-      float: right;
-    }
-
-    .grid__col-0--#{$key} {
-      display: none;
-    }
-
-    .grid__pull-0--#{$key},
-    .grid__push-0--#{$key} {
-      margin-left: 0;
-    }
-
-    // Generate all columns classes
-    @for $i from 1 through $grid-columns {
-      .grid__col-#{$i}--#{$key} {
-        width: $i * 100% / $grid-columns;
-      }
-
-      .grid__pull-#{$i}--#{$key} {
-        margin-left: $i * -100% / $grid-columns;
-      }
-
-      .grid__push-#{$i}--#{$key} {
-        margin-left: $i * 100% / $grid-columns;
-      }
+    .grid__push-#{$i}--#{$breakpoint} {
+      margin-left: $i * 100% / $grid-columns;
     }
   }
 }

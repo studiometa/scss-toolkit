@@ -2,11 +2,28 @@
    Colors
 \*============================================================================*/
 
+/** @type {Boolean} Do we need classes? */
 $has-classes: false !default;
+
+/** @type {Boolean} Do we need the `--force` modifiers? */
+$colors-with-force: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
+$colors-with-breakpoints: false !default;
+
+/**
+ * Map of color names and values
+ *
+ * @type {Map}
+ */
 $colors: (
   'white': #fff,
   'black': #000,
 ) !default;
+
+/*============================================================================*\
+   Functions
+\*============================================================================*/
 
 /**
  * A function helper to avoid having to type `map-get($colors, ...)`
@@ -16,9 +33,13 @@ $colors: (
  * @return {number}        The value corresponding to the color's name
  */
 @function color($color) {
+  // Make sure that `$color` is a string
+  @if type-of($color) != 'string' {
+    $color: inspect($color);
+  }
+
   @if not map-has-key($colors, $color) {
     @error 'No color found in the `$colors` map for `#{$color}`.';
-    @return '';
   }
 
   @return map-get($colors, $color);
@@ -32,46 +53,106 @@ $colors: (
 }
 
 /*============================================================================*\
-   Color helpers
+   Mixins
+\*============================================================================*/
+
+/**
+ * Abstract loop over all colors with the possibility to exclude some
+ *
+ * @param  {ArgList} $excludes The colors to exclude from the loop
+ *
+ * @author Titouan Mathis <titouan@studiometa.fr>
+ * @since  1.2.0
+ */
+@mixin for-each-colors($excludes...) {
+  @each $color in $colors {
+    $color: nth($color, 1);
+    $value: c($color);
+
+    @if not index($excludes, $color) {
+      @content ($color, $value);
+    }
+  }
+}
+
+/*============================================================================*\
+   Class helpers
 \*============================================================================*/
 
 @if $has-classes {
-  @each $color in $colors {
-    $name: nth($color, 1);
-    $value: c($name);
-
-    // Global helpers
-    .color-#{$name} {
+  @include for-each-colors using ($color, $value) {
+    .color-#{$color} {
       color: $value;
     }
 
-    .color-#{$name}--force {
-      color: $value !important;
-    }
-
-    .background-#{$name} {
+    .background-#{$color} {
       background-color: $value;
     }
 
-    .background-#{$name}--force {
-      background-color: $value !important;
-    }
-
-    // SVG helpers
-    .fill-#{$name} {
+    .fill-#{$color} {
       fill: $value;
     }
 
-    .fill-#{$name}--force {
-      fill: $value !important;
-    }
-
-    .stroke-#{$name} {
+    .stroke-#{$color} {
       stroke: $value;
     }
 
-    .stroke-#{$name}--force {
-      stroke: $value !important;
+    @if $colors-with-force {
+      .color-#{$color}--force {
+        color: $value !important;
+      }
+
+      .background-#{$color}--force {
+        background-color: $value !important;
+      }
+
+      .fill-#{$color}--force {
+        fill: $value !important;
+      }
+
+      .stroke-#{$color}--force {
+        stroke: $value !important;
+      }
+    }
+  }
+
+  @if $colors-with-breakpoints {
+    @include for-each-breakpoints using ($breakpoint) {
+      @include for-each-colors using ($color, $value) {
+        .color-#{$color}--#{$breakpoint} {
+          color: $value;
+        }
+
+        .background-#{$color}--#{$breakpoint} {
+          background-color: $value;
+        }
+
+        .fill-#{$color}--#{$breakpoint} {
+          fill: $value;
+        }
+
+        .stroke-#{$color}--#{$breakpoint} {
+          stroke: $value;
+        }
+
+        @if $colors-with-force {
+          .color-#{$color}--force-#{$breakpoint} {
+            color: $value !important;
+          }
+
+          .background-#{$color}--force-#{$breakpoint} {
+            background-color: $value !important;
+          }
+
+          .fill-#{$color}--force-#{$breakpoint} {
+            fill: $value !important;
+          }
+
+          .stroke-#{$color}--force-#{$breakpoint} {
+            stroke: $value !important;
+          }
+        }
+      }
     }
   }
 }

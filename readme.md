@@ -1,6 +1,13 @@
 # SCSS Toolkit
 
-A small and configurable SCSS Toolkit to boost your project! 🚀
+[![NPM Version](https://img.shields.io/npm/v/@studiometa/scss-toolkit.svg?style=flat-square)](https://www.npmjs.com/package/@studiometa/scss-toolkit)
+[![NPM Beta Version](https://img.shields.io/npm/v/@studiometa/scss-toolkit/beta.svg?style=flat-square)](https://www.npmjs.com/package/@studiometa/scss-toolkit/v/beta)
+[![Dependency Status](https://img.shields.io/david/studiometa/scss-toolkit.svg?label=deps&style=flat-square)](https://david-dm.org/studiometa/scss-toolkit)
+[![devDependency Status](https://img.shields.io/david/dev/studiometa/scss-toolkit.svg?label=devDeps&style=flat-square)](https://david-dm.org/studiometa/scss-toolkit?type=dev)
+
+> A small and configurable SCSS Toolkit to boost your project! 🚀
+
+## Table of contents
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -20,15 +27,19 @@ A small and configurable SCSS Toolkit to boost your project! 🚀
     * [Debug](#componentsdebugscss)
     * [Grid](#componentsgridscss)
     * [Reset](#componentsresetscss)
+- [Contributing](#contributing)
 
 ## Installation
 
-Install it with your favorite package manager:
+Install it with Yarn:
 
 ```bash
-yarn add @studiometa/scss-toolkit
-# OR
-npm install @studiometa/scss-toolkit
+$ yarn add @studiometa/scss-toolkit
+```
+Or with NPM:
+
+```bash
+$ npm install @studiometa/scss-toolkit
 ```
 
 ## Usage
@@ -37,15 +48,8 @@ npm install @studiometa/scss-toolkit
 
 Import the toolkit in your project to have access to all helpers functions, mixins, variables and classes:
 
-```scss
+```sass
 @import '~@studiometa/scss-toolkit';
-```
-
-If you need some mixins or functions of a specific framework file, you can import it separately:
-
-```scss
-@import '~@studiometa/scss-toolkit/src/framework/breakpoints';
-@import '~@studiometa/scss-toolkit/src/framework/easings';
 ```
 
 > If your current Sass implementation does not support `@import`s from Node modules, have a look at the [`node-sass-magic-importer`](https://www.npmjs.com/package/node-sass-magic-importer) custom importer.
@@ -55,23 +59,10 @@ If you need some mixins or functions of a specific framework file, you can impor
 If you need to specify a custom configuration — you probably will, the best way to use the micro framework in your application is to create a separate `_config.scss` file which will override the configurations of the framework.
 
 **_config.scss**
-```scss
+```sass
 /*==========================================================================*\
    Global SCSS configuration
 \*==========================================================================*/
-
-// Assets directories configuration
-$img-dir: '/assets/img/';
-$svg-dir: '/assets/svg/';
-$font-dir: '/assets/fonts/';
-
-// Typography configuration
-$font-name-serif: 'Meta Serif';
-$font-name-sans: 'Meta OT';
-$font-faces: (
-  $font-name-serif 'meta-serif-regular' 400 normal,
-  $font-name-sans 'meta-ot-regular' 400 normal,
-);
 
 // Colors definition
 $colors: (
@@ -87,7 +78,7 @@ $colors: (
 You can then import your `_config.scss` file wherever you need to access a function, mixin or variable from the toolkit. You can import both your configuration file and the SCSS Toolkit package in your main SCSS file with a variable `$has-classes` set to `true` to import all the class helpers from the toolkit.
 
 **app.scss**
-```scss
+```sass
 /*==========================================================================*\
    Main styles
 \*==========================================================================*/
@@ -95,15 +86,21 @@ You can then import your `_config.scss` file wherever you need to access a funct
 // Import dependencies:
 // - _config.scss to override the SCSS toolkit's defaults
 // - @studiometa/scss-toolkit/components/reset to get some nice defaults
-// - @studiometa/scss-toolkit with the `$has-classes` variable set to `true`
-//   for the functions, mixins and classes helpers
 @import './config';
 @import '~@studiometa/scss-toolkit/components/reset';
+
+// Import your project files
+@import './components/foo';
+@import './components/bar';
+// ...
+
+// Import the toolkit latst with the `$has-classes` variable set to `true`
+// for the functions, mixins and classes helpers. Importing it last will let
+// you use the classes without the `--force` modifier to override some
+// of your components behaviours.
 $has-classes: true;
 @import '~@studiometa/scss-toolkit';
 $has-classes: false;
-
-// ...
 ```
 
 > ⚠️ We reset the `$has-classes` variable to `false` right after the toolkit import to make sure future import in any SCSS file will only import the mixins, functions and variables declarations without the class helpers.
@@ -119,12 +116,13 @@ The micro-framework is composed of 8 different files which defines each a set of
 **Definitions**
 
 - `$breakpoints`: a map of names and values (in pixels) of breakpoints
-- `@function media($breakpoint, $type, $unit)`: a function to get a breakpoint declaration given a name
-- `@function md($breakpoint, $type, $unit)`: an alias for the `media(...)` function
+- `$breakpoints-height`: a map of names and values (in pixels) of height based breakpoints
+- `@function media($breakpoint, $type, $unit, $orientation)`: a function to get a breakpoint declaration given a name
+- `@function md($breakpoint, $type, $unit, $orientation)`: an alias for the `media(...)` function
 
 **Defaults**
 
-```scss
+```sass
 $breakpoints: (
   'xxs': 0,
   'xs': 480,
@@ -134,11 +132,21 @@ $breakpoints: (
   'xl': 1440,
   'xxl': 1920,
 ) !default;
+
+$breakpoints-height: (
+  'xxs': 0,
+  'xs': 360,
+  's': 576,
+  'm': 768,
+  'l': 960,
+  'xl': 1080,
+  'xxl': 1440,
+) !default;
 ```
 
 **Usage**
 
-```scss
+```sass
 .foo {
   display: none;
 
@@ -150,6 +158,15 @@ $breakpoints: (
   @media #{md('xs', 'max')} { // @media not all and (min-width: 48em) { ... }
     display: flex;
   }
+
+  @media #{md('s', 'min', 'em', 'height')} { // @media (min-height: 36em) { ... }
+    min-height: 50vh;
+  }
+
+  // Using Sass ArgList
+  @media #{md((breakpoint: 's', orientation: 'height')...)} { // @media (min-height: 36em) { ... }
+    min-height: 50vh;
+  }
 }
 ```
 
@@ -157,9 +174,12 @@ $breakpoints: (
 
 **Definitions**
 
+- `$colors-with-force`: wether to create `…--force` modifiers with the `!important` flag or not
+- `$colors-with-breakpoints`: wether to create `…--<breakpoint>` modifiers or not
 - `$colors`: a map of names and values of colors
 - `@function color($color)`: a function to get a color value by its name defined in the previous map
 - `@function c($color)`: an alias for the `color(...)` function
+- `@mixin for-each-colors($excludes)`: a mixin to abstract the loop over the `$colors` map, with the color name and its value as mixin props
 - Class helpers:
   + `.<property>-<color>[--force]`: set the given `<property>` to the given `<color>`'s value, with the `--force` modifier adding an `!important` flag
     * `<property>`: `background`, `color`, `fill`, `stroke`
@@ -167,7 +187,18 @@ $breakpoints: (
 
 **Defaults**
 
-```scss
+```sass
+/** @type {Boolean} Do we need the `--force` modifiers? */
+$colors-with-force: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
+$colors-with-breakpoints: false !default;
+
+/**
+ * Map of color names and values
+ *
+ * @type {Map}
+ */
 $colors: (
   'white': #fff,
   'black': #000,
@@ -178,7 +209,7 @@ $colors: (
 
 Example usage for the `color($color)` function:
 
-```scss
+```sass
 .foo {
   color: color('white');
 }
@@ -205,6 +236,9 @@ Example usage of the helper classes:
 
 **Definitions**
 
+- `$displays-with-force`: wether to create `…--force` modifiers with the `!important` flag or not
+- `$displays-with-breakpoints`: wether to create `…--<breakpoint>` modifiers or not
+- `$displays`: a list of display value from which to create helper classes
 - `@mixin hidden-accessible`: a set of properties to hide an element while keeping it accessible
 - Class helpers:
   + `.display-<type>[--<breakpoint>|--force[-<breakpoint>]]` : classes setting the property `display` to the given `<type>`, with the `--force` modifier adding the `!important` flag to the declaration, and the `<breakpoint>` modifier applying the style to the corresponding breakpoint
@@ -212,11 +246,24 @@ Example usage of the helper classes:
     * `<breakpoint>`: any of the [defined breakpoints](#framework_breakpointsscss)
   + `.display-hidden-accessible` : a class using the `display-hidden-accessible()` mixin
 
+**Defaults**
+
+```sass
+/** @type {Boolean} Do we need the `--force` modifiers? */
+$displays-with-force: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
+$displays-with-breakpoints: false !default;
+
+/** @type {List} List of display values to use */
+$displays: (none, block, inline, inline-block) !default;
+```
+
 **Usage**
 
 Example usage for the `display-hidden-accessible` mixin:
 
-```scss
+```sass
 .foo {
   @include display-hidden-accessible; // Hide this element while keeping it accessible
 }
@@ -243,7 +290,7 @@ Defines a set of defaults easing variables, from `$in-quad` to `$in-out-back`.
 
 **Defaults**
 
-```scss
+```sass
 $in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53) !default;
 $out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94) !default;
 $in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955) !default;
@@ -279,13 +326,13 @@ $in-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55) !default;
 
 **Usage**
 
-```scss
+```sass
 .foo {
   transition: transform 0.6s $in-out-expo;
 }
 ```
 
-#### [`framework/_index.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_index.scss)
+#### [`framework/index.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/index.scss)
 
 **Definitions**
 
@@ -293,19 +340,22 @@ Imports all the framework files with the `$has-classes` variable set to `false !
 
 **Usage**
 
-```scss
+```sass
 // Import all the framework files at once
-@import '@studiometa/scss-toolkit/src/framework/index';
+@import '@studiometa/scss-toolkit';
 ```
 
 #### [`framework/_layers.scss`](https://github.com/studiometa/scss-toolkit/blob/master/src/framework/_layers.scss)
 
 **Definitions**
 
-- `$layers`: a map of names and values of layers 
+- `$layers-with-force`: wether to create `…--force` modifiers with the `!important` flag or not
+- `$layers-with-breakpoints`: wether to create `…--<breakpoint>` modifiers or not
+- `$layers`: a map of names and values of layers
 - `@function layer($layer, $modifier)`: a function to get a layer value by its name defined in the previous map
 - `@function l($layer, $modifier)`: an alias for the `layer(...)` function
 - `@function z($layer, $modifier)`: a legacy alias for the `layer(...)` function
+- `@mixin for-each-layers($excludes)`: a mixin to abstract the loop over the `$colors` map, with the color name and its value as mixin props
 - Class helpers:
   + `.layer-<layer>[--<breakpoint>|--force[-<breakpoint>]]`: classes setting the `z-index` property to the corresponding value, with the `--force` modifier adding an `!important` flag, and the `<breakpoint>` modifier applying the style to the corresponding breakpoint
     * `<layer>`: one of the [defined layers](#framework_layersscss)
@@ -313,16 +363,22 @@ Imports all the framework files with the `$has-classes` variable set to `false !
 
 **Defaults**
 
-```scss
+```sass
+/** @type {Boolean} Do we need the `--force` modifiers? */
+$layers-with-force: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
+$layers-with-breakpoints: false !default;
+
+/**
+ * Map of layer names and values to use
+ *
+ * @type {Map}
+ */
 $layers: (
-  'goku': 9000,
-  'modal': 6000,
-  'sticky': 2000,
-  'menu': 300,
-  'tooltip': 200,
-  'dropdown': 100,
-  'default': 1,
-  'limbo': -999,
+  goku: 9000,
+  default: 1,
+  limbo: -999,
 ) !default;
 ```
 
@@ -330,7 +386,7 @@ $layers: (
 
 Example usage of the functions:
 
-```scss
+```sass
 .foo {
   z-index: layer('goku');
 
@@ -340,7 +396,7 @@ Example usage of the functions:
 }
 
 .bar {
-  z-index: z('default', 2);
+  z-index: l('default', 2); // z-index: 3;
 }
 ```
 
@@ -355,13 +411,14 @@ Example usage of the helper classes:
 
 **Definitions**
 
-- `$spaces-base`
-- `$spaces`
-- `@function space($space)`
-- `@function s($space)`
+- `$spaces-base`: the base value of your spaces, can be of any unit, but `rem` is advised
+- `$spaces`: a list of factor of the base value for the different spaces value in your project
+- `@function space($space)`: a function returning the computed value for a given `$space` defined in the `$spaces` list
+- `@function s($space)`: alias for the above `space($space)` function
+- `@mixin for-each-spaces($excludes)`: a mixin to abstract the loop over the `$spaces` list with the space name and its value passed as props
 - Class helpers:
   + `.space-<direction>-<size>[--<breakpoint>]` : classes setting the property defined by `<direction>` to the given `<size>`, with the `<breakpoint>` modifier applying the style to the corresponding breakpoint
-    * `<direction>`: `m`, `my`, `mx`, `mt`, `mr`, `mb`, `ml`, `p`, `py`, `px`, `pt`, `pr`, `pb` and `pl`
+    * `<direction>`: one of `m`, `my`, `mx`, `mt`, `mr`, `mb`, `ml`, `p`, `py`, `px`, `pt`, `pr`, `pb` and `pl`
     * `<size>`: any of the [defined spaces](#framework_spacesscss)
     * `<breakpoint>`: any of the [defined breakpoints](#framework_breakpointsscss)
 
@@ -370,24 +427,31 @@ Example usage of the helper classes:
 
 The default spaces values are based on the power of two, with a base unit starting at 8px (0.5rem).
 
-```scss
-// Default unit is 8px, often used by designers as a basic unit
+```sass
+/** @type {Number} The base value of all spacings */
 $spaces-base: 8px / 16px * 1rem !default;
-// All spaces
+
+/** @type {List} List of all space factors */
 $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
 ```
 
 **Usage**
 
-```scss
+```sass
+$spaces-base: 0.5rem;
+$spaces: (0, 1, 2, 4, 8, 16, auto);
+
+// SCSS
 .foo {
-  margin: space(2);
+  margin: space(4); // 4 * 0.5rem
 }
 
-.bar {
-  padding-bottom: s(4);
+// CSS
+.foo {
+  margin: 2rem;
 }
 
+// SCSS
 .baz {
   margin-right: s(auto);
   margin-left: s(auto);
@@ -406,95 +470,158 @@ $spaces: (0, 1, 2, 4, 8, 16, auto) !default;
 
 **Definitions**
 
-- `$font-dir`: path to the folder of your webfont files, must be of `*.woff` and `*.woff2` formats
-- `$font-name-serif`: the name of the serif font, to be used in `font-family` property
-- `$font-name-sans`: the name of the sans-serif font, to be used in `font-family` property
-- `$font-family-serif`: the serif `font-family` declaration
-- `$font-family-sans`: the sans-serif `font-family` declaration
-- `$font-faces`: a map of font-faces declaration structured as `<font-name> <filename> <font-weight> <font-style>`
-  + `<font-name>`: can be one of the `$font-name-serif` or `$font-name-sans` variables
-  + `<filename>`: the name of the file stored in the `$font-dir` folder
-  + `<font-weight>`: the weight of the font, from `100` to `900`
-  + `<font-style>`: a `font-style` value
-- `$font-sizes`: a map of font-sizes lists to be used in your project structured as `<name>: (<font-size> <line-height>)`
+- `@mixin reponsize-type($min-width: 0, $max-width: 2560, $min-size: 12, $max-size: 16)`: a mixin to generate declaration for responsive font-sizes
+- `@mixin type-antialiased`: a mixin to generate properties for antialiased font rendering
+- `$type-sizes`: a map of font-sizes lists to be used in your project structured as `<name>: ( size: <font-size>[, line-height: <line-height>][, weight: <font-weight>])`
   + `<name>`: the name of the size
   + `<font-size>`: the `font-size` value in pixels
   + `<line-height>`: the `line-height` value in pixels
-- `@function font-size($font-size, $unit: 'em')`: a function to get a font-size value in the given unit by its name defined in the `$font-sizes` map
-- `@function fz($font-size, $unit)`: alias for the `font-size($font-size, $unit)` function
-- `@function line-height($font-size)`: a function to get a unitless line-height value by its name defined in the `$font-sizes` map
-- `@function lh($font-size)`: alias for the `line-height($font-size)` function
-- `@mixin font-size($font-size, $unit: 'em')`: a mixin to get both font-size in the given unit and line-height for a given name defined in the `$font-size` map
-- `@mixin fz($font-size, $unit)`: alias for the `@include font-size($font-size, $unit)` mixin
-- `@mixin reponsize-type($min-width: 0, $max-width: 2560, $min-size: 12, $max-size: 16)`: a mixin to generate declaration for responsive font-sizes
-- `@mixin type-antialiased`: a mixin to generate properties for antialiased font rendering
+  + `<font-weight>`: the unitless `font-weight` value
+- `@mixin font-size($font-size, $unit: 'em')`: a mixin to get CSS properties of the given name defined in the `$font-size` map
+- `@mixin fz($font-size, $unit: 'em')`: alias for the `@include font-size($font-size, $unit)` mixin
+- `$type-webfont-dir`: path to the folder of your webfont files (which must be of `*.woff` and `*.woff2` formats)
+- `$type-webfont-display`: the `font-display` property that will be applied to the `@font-faces` declarations
+- `$type-fonts: (<identifier>: <definition>)`: a map of font identifiers
+  + `<identifier>`: a unique font name, will be used to generate helper classes
+  + `<definition>: (stack: <font-family>, [name: <font-name>, webfonts: <webfonts>)`: a map defining the font stack and its webfonts if needed
+    * `<stack>`: the full stack of fonts and their fallbacks, will be used to declare the `font-family` property
+    * `<font-name>`: the name of the font, used to set the `font-family` property in the `@font-faces` declaration
+    * `<webfonts>: (filename: <filename>, weight: <font-weight>, style: <font-style>)`: a list of maps containing the filename, weight and style of each wbefont to declare in an `@font-faces` statement
+      - `<filename>`: the name of the `woff` and `woff2` files of your webfont, without extension
+      - `<font-weight>`: the weight corresponding to the given filename (a number from `100` to `900`)
+      - `<font-style>`: the style of the given filename (`normal`, `italic`, etc.)
 - Class helpers:
-  + An `@font-face` declaration based on the `$font-faces` list
   + `.type-antialiased`: a class implementing the `type-antialiased` mixin
   + `.type[-rem]-<size>[--<breakpoint>]`: set the `font-size` in `em` and `line-height` properties to the given `<size>` defined values, with the `-rem` variation setting the `font-size` unit in `rem` and the `<breakpoint>` modifier applying the styles to the corresponding breakpoint
     * `<size>`: a name defined in the `$font-sizes` map
     * `<breakpoint>`: a breakpoint's name defined in the `$breakpoints` map
-  + `.type-<position>[--<breakpoint>]`: set the `text-align` property, with the `<breakpoint>` modifier applying the styles to the corresponding breakpoint
-    * `<position>`: one of `center`, `left`, `right`
+  + `.type-<font-name>`: set the `font-family` property to the corresponding stack in the `$type-fonts` map
+    * `<font-name>`: the unique identifier given to the font
+  + `.type-align-<alignment>[--<breakpoint>]`: set the `text-align` property, with the `<breakpoint>` modifier applying the styles to the corresponding breakpoint
+    * `<alignment>`: one of the value defined in the `$type-alignments` map, `center`, `left`, or `right` by defaults
     * `<breakpoint>`: a breakpoint's name defined in the `$breakpoints` map
-  + `.type-serif`: set the font-family property to the `$font-family-serif` value
-  + `.type-sans`: set the font-family property to the `$font-family-sans` value
-  + `.type-<weight>[--<breakpoin>]`: set the `font-weight` property to the given `<weight>`, with the `<breakpoint>` modifier applying the style to the corresponding breakpoint
-    * `<weight>`: one of `thin`, `extralight`, `light`, `regular`, `medium`, `semibold`, `bold`, `extrabold`, `black`
+  + `.type-<weight>[--<breakpoint>]`: set the `font-weight` property to the given `<weight>`, with the `<breakpoint>` modifier applying the style to the corresponding breakpoint
+    * `<weight>`: one of the value defined in the `$type-weights` map, `300`, `400` or `700` by defaults
     * `<breakpoint>`: a breakpoint's name defined in the `$breakpoints` map
   + `.type-spacing-<value>[--<breakpoint>]`: set the `letter-spacing` property to the given value, with the `<breakpoint>` modifier applying the style to the corresponding breakpoint
-    * `<value>`: one of `25`, `50`, `100`, `200`
+    * `<value>`: one of the value defined in the `$type-spacings` map, `25`, `50`, `100`, `200` by defaults
     * `<breakpoint>`: a breakpoint's name defined in the `$breakpoints` map
-  + `.type-uppercase`: set the `text-transform` property to `uppercase`
-  + `.type-lowercase`: set the `text-transform` property to `lowercase`
-  + `.type-capitalize`: set the `text-transform` property to `capitalize`
-  + `.type-no-underline`: set the `text-decoration` property to `none`
-  + `.type-underline`: set the `text-decoration` property to `underline`
-  + `body`: set the `font-family` property on the `body` to the value of the `$font-family-sans` variable
-  + `h1, h2, h3, h4`: set the `font-family` property on the first 4 levels of heading to the value of the `$font-family-serif` variable
-  + `a`: set the `color` property on the `a` HTML element to `inherit`
+  + `.type-transform-<transform>`: set the `text-transform` property to the given `<transform>`
+    * `<transform>`: one of the value defined in the `$type-transforms` map, `uppercase`, `lowercase` or `capitalize` by defaults
+  + `.typ-decoration-<decoration>`: set the `text-decoration` property to the given `<decoration>` value
+    * `<decoration>`: one of the value defined in the `$type-decorations` map, `none` or `underline` by defaults
 
 **Defaults**
 
 ```scss
-$font-dir: '/source/fonts/' !default;
-$font-name-serif: Georgia !default;
-$font-name-sans: Arial !default;
-$font-family-serif: $font-name-serif, serif !default;
-$font-family-sans: $font-name-sans, sans-serif !default;
-
-$font-faces: (
-  $font-name-serif 'type-serif-regular' 400 normal,
-  $font-name-sans 'type-sans-regular' 400 normal
+/**
+ * A map to define all type-sizes and their corresponding line-heights, the
+ * first value is the font-size, the seconde the line-height.
+ *
+ * @type {Map}
+ */
+$type-sizes: (
+  display-1: (
+    size: 32px,
+    line-height: 48px,
+    weight: 700,
+  ),
+  display-2: (
+    size: 24px,
+    line-height: 36px,
+    weight: 700,
+  ),
+  body: (
+    size: 16px,
+  ),
+  small: (
+    size: 12px,
+  ),
 ) !default;
 
-$font-sizes: (
-  display-3: ( 44px, 66px ),
-  display-2: ( 36px, 54px ),
-  display-1: ( 24px, 32px ),
-  display-0: ( 18px, 27px ),
-  body:      ( 16px, 30px ),
-  medium:    ( 14px, 26px ),
-  small:     ( 12px, 22px ),
-  smaller:   ( 10px, 18px ),
+
+/** @type {String} The path to the webfonts directory */
+$type-webfont-dir: '/static/fonts/' !default;
+
+/** @type {String} The value for all `font-display` properties */
+$type-webfont-display: auto !default;
+
+/**
+ * A map to define all font-families specifications which we might refer to by a
+ * named identifier. The map is formatted as follow:
+ *
+ * (
+ *   <identifier>: (
+ *     name: <font-family-name>,
+ *     stack: <font-family-stack>,
+ *     webfonts: (
+ *       (
+ *         filename: <webfont-filename>,
+ *         weight: <webfont-weight>,
+ *         style: <webfont-style>,
+ *       ),
+ *     ),
+ *   ),
+ * )
+ *
+ * @type {Map}
+ */
+$type-fonts: (
+  serif: (
+    name: Georgia,
+    stack: 'Georgia, serif',
+    webfonts: (
+      (
+        filename: 'georgia-regular',
+        weight: 400,
+        style: normal,
+      ),
+    ),
+  ),
+  sans-serif: (
+    name: Arial,
+    stack: 'Arial, sans-serif',
+    webfonts: (
+      (
+        filename: 'arial-regular',
+        weight: 400,
+        style: normal,
+      ),
+    ),
+  ),
 ) !default;
+
+/** @type {List} List of alignment values to use */
+$type-alignments: (left, center, right) !default;
+
+/** @type {List} List of font weights values to use */
+$type-weights: (300, 400, 700) !default;
+
+/** @type {List} List of letter spacings values to use */
+$type-spacings: (25, 50, 100, 200) !default;
+
+/** @type {List} List of text transform values to use */
+$type-transforms: (uppercase, lowercase, capitalize) !default;
+
+/** @type {List} List of text decoration values to use */
+$type-decorations: (none, underline) !default;
 ```
 
 **Usage**
 
 ```scss
-.foo__title {
-  @include fz('display-3');
+.title {
+  @include fz('display-1');
   @include type-antialiased;
 }
 ```
 
 ```html
 <!-- Adjust the size of a title on different breakpoints -->
-<h1 class="type-display-1--xxs type-display-2--s type-display-3--l">Foo Bar</h1>
+<h1 class="type-display-1--xxs type-display-2--s">Foo Bar</h1>
 
 <!-- Center a text -->
-<p class="type-center">Lorem ipsum dolor…</p>
+<p class="type-align-center">Lorem ipsum dolor…</p>
 ```
 
 
@@ -512,7 +639,7 @@ This component defines colored outlines on every HTML element, useful to debug l
 
 To use it, simply import the component in your project:
 
-```scss
+```sass
 // You can import it globally
 @import '@studiometa/scss-toolkit/src/components/debug';
 
@@ -547,7 +674,7 @@ To use it, simply import the component in your project:
     * `<columns>`: a number from 1 to the total number of columns defined in the `$grid-columns` variable
     * `<breakpoint>`: name of one of the breakpoint defined in the `$grid-breakpoints` variable
   + `.grid__col-<type>--<breakpoint>`
-    * `<type>`: 
+    * `<type>`:
       - `.grid__col-center--<breakpoint>`: center the column in its row
       - `.grid__col-clear--<breakpoint>`: clear the float of the previous column, creates a line-break in your grid
       - `.grid__col-no-clear--<breakpoint>`: reverse the effect of the previous class
@@ -558,7 +685,7 @@ To use it, simply import the component in your project:
 
 **Defaults**
 
-```scss
+```sass
 $grid-columns: 12 !default;
 $grid-gutter: space(4) !default;
 $grid-breakpoints: $breakpoints !default;
@@ -579,10 +706,10 @@ $grid-breakpoints: $breakpoints !default;
 <div class="grid">
   <div class="grid__row">
     <div class="
-      grid__col-12--xxs 
-      grid__col-10--xs 
+      grid__col-12--xxs
+      grid__col-10--xs
       grid__push-1--xs
-      grid__col-8--m 
+      grid__col-8--m
       grid__push-2--m
       grid__col-6--l
       grid__push-3--l
@@ -603,3 +730,19 @@ $grid-breakpoints: $breakpoints !default;
 **Definitions**
 
 The reset component only import the classic [reset.css](https://meyerweb.com/eric/tools/css/reset/).
+
+## Contributing
+
+This project uses [Git Flow](https://github.com/petervanderdoes/gitflow-avh) as a branching model and a combo of [Stylelint](https://stylelint.io/) and [Prettier](https://prettier.io/) to lint the SCSS files. You can lint your modifications when contributing with the following commands:
+
+```bash
+# Lint all files in the src/ folder
+$ yarn lint
+# or
+$ npm run lint
+
+# Try to fix all lint errors/warnings
+$ yarn fix
+# or
+$ npm run fix
+```

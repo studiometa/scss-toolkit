@@ -2,26 +2,37 @@
    Layers (z-index) definitions
 \*============================================================================*/
 
+/** @type {Boolean} Do we need classes? */
 $has-classes: false !default;
 
+/** @type {Boolean} Do we need the `--force` modifiers? */
+$layers-with-force: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
+$layers-with-breakpoints: false !default;
+
+/**
+ * Map of layer names and values to use
+ *
+ * @type {Map}
+ */
 $layers: (
-  'goku': 9000,
-  'modal': 6000,
-  'sticky': 2000,
-  'menu': 300,
-  'tooltip': 200,
-  'dropdown': 100,
-  'default': 1,
-  'limbo': -999,
+  goku: 9000,
+  default: 1,
+  limbo: -999,
 ) !default;
+
+/*============================================================================*\
+   Functions
+\*============================================================================*/
 
 /**
  * A function helper to avoid having to type `map-get($layers, ...)`
  * Based on http://css-tricks.com/handling-z-index/
  *
- * @param  {string} $layer    The name of the z-index
- * @param  {number} $modifier The modifier if needed
- * @return {number}           The corresponding z-index based on the $layers var
+ * @param  {String} $layer    The name of the z-index
+ * @param  {Number} $modifier The modifier if needed
+ * @return {Number}           The corresponding z-index based on the $layers var
  */
 @function layer($layer, $modifier: 0) {
   @if not map-has-key($layers, $layer) {
@@ -35,6 +46,10 @@ $layers: (
 
 /**
  * Alias for the `layer($layer, $modifier)` function above
+ *
+ * @param  {String} $layer    The name of the z-index
+ * @param  {Number} $modifier The modifier if needed
+ * @return {Number}           The corresponding z-index based on the $layers var
  */
 @function l($layer, $modifier: 0) {
   @return layer($layer, $modifier);
@@ -42,6 +57,10 @@ $layers: (
 
 /**
  * Deprecated alias for the `layer($layer, $modifier)` function
+ *
+ * @param  {String} $layer    The name of the z-index
+ * @param  {Number} $modifier The modifier if needed
+ * @return {Number}           The corresponding z-index based on the $layers var
  */
 @function z($layer, $modifier: 0) {
   /* stylelint-disable-next-line */
@@ -50,38 +69,57 @@ $layers: (
 }
 
 /*============================================================================*\
-   Layers class helpers
+   Mixins
+\*============================================================================*/
+
+/**
+ * Abstract loop over all layers with the possibility to exclude some
+ *
+ * @param  {ArgList} $excludes The colors to exclude from the loop
+ *
+ * @author Titouan Mathis <titouan@studiometa.fr>
+ * @since  1.2.0
+ */
+@mixin for-each-layers($excludes...) {
+  @each $layer in $layers {
+    $layer: nth($layer, 1);
+    $value: l($layer);
+
+    @if not index($excludes, $layer) {
+      @content ($layer, $value);
+    }
+  }
+}
+
+/*============================================================================*\
+   Class helpers
 \*============================================================================*/
 
 @if $has-classes {
-  @each $layer in $layers {
-    $name: nth($layer, 1);
-    $value: l($name);
-
-    .layer-#{$name} {
+  @include for-each-layers using ($layer, $value) {
+    .layer-#{$layer} {
       z-index: $value;
     }
 
-    .layer-#{$name}--force {
-      z-index: $value !important;
+    @if $layers-with-force {
+      .layer-#{$layer}--force {
+        z-index: $value !important;
+      }
     }
   }
 
   // Media queries
-  @each $breakpoint in $breakpoints {
-    $breakpoint: nth($breakpoint, 1);
-
-    @media all and #{md($breakpoint)} {
-      @each $layer in $layers {
-        $name: nth($layer, 1);
-        $value: l($name);
-
-        .layer-#{$name}--#{$breakpoint} {
+  @if $layers-with-breakpoints {
+    @include for-each-breakpoints using ($breakpoint) {
+      @include for-each-layers using ($layer, $value) {
+        .layer-#{$layer}--#{$breakpoint} {
           z-index: $value;
         }
 
-        .layer-#{$name}--force-#{$breakpoint} {
-          z-index: $value !important;
+        @if $layers-with-force {
+          .layer-#{$layer}--force-#{$breakpoint} {
+            z-index: $value !important;
+          }
         }
       }
     }

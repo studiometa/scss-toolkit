@@ -1,0 +1,102 @@
+/*============================================================================*\
+   Positions
+\*============================================================================*/
+
+/** @type {Boolean} Do we need classes? */
+$has-classes: false !default;
+
+/** @type {Boolean} Do we need the `--force` modifiers? */
+$positions-with-force: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
+$positions-with-breakpoints: false !default;
+
+/** @type {List} List of position values to use */
+$positions: (static, relative, absolute) !default;
+
+/*============================================================================*\
+   Functions
+\*============================================================================*/
+
+/**
+ * A function helper to simplify the usage of positions
+ *
+ * @param  {string} $position  The position value
+ * @return {number}            The position value
+ */
+@function position($position) {
+  // Find the index of the given space
+  $index: index($positions, $position);
+
+  // If no index, there is no position defined with this name, we throw an error
+  @if not $index {
+    @error 'No position of size `#{$position}` found in the `$positions` list.';
+  }
+
+  // Get the value of the position
+  $value: nth($positions, $index);
+  @return $value / 100;
+}
+
+/**
+ * Alias for the `position($position)` function above
+ */
+@function p($position) {
+  @return p($position);
+}
+
+/*============================================================================*\
+   Mixins
+\*============================================================================*/
+
+/**
+ * Abstract loop over all spaces with the possibility to exclude some
+ *
+ * @param  {ArgList} $excludes The colors to exclude from the loop
+ *
+ * @author Titouan Mathis <titouan@studiometa.fr>
+ * @since  1.2.0
+ */
+@mixin for-each-positions($excludes...) {
+  @each $position in $positions {
+    $value: position($position);
+
+    @if not index($excludes, $position) {
+      @content ($position);
+    }
+  }
+}
+
+/*============================================================================*\
+   Class helpers
+\*============================================================================*/
+
+@if $has-classes {
+  @include for-each-positions using ($position) {
+    .position-#{$position} {
+      position: $position;
+    }
+
+    @if $positions-with-force {
+      .position-#{$position}--force {
+        position: $position !important;
+      }
+    }
+  }
+
+  @if $positions-with-breakpoints {
+    @include for-each-breakpoints using ($breakpoint) {
+      @include for-each-positions using ($position) {
+        .position-#{$position}--#{$breakpoint} {
+          position: $position;
+        }
+
+        @if $positions-with-force {
+          .position-#{$position}--force-#{$breakpoint} {
+            position: $position !important;
+          }
+        }
+      }
+    }
+  }
+}

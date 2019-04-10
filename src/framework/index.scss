@@ -2,7 +2,7 @@
    Main framework file
 \*============================================================================*/
 
-/** @type {Boolean} Enable of disable the helper classes */
+/** @type {Boolean} Do we need classes? */
 $has-classes: false !default;
 
 // Import everything!
@@ -13,3 +13,6 @@ $has-classes: false !default;
 @import 'spaces';
 @import 'displays';
 @import 'typography';
+@import 'flex';
+@import 'opacities';
+@import 'positions';

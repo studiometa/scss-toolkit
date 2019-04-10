@@ -1,11 +1,17 @@
 {
   "name": "@studiometa/scss-toolkit",
-  "version": "1.1.2",
+  "version": "2.0.0",
   "description": "SCSS Toolkit",
-  "main": "src/index.scss",
+  "main": "src/framework/index.scss",
   "scripts": {
-    "test": "gulp styles-build",
-    "lint-scss": "stylelint ./src/"
+    "test": "npm run lint && npm run eslint && npm run test-build && echo 'All test passed! 🎉\n' && exit 0",
+    "prepare": "npm run test",
+    "postinstall": "ln -s ./src/components ./components",
+    "test-build": "if gulp styles-build -q 2>&1 >/dev/null | tee tmp | grep -q 'Error'; then cat tmp && rm tmp && exit 1; else rm tmp && exit 0; fi;",
+    "lint": "stylelint ./src/",
+    "fix": "stylelint ./src/ --fix",
+    "eslint": "eslint .",
+    "eslint-fix": "eslint --fix ."
   },
   "repository": {
     "type": "git",
@@ -18,8 +24,11 @@
   },
   "homepage": "https://github.com/studiometa/scss-toolkit#readme",
   "devDependencies": {
-    "@studiometa/gulp-config": "^1.2.0-beta.7",
-    "@studiometa/stylelint-config": "^1.0.1",
+    "@studiometa/eslint-config": "^1.1.3",
+    "@studiometa/gulp-config": "^1.3.1",
+    "@studiometa/prettier-config": "^1.0.0",
+    "@studiometa/stylelint-config": "^1.0.3",
+    "eslint": "^5.16.0",
     "stylelint": "^9.8.0"
   },
   "dependencies": {

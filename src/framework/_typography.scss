@@ -2,193 +2,21 @@
    Main typography styles
 \*============================================================================*/
 
+/** @type {Boolean} Do we need classes? */
 $has-classes: false !default;
-$font-dir: '/source/fonts/' !default;
-$font-name-serif: Georgia !default;
-$font-name-sans: Arial !default;
-$font-family-serif: $font-name-serif, serif !default;
-$font-family-sans: $font-name-sans, sans-serif !default;
-$font-display: auto !default;
-
-$font-faces: (
-  $font-name-serif 'type-serif-regular' 400 normal,
-  $font-name-sans 'type-sans-regular' 400 normal
-) !default;
-
-/**
- * A map to define all font-sizes and their corresponding line-heights, the
- * first value is the font-size, the seconde the line-height.
- *
- * The `fz($font-size, $unit)` and the `lh($font-size)` functions below can be
- * used to get easily one of the two values.
- *
- * @type {Map}
- */
-$font-sizes: (
-  'display-3': (
-    44px,
-    66px,
-  ),
-  'display-2': (
-    36px,
-    54px,
-  ),
-  'display-1': (
-    24px,
-    32px,
-  ),
-  'display-0': (
-    18px,
-    27px,
-  ),
-  'title-small': (
-    20px,
-    26px,
-  ),
-  'title-smaller': (
-    18px,
-    24px,
-  ),
-  'body': (
-    16px,
-    30px,
-  ),
-  'medium': (
-    14px,
-    26px,
-  ),
-  'small': (
-    12px,
-    22px,
-  ),
-  'smaller': (
-    10px,
-    18px,
-  ),
-) !default;
 
 /*============================================================================*\
-   Font-sizes helper function
-\*============================================================================*/
-
-/**
- * A function helper to avoid having to type `map-get($layers, ...)`
- * Based on http://css-tricks.com/handling-z-index/
- *
- * @param  {string} $layer The name of the z-index
- * @param  {number} $var   The modifier if needed
- * @return {number}        The corresponding z-index based on the $layers var
- */
-@function font-size($font-size, $unit: 'em') {
-  @if not map-has-key($font-sizes, $font-size) {
-    @error 'No font-size found in $fonti-sizes map for `#{$font-size}`.';
-  }
-
-  $root-font-size: 16px;
-  $values: map-get($font-sizes, $font-size);
-
-  // First value is the font-size
-  $font-size: nth($values, 1);
-
-  // Second value is the line-height, we divide it by the font-size to get
-  // a line-height without unit, which is a best practice.
-  $line-height: nth($values, 2) / $font-size;
-
-  @if $unit == 'px' {
-    @return $font-size;
-  } @else {
-    @return #{$font-size / $root-font-size + $unit};
-  }
-}
-
-/**
- * Alias for the `font-size($font-size, $unit)` function above
- */
-@function fz($font-size, $unit: 'em') {
-  @return font-size($font-size, $unit);
-}
-
-/**
- * A function helper to get the computed line-height of the given font-size
- * @param  {string} $font-size The name of the font-size
- * @return {string}            The corresponding line-height
- */
-@function line-height($font-size) {
-  @if not map-has-key($font-sizes, $font-size) {
-    @error 'No font-size found in $fonti-sizes map for `#{$font-size}`.';
-  }
-
-  $values: map-get($font-sizes, $font-size);
-
-  // First value is the font-size
-  $font-size: nth($values, 1);
-
-  // Second value is the line-height, we divide it by the font-size to get
-  // a line-height without unit, which is a best practice.
-  $line-height: nth($values, 2) / $font-size;
-
-  @return $line-height;
-}
-
-/**
- * Alias for the `line-height($font-size)` function above
- */
-@function lh($font-size) {
-  @return line-height($font-size);
-}
-
-/**
- * A mixin to get both font-size and line-height given a named font-size
- * @param  {string} $font-size The font-size name
- * @param  {string} $unit      The unit for the font-size value
- * @return {string}            The `font-size` and `line-height` declarations
- */
-@mixin font-size($font-size, $unit: 'em') {
-  font-size: fz($font-size, $unit);
-  line-height: lh($font-size);
-}
-
-/**
- * Alias for the `font-size($font-size, $unit)` mixin defined above
- */
-@mixin fz($font-size, $unit: 'em') {
-  @include font-size($font-size, $unit);
-}
-
-/*============================================================================*\
-   Fontaces declarations
-\*============================================================================*/
-
-@if $has-classes {
-  @each $font-face in $font-faces {
-    $name: nth($font-face, 1);
-    $file: nth($font-face, 2);
-    $weight: nth($font-face, 3);
-    $style: nth($font-face, 4);
-
-    @font-face {
-      font-family: $name;
-      src: url('#{$font-dir + $file}.woff2') format('woff2'),
-        url('#{$font-dir + $file}.woff') format('woff');
-      font-weight: $weight;
-      font-style: $style;
-      font-display: $font-display;
-    }
-  }
-}
-
-/*============================================================================*\
-   Responsive type mixin
+   Generic mixins
 \*============================================================================*/
 
 /**
  * Responsive typograhy
  * @author Mike Riethmuller http://codepen.io/MadeByMike/pen/YPJJYv
+ *
  * @param  {integer} $min-width The minimum breakpoint
  * @param  {integer} $max-width The maximum breakpoint
  * @param  {integer} $min-size  The minimum font-size
  * @param  {integer} $max-size  The maximum font-size
- * @return {void}
  */
 @mixin responsive-type(
   $min-width: 0,
@@ -213,10 +41,6 @@ $font-sizes: (
   }
 }
 
-/*============================================================================*\
-   Antialiasing mixin
-\*============================================================================*/
-
 /**
  * Antialiasing for better font rendering
  */
@@ -226,21 +50,87 @@ $font-sizes: (
 }
 
 @if $has-classes {
-  html,
-  input,
-  button,
   .type-antialiased {
-    @include type-antialiased;
+    &,
+    input,
+    button {
+      @include type-antialiased;
+    }
   }
 }
 
 /*============================================================================*\
-   Type font-size helpers
+   Type sizes definitions
+\*============================================================================*/
+
+/**
+ * A map to define all type-sizes and their corresponding line-heights, the
+ * first value is the font-size, the seconde the line-height.
+ *
+ * @type {Map}
+ */
+$type-sizes: (
+  display-1: (
+    size: 32px,
+    line-height: 48px,
+    weight: 700,
+  ),
+  display-2: (
+    size: 24px,
+    line-height: 36px,
+    weight: 700,
+  ),
+  body: (
+    size: 16px,
+  ),
+  small: (
+    size: 12px,
+  ),
+) !default;
+
+/**
+ * A mixin to get both font-size and line-height given a named font-size
+ *
+ * @param  {string} $type-size The font-size name
+ * @param  {string} $unit      The unit for the font-size value
+ * @return {string}            The `font-size` and `line-height` declarations
+ */
+@mixin font-size($type-size, $unit: 'em') {
+  @if not map-has-key($type-sizes, $type-size) {
+    @error 'No font-size found in $type-sizes map for `#{$type-size}`.';
+  }
+
+  $type-size: map-get($type-sizes, $type-size);
+  $font-size: map-get($type-size, 'size');
+
+  @if $unit == 'px' {
+    font-size: $font-size;
+  } @else {
+    font-size: #{$font-size / 16px + $unit};
+  }
+
+  @if map-has-key($type-size, 'weight') {
+    font-weight: map-get($type-size, 'weight');
+  }
+
+  @if map-has-key($type-size, 'line-height') {
+    line-height: map-get($type-size, 'line-height') / $font-size;
+  }
+}
+
+/**
+ * Alias for the `font-size($type-size, $unit)` mixin defined above
+ */
+@mixin fz($type-size, $unit: 'em') {
+  @include font-size($type-size, $unit);
+}
+
+/* Class helpers
 \*============================================================================*/
 
 @if $has-classes {
-  @each $font-size in $font-sizes {
-    $key: nth($font-size, 1);
+  @each $type-size in $type-sizes {
+    $key: nth($type-size, 1);
 
     .type-#{$key} {
       @include fz($key);
@@ -252,19 +142,104 @@ $font-sizes: (
   }
 
   // Media queries
-  @each $breakpoint in $breakpoints {
-    $breakpoint: nth($breakpoint, 1);
+  @include for-each-breakpoints using ($breakpoint) {
+    @each $type-size in $type-sizes {
+      $size: nth($type-size, 1);
 
-    @media all and #{md($breakpoint)} {
-      @each $font-size in $font-sizes {
-        $key: nth($font-size, 1);
+      .type-#{$size}--#{$breakpoint} {
+        @include fz($size);
+      }
 
-        .type-#{$key}--#{$breakpoint} {
-          @include fz($key);
-        }
+      .type-rem-#{$size}--#{$breakpoint} {
+        @include fz($size);
+      }
+    }
+  }
+}
 
-        .type-rem-#{$key}--#{$breakpoint} {
-          @include fz($key);
+/*============================================================================*\
+   Type font families definitions
+\*============================================================================*/
+
+/** @type {String} The path to the webfonts directory */
+$type-webfont-dir: '/static/fonts/' !default;
+
+/** @type {String} The value for all `font-display` properties */
+$type-webfont-display: auto !default;
+
+/**
+ * A map to define all font-families specifications which we might refer to by a
+ * named identifier. The map is formatted as follow:
+ *
+ * (
+ *   <identifier>: (
+ *     name: <font-family-name>,
+ *     stack: <font-family-stack>,
+ *     webfonts: (
+ *       (
+ *         filename: <webfont-filename>,
+ *         weight: <webfont-weight>,
+ *         style: <webfont-style>,
+ *       ),
+ *     ),
+ *   ),
+ * )
+ *
+ * @type {Map}
+ */
+$type-fonts: (
+  serif: (
+    name: Georgia,
+    stack: 'Georgia, serif',
+    webfonts: (
+      (
+        filename: 'georgia-regular',
+        weight: 400,
+        style: normal,
+      ),
+    ),
+  ),
+  sans-serif: (
+    name: Arial,
+    stack: 'Arial, sans-serif',
+    webfonts: (
+      (
+        filename: 'arial-regular',
+        weight: 400,
+        style: normal,
+      ),
+    ),
+  ),
+) !default;
+
+/* Class helpers
+\*============================================================================*/
+
+@if $has-classes {
+  @each $font in $type-fonts {
+    $key: nth($font, 1);
+    $font: map-get($type-fonts, $key);
+    $stack: map-get($font, 'stack');
+
+    .type-#{$key} {
+      font-family: unquote($stack);
+    }
+
+    @if map-has-key($font, 'webfonts') and map-has-key($font, 'name') {
+      $name: map-get($font, 'name');
+      $webfonts: map-get($font, 'webfonts');
+      @each $webfont in $webfonts {
+        $file: map-get($webfont, 'filename');
+        $weight: map-get($webfont, 'weight');
+        $style: map-get($webfont, 'style');
+
+        @font-face {
+          font-family: $name;
+          src: url('#{$type-webfont-dir + $file}.woff2') format('woff2'),
+            url('#{$type-webfont-dir + $file}.woff') format('woff');
+          font-weight: $weight;
+          font-style: $style;
+          font-display: $type-webfont-display;
         }
       }
     }
@@ -272,59 +247,28 @@ $font-sizes: (
 }
 
 /*============================================================================*\
-   Type alignement helpers
+   Type alignement definition
+\*============================================================================*/
+
+/** @type {List} List of alignment values to use */
+$type-alignments: (left, center, right) !default;
+
+/* Class helpers
 \*============================================================================*/
 
 @if $has-classes {
-  .type-center {
-    text-align: center;
-  }
-
-  .type-left {
-    text-align: left;
-  }
-
-  .type-right {
-    text-align: right;
-  }
-
-  /**
-   * Generate helpers for each defined breakpoints
-   */
-  @each $breakpoint in $breakpoints {
-    $breakpoint: nth($breakpoint, 1);
-
-    @media #{md($breakpoint)} {
-      /**
-       * Margin spacers
-       */
-
-      .type-center--#{$breakpoint} {
-        text-align: center;
-      }
-
-      .type-left--#{$breakpoint} {
-        text-align: left;
-      }
-
-      .type-right--#{$breakpoint} {
-        text-align: right;
-      }
+  @each $alignment in $type-alignments {
+    .type-align-#{$alignment} {
+      text-align: #{$alignment};
     }
   }
-}
 
-/*============================================================================*\
-   Type font families helpers
-\*============================================================================*/
-
-@if $has-classes {
-  .type-serif {
-    font-family: $font-family-serif;
-  }
-
-  .type-sans {
-    font-family: $font-family-sans;
+  @include for-each-breakpoints using ($breakpoint) {
+    @each $alignment in $type-alignments {
+      .type-align-#{$alignment}--#{$breakpoint} {
+        text-align: #{$alignment};
+      }
+    }
   }
 }
 
@@ -332,179 +276,96 @@ $font-sizes: (
    Type font weight helpers
 \*============================================================================*/
 
+/** @type {List} List of font weights values to use */
+$type-weights: (300, 400, 700) !default;
+
+/* Class helpers
+\*============================================================================*/
+
 @if $has-classes {
-  .type-thin {
-    font-weight: 100;
-  }
-
-  .type-extralight {
-    font-weight: 200;
-  }
-
-  .type-light {
-    font-weight: 300;
-  }
-
-  .type-regular {
-    font-weight: 400;
-  }
-
-  .type-medium {
-    font-weight: 500;
-  }
-
-  .type-semibold {
-    font-weight: 600;
-  }
-
-  .type-bold {
-    font-weight: 700;
-  }
-
-  .type-extrabold {
-    font-weight: 800;
-  }
-
-  .type-black {
-    font-weight: 900;
+  @each $weight in $type-weights {
+    .type-weight-#{$weight} {
+      font-weight: $weight;
+    }
   }
 
   /**
    * Generate helpers for each defined breakpoints
    */
-  @each $breakpoint in $breakpoints {
-    $breakpoint: nth($breakpoint, 1);
-
-    @media #{md($breakpoint)} {
-      .type-thin--#{$breakpoint} {
-        font-weight: 100;
-      }
-
-      .type-extralight--#{$breakpoint} {
-        font-weight: 200;
-      }
-
-      .type-light--#{$breakpoint} {
-        font-weight: 300;
-      }
-
-      .type-regular--#{$breakpoint} {
-        font-weight: 400;
-      }
-
-      .type-medium--#{$breakpoint} {
-        font-weight: 500;
-      }
-
-      .type-semibold--#{$breakpoint} {
-        font-weight: 600;
-      }
-
-      .type-bold--#{$breakpoint} {
-        font-weight: 700;
-      }
-
-      .type-extrabold--#{$breakpoint} {
-        font-weight: 800;
-      }
-
-      .type-black--#{$breakpoint} {
-        font-weight: 900;
+  @include for-each-breakpoints using ($breakpoint) {
+    @each $weight in $type-weights {
+      .type-weight-#{$weight}--#{$breakpoint} {
+        font-weight: $weight;
       }
     }
   }
 }
 
 /*============================================================================*\
-   Type spacing
+   Type spacings definitions
+\*============================================================================*/
+
+/** @type {List} List of letter spacings values to use */
+$type-spacings: (25, 50, 100, 200) !default;
+
+/* Class helpers
 \*============================================================================*/
 
 @if $has-classes {
-  .type-spacing-25 {
-    letter-spacing: 0.025em;
-  }
+  @each $spacing in $type-spacings {
+    $value: $spacing / 1000;
 
-  .type-spacing-50 {
-    letter-spacing: 0.05em;
-  }
-
-  .type-spacing-100 {
-    letter-spacing: 0.1em;
-  }
-
-  .type-spacing-200 {
-    letter-spacing: 0.2em;
+    .type-spacing-#{$spacing} {
+      letter-spacing: #{$value}em;
+    }
   }
 
   /**
    * Generate helpers for each defined breakpoints
    */
-  @each $breakpoint in $breakpoints {
-    $breakpoint: nth($breakpoint, 1);
+  @include for-each-breakpoints using ($breakpoint) {
+    @each $spacing in $type-spacings {
+      $value: $spacing / 1000;
 
-    @media #{md($breakpoint)} {
-      .type-spacing-25--#{$breakpoint} {
-        letter-spacing: 0.025em;
-      }
-
-      .type-spacing-50--#{$breakpoint} {
-        letter-spacing: 0.05em;
-      }
-
-      .type-spacing-100--#{$breakpoint} {
-        letter-spacing: 0.1em;
-      }
-
-      .type-spacing-200--#{$breakpoint} {
-        letter-spacing: 0.2em;
+      .type-spacing-#{$spacing}--#{$breakpoint} {
+        letter-spacing: #{$value}em;
       }
     }
   }
 }
 
 /*============================================================================*\
-   Type transform
+   Type transforms definitions
+\*============================================================================*/
+
+/** @type {List} List of text transform values to use */
+$type-transforms: (uppercase, lowercase, capitalize) !default;
+
+/* Class helpers
 \*============================================================================*/
 
 @if $has-classes {
-  .type-uppercase {
-    text-transform: uppercase;
-  }
-
-  .type-lowercase {
-    text-transform: lowercase;
-  }
-
-  .type-capitalize {
-    text-transform: capitalize;
-  }
-
-  .type-no-underline {
-    text-decoration: none;
-  }
-
-  .type-underline {
-    text-decoration: underline;
+  @each $transform in $type-transforms {
+    .type-transform-#{$transform} {
+      text-transform: #{$transform};
+    }
   }
 }
 
 /*============================================================================*\
-   Type font defaults
+   Type decorations definitions
+\*============================================================================*/
+
+/** @type {List} List of text decoration values to use */
+$type-decorations: (none, underline) !default;
+
+/* Class helpers
 \*============================================================================*/
 
 @if $has-classes {
-  body {
-    font-family: $font-family-sans;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4 {
-    font-family: $font-family-serif;
-  }
-
-  a {
-    color: inherit;
+  @each $decoration in $type-decorations {
+    .type-decoration-#{$decoration} {
+      text-decoration: #{$decoration};
+    }
   }
 }

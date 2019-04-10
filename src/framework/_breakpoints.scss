@@ -3,6 +3,12 @@
 \*============================================================================*/
 
 $has-classes: false !default;
+
+/**
+ * Map of width based breakpoints names and values in pixels
+ *
+ * @type {Map}
+ */
 $breakpoints: (
   'xxs': 0,
   'xs': 480,
@@ -13,8 +19,23 @@ $breakpoints: (
   'xxl': 1920,
 ) !default;
 
+/**
+ * Map of height based breakpoints names and values in pixels
+ *
+ * @type {Map}
+ */
+$breakpoints-height: (
+  'xxs': 0,
+  'xs': 360,
+  's': 576,
+  'm': 768,
+  'l': 960,
+  'xl': 1080,
+  'xxl': 1440,
+) !default;
+
 /*============================================================================*\
-   Function helper
+   Functions
 \*============================================================================*/
 
 /**
@@ -22,14 +43,21 @@ $breakpoints: (
  * @param  {string} $breakpoint The wanted breakpoint
  * @param  {string} $type            Type of media query (min or max)
  * @param  {string} $unit            The unit for the media queries (em or px)
+ * @param  {string} $orientation     The orientation of the media query (width or height)
  * @return {string}                  A media query expression
  */
-@function media($breakpoint, $type: 'min', $unit: 'em') {
-  @if not map-has-key($breakpoints, $breakpoint) {
-    @error 'No breakpoint found in the `$breakpoints` map for `#{$breakpoint}`.';
+@function media($breakpoint, $type: 'min', $unit: 'em', $orientation: 'width') {
+  $breakpoints-base: $breakpoints;
+
+  @if $orientation == 'height' {
+    $breakpoints-base: $breakpoints-height;
   }
 
-  $value: map-get($breakpoints, $breakpoint);
+  @if not map-has-key($breakpoints-base, $breakpoint) {
+    @error 'No breakpoint found in the `$breakpoints-base` map for `#{$breakpoint}`.';
+  }
+
+  $value: map-get($breakpoints-base, $breakpoint);
 
   @if $value / $value != 1 and $value != 0 {
     @return $value;
@@ -39,16 +67,16 @@ $breakpoints: (
     $size: $value / 16 * 1em;
 
     @if $type == 'min' {
-      @return '(min-width: #{$size})';
+      @return '(min-#{$orientation}: #{$size})';
     }
 
-    // For the `max` variation, we do not use `(max-width: …)` but we use
-    // instead a negation of the `(min-width: …)` declaration to allow for a
+    // For the `max` variation, we do not use `(max-#{$orientation}: …)` but we use
+    // instead a negation of the `(min-#{$orientation}: …)` declaration to allow for a
     // better cohabitation between the usage of `min` and `max` media queries.
     // See https://codepen.io/vincent-valentin/pen/ObBJae for a working example
     // of how this works for the best.
     @if $type == 'max' {
-      @return 'not all and (min-width: #{$size})';
+      @return 'not all and (min-#{$orientation}: #{$size})';
     }
   }
 
@@ -56,18 +84,42 @@ $breakpoints: (
     $size: $value * 1px;
 
     @if $type == 'min' {
-      @return '(min-width: #{$size})';
+      @return '(min-#{$orientation}: #{$size})';
     }
 
     @if $type == 'max' {
-      @return 'not all and (min-width: #{$size})';
+      @return 'not all and (min-#{$orientation}: #{$size})';
     }
   }
 }
 
 /**
- * Alias of the `media($breakpoint, $type, $unit)` function above
+ * Alias of the `media($breakpoint, $type, $unit, $orientation)` function above
  */
-@function md($breakpoint, $type: 'min', $unit: 'em') {
-  @return media($breakpoint, $type, $unit);
+@function md($breakpoint, $type: 'min', $unit: 'em', $orientation: 'width') {
+  @return media($breakpoint, $type, $unit, $orientation);
+}
+
+/*============================================================================*\
+   Mixins
+\*============================================================================*/
+
+/**
+ * Abstract the loop over each breakpoints
+ *
+ * @param  {ArgList} $excludes The breakpoints to exclude
+ *
+ * @author Titouan Mathis <titouan@studiometa.fr>
+ * @since  1.2.0
+ */
+@mixin for-each-breakpoints($excludes...) {
+  @each $breakpoint in $breakpoints {
+    $breakpoint: nth($breakpoint, 1);
+
+    @if not index($excludes, $breakpoint) {
+      @media #{md($breakpoint)} {
+        @content ($breakpoint);
+      }
+    }
+  }
 }

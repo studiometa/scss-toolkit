@@ -1,0 +1,87 @@
+/*============================================================================*\
+   Opacities
+\*============================================================================*/
+
+/** @type {Boolean} Do we need classes? */
+$has-classes: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
+$opacities-with-breakpoints: true !default;
+
+/** @type {List} List of opacity values to use */
+$opacities: (0, 25, 50, 75, 100) !default;
+
+/*============================================================================*\
+   Functions
+\*============================================================================*/
+
+/**
+ * A function helper to simplify the usage of opacities
+ *
+ * @param  {string} $opacity  The 100 based opacity value
+ * @return {number}           The 1 based computed opacity
+ */
+@function opacity($opacity) {
+  // Find the index of the given space
+  $index: index($opacities, $opacity);
+
+  // If no index, there is no opacity defined with this name, we throw an error
+  @if not $index {
+    @error 'No opacity of size `#{$opacity}` found in the `$opacities` list.';
+  }
+
+  // Get the value of the opacity
+  $value: nth($opacities, $index);
+  @return $value / 100;
+}
+
+/**
+ * Alias for the `opacity($opacity)` function above
+ */
+@function o($opacity) {
+  @return o($opacity);
+}
+
+/*============================================================================*\
+   Mixins
+\*============================================================================*/
+
+/**
+ * Abstract loop over all spaces with the possibility to exclude some
+ *
+ * @param  {ArgList} $excludes The colors to exclude from the loop
+ *
+ * @author Titouan Mathis <titouan@studiometa.fr>
+ * @since  1.2.0
+ */
+@mixin for-each-opacities($excludes...) {
+  @each $opacity in $opacities {
+    $value: opacity($opacity);
+
+    @if not index($excludes, $opacity) {
+      @content ($opacity, $value);
+    }
+  }
+}
+
+/*============================================================================*\
+   Class helpers
+\*============================================================================*/
+
+@if $has-classes {
+  @include for-each-opacities using ($opacity, $value) {
+    .opacity-#{$opacity} {
+      opacity: $value;
+    }
+  }
+
+  @if $opacities-with-breakpoints {
+    @include for-each-breakpoints using ($breakpoint) {
+      @include for-each-opacities using ($opacity, $value) {
+        .opacity-#{$opacity}--#{$breakpoint} {
+          opacity: $value;
+        }
+      }
+    }
+  }
+}

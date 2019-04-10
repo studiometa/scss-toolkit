@@ -2,8 +2,20 @@
    Displays helpers
 \*============================================================================*/
 
+/** @type {Boolean} Do we need classes? */
+$has-classes: false !default;
+
+/** @type {Boolean} Do we need the `--force` modifiers? */
+$displays-with-force: false !default;
+
+/** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
+$displays-with-breakpoints: false !default;
+
+/** @type {List} List of display values to use */
+$displays: (none, block, inline, inline-block) !default;
+
 /*============================================================================*\
-   Helper mixins
+   Mixins
 \*============================================================================*/
 
 /**
@@ -22,48 +34,20 @@
 }
 
 /*============================================================================*\
-   Helper classes
+   Class helpers
 \*============================================================================*/
 
 @if $has-classes {
-  .display-none {
-    display: none;
-  }
+  @each $display in $displays {
+    .display-#{$display} {
+      display: $display;
+    }
 
-  .display-none--force {
-    display: none !important;
-  }
-
-  .display-block {
-    display: block;
-  }
-
-  .display-block--force {
-    display: block !important;
-  }
-
-  .display-flex {
-    display: flex;
-  }
-
-  .display-flex--force {
-    display: flex !important;
-  }
-
-  .display-inline {
-    display: inline;
-  }
-
-  .display-inline--force {
-    display: inline !important;
-  }
-
-  .display-inline-block {
-    display: inline-block;
-  }
-
-  .display-inline-block--force {
-    display: inline-block !important;
+    @if $displays-with-force {
+      .display-#{$display}--force {
+        display: $display !important;
+      }
+    }
   }
 
   .display-hidden-accessible {
@@ -74,51 +58,21 @@
      Visibility breakpoints modifiers
   \*==========================================================================*/
 
-  @each $breakpoint in $breakpoints {
-    $key: nth($breakpoint, 1);
+  @if $displays-with-breakpoints {
+    @include for-each-breakpoints using ($breakpoint) {
+      @each $display in $displays {
+        .display-#{$display}--#{$breakpoint} {
+          display: $display;
+        }
 
-    @media #{md($key)} {
-      .display-none--#{$key} {
-        display: none;
+        @if $displays-with-force {
+          .display-#{$display}--force-#{$breakpoint} {
+            display: $display !important;
+          }
+        }
       }
 
-      .display-none--force-#{$key} {
-        display: none !important;
-      }
-
-      .display-block--#{$key} {
-        display: block;
-      }
-
-      .display-block--force-#{$key} {
-        display: block !important;
-      }
-
-      .display-flex--#{$key} {
-        display: flex;
-      }
-
-      .display-flex--force-#{$key} {
-        display: flex !important;
-      }
-
-      .display-inline--#{$key} {
-        display: inline;
-      }
-
-      .display-inline--force-#{$key} {
-        display: inline !important;
-      }
-
-      .display-inline-block--#{$key} {
-        display: inline-block;
-      }
-
-      .display-inline-block--force-#{$key} {
-        display: inline-block !important;
-      }
-
-      .display-hidden-accessible--#{$key} {
+      .display-hidden-accessible {
         @include display-hidden-accessible();
       }
     }
