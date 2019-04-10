@@ -1,6 +1,12 @@
 /*============================================================================*\
-   Flex definitions
+   Flex helpers
 \*============================================================================*/
+
+/*============================================================================*\
+   Flex display
+\*============================================================================*/
+$has-classes: false !default;
+
 @if $has-classes {
   .flex {
     display: flex;
@@ -24,8 +30,6 @@
 /*============================================================================*\
    Align (items / self / content)
 \*============================================================================*/
-$align: (start, center, end);
-
 @if $has-classes {
   .align-start {
     align-items: flex-start;
@@ -143,7 +147,7 @@ $align: (start, center, end);
 }
 
 /*============================================================================*\
-   Justify (content / items)
+   Justify (content / self)
 \*============================================================================*/
 @if $has-classes {
   .justify-start {
@@ -171,27 +175,27 @@ $align: (start, center, end);
   }
 
   .justify-start-self {
-    justify-content: flex-start;
+    justify-self: flex-start;
   }
 
   .justify-center-self {
-    justify-content: center;
+    justify-self: center;
   }
 
   .justify-end-self {
-    justify-content: flex-end;
+    justify-self: flex-end;
   }
 
   .justify-around-self {
-    justify-content: space-around;
+    justify-self: space-around;
   }
 
   .justify-between-self {
-    justify-content: space-between;
+    justify-self: space-between;
   }
 
   .justify-evenly-self {
-    justify-content: space-evenly;
+    justify-self: space-evenly;
   }
 
   @include for-each-breakpoints using ($breakpoint) {
@@ -220,27 +224,27 @@ $align: (start, center, end);
     }
 
     .justify-start-self--#{$breakpoint} {
-      justify-content: flex-start;
+      justify-self: flex-start;
     }
 
     .justify-center-self--#{$breakpoint} {
-      justify-content: center;
+      justify-self: center;
     }
 
     .justify-end-self--#{$breakpoint} {
-      justify-content: flex-end;
+      justify-self: flex-end;
     }
 
     .justify-around-self--#{$breakpoint} {
-      justify-content: space-around;
+      justify-self: space-around;
     }
 
     .justify-between-self--#{$breakpoint} {
-      justify-content: space-between;
+      justify-self: space-between;
     }
 
     .justify-evenly-self--#{$breakpoint} {
-      justify-content: space-evenly;
+      justify-self: space-evenly;
     }
   }
 }
@@ -327,23 +331,11 @@ $flexes: (0, auto, none) !default;
     .flex-grow-#{$value} {
       flex-grow: $value;
     }
-
-    @include for-each-breakpoints using ($breakpoint) {
-      .flex-grow-#{$value}--#{$breakpoint} {
-        flex-grow: $value;
-      }
-    }
   }
 
   @each $value in $flex-shrinks {
     .flex-shrink-#{$value} {
-      flex-grow: $value;
-    }
-
-    @include for-each-breakpoints using ($breakpoint) {
-      .flex-shrink-#{$value}--#{$breakpoint} {
-        flex-grow: $value;
-      }
+      flex-shrink: $value;
     }
   }
 
@@ -351,8 +343,22 @@ $flexes: (0, auto, none) !default;
     .flex-#{$value} {
       flex: $value;
     }
+  }
 
-    @include for-each-breakpoints using ($breakpoint) {
+  @include for-each-breakpoints using ($breakpoint) {
+    @each $value in $flex-grows {
+      .flex-grow-#{$value}--#{$breakpoint} {
+        flex-grow: $value;
+      }
+    }
+
+    @each $value in $flex-shrinks {
+      .flex-shrink-#{$value}--#{$breakpoint} {
+        flex-grow: $value;
+      }
+    }
+
+    @each $value in $flexes {
       .flex-#{$value}--#{$breakpoint} {
         flex: $value;
       }
