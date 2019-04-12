@@ -1,0 +1,9 @@
+@import './config';
+
+.font-family-serif {
+  font-family: font-family('serif');
+}
+
+.font-family-sans-serif {
+  font-family: ff('sans-serif');
+}

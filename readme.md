@@ -490,6 +490,8 @@ $spaces: (0, 1, 2, 4, 8, 16, auto);
       - `<filename>`: the name of the `woff` and `woff2` files of your webfont, without extension
       - `<font-weight>`: the weight corresponding to the given filename (a number from `100` to `900`)
       - `<font-style>`: the style of the given filename (`normal`, `italic`, etc.)
+- `@function font-family($type-font)`: a function to get a `font-family` stack by a given identifier
+- `@function ff($type-font)`: alias for the above `font-family($type-font)` function
 - Class helpers:
   + `.type-antialiased`: a class implementing the `type-antialiased` mixin
   + `.type[-rem]-<size>[--<breakpoint>]`: set the `font-size` in `em` and `line-height` properties to the given `<size>` defined values, with the `-rem` variation setting the `font-size` unit in `rem` and the `<breakpoint>` modifier applying the styles to the corresponding breakpoint

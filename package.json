@@ -1,6 +1,6 @@
 {
   "name": "@studiometa/scss-toolkit",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "SCSS Toolkit",
   "main": "src/framework/index.scss",
   "scripts": {
@@ -11,7 +11,8 @@
     "lint": "stylelint ./src/",
     "fix": "stylelint ./src/ --fix",
     "eslint": "eslint .",
-    "eslint-fix": "eslint --fix ."
+    "eslint-fix": "eslint --fix .",
+    "dev": "gulp"
   },
   "repository": {
     "type": "git",
