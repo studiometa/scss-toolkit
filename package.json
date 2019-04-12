@@ -11,7 +11,8 @@
     "lint": "stylelint ./src/",
     "fix": "stylelint ./src/ --fix",
     "eslint": "eslint .",
-    "eslint-fix": "eslint --fix ."
+    "eslint-fix": "eslint --fix .",
+    "dev": "gulp"
   },
   "repository": {
     "type": "git",

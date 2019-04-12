@@ -212,6 +212,33 @@ $type-fonts: (
   ),
 ) !default;
 
+/**
+ * A function to get a font-family stack by its identifier
+ *
+ * @param  {string} $type-font The font-family identifier
+ * @return {string}            The font-family defined stack
+ */
+@function font-family($type-font) {
+  @if not map-has-key($type-fonts, $type-font) {
+    @error 'No font-size found in $type-fonts map for `#{$type-font}`.';
+  }
+
+  $font: map-get($type-fonts, $type-font);
+  $stack: map-get($font, 'stack');;
+
+  @return unquote($stack);
+}
+
+/**
+ * Alias for the `font-family($type-font)` function defined above
+ *
+ * @param  {string} $type-font The font-family identifier
+ * @return {string}            The font-family defined stack
+ */
+@function ff($type-font) {
+  @return font-family($type-font);
+}
+
 /* Class helpers
 \*============================================================================*/
 
