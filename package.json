@@ -1,6 +1,6 @@
 {
   "name": "@studiometa/scss-toolkit",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "SCSS Toolkit",
   "main": "src/framework/index.scss",
   "scripts": {
@@ -8,10 +8,10 @@
     "prepare": "npm run test",
     "postinstall": "ln -s ./src/components ./components",
     "test-build": "if gulp styles-build -q 2>&1 >/dev/null | tee tmp | grep -q 'Error'; then cat tmp && rm tmp && exit 1; else rm tmp && exit 0; fi;",
-    "lint": "stylelint ./src/",
-    "fix": "stylelint ./src/ --fix",
-    "eslint": "eslint .",
-    "eslint-fix": "eslint --fix .",
+    "lint": "stylelint '**/*.scss'",
+    "fix": "stylelint '**/*.scss' --fix",
+    "eslint": "eslint *.js",
+    "eslint-fix": "eslint --fix *.js",
     "dev": "gulp"
   },
   "repository": {
@@ -30,9 +30,26 @@
     "@studiometa/prettier-config": "^1.0.0",
     "@studiometa/stylelint-config": "^1.0.3",
     "eslint": "^5.16.0",
+    "husky": ">=1",
+    "lint-staged": ">=8",
     "stylelint": "^9.8.0"
   },
   "dependencies": {
     "reset-css": "^4.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run eslint-fix --",
+      "git add"
+    ],
+    "**/*.scss": [
+      "npm run fix --",
+      "git add"
+    ]
   }
 }
