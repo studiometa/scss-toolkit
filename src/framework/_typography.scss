@@ -224,7 +224,7 @@ $type-fonts: (
   }
 
   $font: map-get($type-fonts, $type-font);
-  $stack: map-get($font, 'stack');;
+  $stack: map-get($font, 'stack');
 
   @return unquote($stack);
 }
