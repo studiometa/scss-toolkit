@@ -72,7 +72,7 @@ $displays: (none, block, inline, inline-block) !default;
         }
       }
 
-      .display-hidden-accessible {
+      .display-hidden-accessible--#{$breakpoint} {
         @include display-hidden-accessible();
       }
     }
