@@ -18,6 +18,7 @@ $has-classes: false !default;
     display: inline-flex;
   }
 
+  // stylelint-disable-next-line order/order
   @include for-each-breakpoints using ($breakpoint) {
     .flex--#{$breakpoint} {
       display: flex;
@@ -90,6 +91,7 @@ $has-classes: false !default;
     align-content: space-between;
   }
 
+  // stylelint-disable-next-line order/order
   @include for-each-breakpoints using ($breakpoint) {
     .align-start--#{$breakpoint} {
       align-items: flex-start;
@@ -202,6 +204,7 @@ $has-classes: false !default;
     justify-self: space-evenly;
   }
 
+  // stylelint-disable-next-line order/order
   @include for-each-breakpoints using ($breakpoint) {
     .justify-start--#{$breakpoint} {
       justify-content: flex-start;
@@ -274,6 +277,7 @@ $has-classes: false !default;
     flex-direction: column-reverse;
   }
 
+  // stylelint-disable-next-line order/order
   @include for-each-breakpoints using ($breakpoint) {
     .flex-row--#{$breakpoint} {
       flex-direction: row;
@@ -310,6 +314,7 @@ $has-classes: false !default;
     flex-wrap: wrap-reverse;
   }
 
+  // stylelint-disable-next-line order/order
   @include for-each-breakpoints using ($breakpoint) {
     .flex-wrap--#{$breakpoint} {
       flex-wrap: wrap;
