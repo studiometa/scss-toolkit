@@ -112,13 +112,8 @@ $grid-gutters: (
 .grid__row {
   position: relative;
 
-  &::after {
-    content: '';
-    clear: both;
-    display: block;
-  }
-
   // Media queries
+  // stylelint-disable-next-line order/order
   @include for-each-breakpoints using ($breakpoint) {
     margin-right: gutter($breakpoint) * -0.5;
     margin-left: gutter($breakpoint) * -0.5;
@@ -127,6 +122,12 @@ $grid-gutters: (
       margin-right: 0;
       margin-left: 0;
     }
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
   }
 }
 
@@ -170,12 +171,8 @@ $grid-gutters: (
 [class*='grid__col-'] {
   min-height: 1px;
 
-  .grid__row--stretch > & {
-    display: flex;
-    align-items: stretch;
-  }
-
   // Media queries
+  // stylelint-disable-next-line order/order
   @include for-each-breakpoints using ($breakpoint) {
     padding-right: gutter($breakpoint) * 0.5;
     padding-left: gutter($breakpoint) * 0.5;
@@ -185,20 +182,25 @@ $grid-gutters: (
       padding-left: 0;
     }
   }
+
+  .grid__row--stretch > & {
+    display: flex;
+    align-items: stretch;
+  }
 }
 
 // Generates the columns class for each breakpoints defined
 @include for-each-breakpoints using ($breakpoint) {
   [class*='grid__col-'][class*='--#{$breakpoint}'] {
-    float: left;
     display: block;
+    float: left;
   }
 
   [class*='grid__col-'].grid__col-center--#{$breakpoint} {
     float: none;
-    clear: both;
     margin-right: auto;
     margin-left: auto;
+    clear: both;
   }
 
   [class*='grid__col-'].grid__col-clear--#{$breakpoint} {

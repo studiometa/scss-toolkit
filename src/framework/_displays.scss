@@ -27,10 +27,10 @@ $displays: (none, block, inline, inline-block) !default;
   position: absolute;
   width: 1px;
   height: 1px;
-  white-space: nowrap;
-  pointer-events: none;
   overflow: hidden;
   clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 /*============================================================================*\

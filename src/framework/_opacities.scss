@@ -6,7 +6,7 @@
 $has-classes: false !default;
 
 /** @type {Boolean} Do we need the `--<breakpoint>` modifiers? */
-$opacities-with-breakpoints: true !default;
+$opacities-with-breakpoints: false !default;
 
 /** @type {List} List of opacity values to use */
 $opacities: (0, 25, 50, 75, 100) !default;
