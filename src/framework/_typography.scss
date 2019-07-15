@@ -262,10 +262,10 @@ $type-fonts: (
 
         @font-face {
           font-family: $name;
+          font-style: $style;
+          font-weight: $weight;
           src: url('#{$type-webfont-dir + $file}.woff2') format('woff2'),
             url('#{$type-webfont-dir + $file}.woff') format('woff');
-          font-weight: $weight;
-          font-style: $style;
           font-display: $type-webfont-display;
         }
       }
