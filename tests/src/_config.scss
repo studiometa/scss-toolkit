@@ -15,6 +15,30 @@ $breakpoints: (
   'extra-large': 2000,
 );
 
+$type-sizes: (
+  display-1: (
+    default: (
+      size: 32px,
+      line-height: 48px,
+      weight: 700,
+    ),
+    small: (
+      size: 48px,
+    ),
+  ),
+  display-2: (
+    size: 24px,
+    line-height: 36px,
+    weight: 700,
+  ),
+  body: (
+    size: 16px,
+  ),
+  small: (
+    size: 12px,
+  ),
+);
+
 @import '../../src/framework/index';
 
 $grid-gutters: (
