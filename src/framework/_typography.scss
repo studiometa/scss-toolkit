@@ -71,9 +71,11 @@ $has-classes: false !default;
  */
 $type-sizes: (
   display-1: (
-    size: 32px,
-    line-height: 48px,
-    weight: 700,
+    default: (
+      size: 32px,
+      line-height: 48px,
+      weight: 700,
+    ),
   ),
   display-2: (
     size: 24px,
@@ -95,34 +97,50 @@ $type-sizes: (
  * @param  {string} $unit      The unit for the font-size value
  * @return {string}            The `font-size` and `line-height` declarations
  */
-@mixin font-size($type-size, $unit: 'em') {
+@mixin font-size($type-size, $unit: 'em', $breakpoint: 'default') {
   @if not map-has-key($type-sizes, $type-size) {
-    @error 'No font-size found in $type-sizes map for `#{$type-size}`.';
+    @error 'No font-size definition found in $type-sizes map for `#{$type-size}`.';
   }
 
-  $type-size: map-get($type-sizes, $type-size);
-  $font-size: map-get($type-size, 'size');
+  $type-size-definition: map-get($type-sizes, $type-size);
 
-  @if $unit == 'px' {
-    font-size: $font-size;
+  // 1. Get the wanted breakpoint defintion if its key exists.
+  // 2. If the key does not exists and the $breakpoint value is default, the
+  // font size definition has no breakpoint definition.
+  // 3. If the 2 preceding condition are not met, there is no size corresponding
+  // to the parameters, so do nothing.
+  @if map-has-key($type-size-definition, $breakpoint) {
+    $type-size: map-get($type-size-definition, $breakpoint);
+  } @else if $breakpoint == 'default' {
+    $type-size: $type-size-definition;
   } @else {
-    font-size: #{$font-size / 16px + $unit};
+    $type-size: false;
   }
 
-  @if map-has-key($type-size, 'weight') {
-    font-weight: map-get($type-size, 'weight');
-  }
+  @if not $type-size == false {
+    $font-size: map-get($type-size, 'size');
 
-  @if map-has-key($type-size, 'line-height') {
-    line-height: map-get($type-size, 'line-height') / $font-size;
+    @if $unit == 'px' {
+      font-size: $font-size;
+    } @else {
+      font-size: #{($font-size / 16px) + $unit};
+    }
+
+    @if map-has-key($type-size, 'weight') {
+      font-weight: map-get($type-size, 'weight');
+    }
+
+    @if map-has-key($type-size, 'line-height') {
+      line-height: map-get($type-size, 'line-height') / $font-size;
+    }
   }
 }
 
 /**
  * Alias for the `font-size($type-size, $unit)` mixin defined above
  */
-@mixin fz($type-size, $unit: 'em') {
-  @include font-size($type-size, $unit);
+@mixin fz($type-size, $unit: 'em', $breakpoint: 'default') {
+  @include font-size($type-size, $unit, $breakpoint);
 }
 
 /* Class helpers
@@ -134,24 +152,19 @@ $type-sizes: (
 
     .type-#{$key} {
       @include fz($key);
+
+      // Media queries
+      @include for-each-breakpoints using ($breakpoint) {
+        @include fz($key, 'em', $breakpoint);
+      }
     }
 
     .type-rem-#{$key} {
       @include fz($key, 'rem');
-    }
-  }
 
-  // Media queries
-  @include for-each-breakpoints using ($breakpoint) {
-    @each $type-size in $type-sizes {
-      $size: nth($type-size, 1);
-
-      .type-#{$size}--#{$breakpoint} {
-        @include fz($size);
-      }
-
-      .type-rem-#{$size}--#{$breakpoint} {
-        @include fz($size);
+      // Media queries
+      @include for-each-breakpoints using ($breakpoint) {
+        @include fz($key, 'rem', $breakpoint);
       }
     }
   }
