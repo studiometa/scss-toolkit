@@ -480,6 +480,7 @@ $spaces: (0, 1, 2, 4, 8, 16, auto);
 - `@mixin font-size($font-size, $unit: 'em')`: a mixin to get CSS properties of the given name defined in the `$font-size` map
 - `@mixin fz($font-size, $unit: 'em')`: alias for the `@include font-size($font-size, $unit)` mixin
 - `$type-webfont-dir`: path to the folder of your webfont files (which must be of `*.woff` and `*.woff2` formats)
+- `$font-size-root`: the root font size applied to `html` DOM element, used to calculate others font sizes
 - `$type-webfont-display`: the `font-display` property that will be applied to the `@font-faces` declarations
 - `$type-fonts: (<identifier>: <definition>)`: a map of font identifiers
   + `<identifier>`: a unique font name, will be used to generate helper classes
@@ -515,6 +516,9 @@ $spaces: (0, 1, 2, 4, 8, 16, auto);
 **Defaults**
 
 ```scss
+/** @type {String} Root font size, used to calculate others font sizes */
+$font-size-root: 16px !default;
+
 /**
  * A map to define all type-sizes and their corresponding line-heights, the
  * first value is the font-size, the seconde the line-height.

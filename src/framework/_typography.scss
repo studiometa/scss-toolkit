@@ -5,6 +5,16 @@
 /** @type {Boolean} Do we need classes? */
 $has-classes: false !default;
 
+/** @type {String} Root font size, used to calculate others font sizes */
+$font-size-root: 16px !default;
+
+@if $has-classes {
+  // Set root font size
+  html {
+    font-size: $font-size-root;
+  }
+}
+
 /*============================================================================*\
    Generic mixins
 \*============================================================================*/
@@ -123,7 +133,7 @@ $type-sizes: (
     @if $unit == 'px' {
       font-size: $font-size;
     } @else {
-      font-size: #{($font-size / 16px) + $unit};
+      font-size: #{$font-size / $font-size-root + $unit};
     }
 
     @if map-has-key($type-size, 'weight') {
