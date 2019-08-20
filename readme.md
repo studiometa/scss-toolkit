@@ -472,7 +472,7 @@ $spaces: (0, 1, 2, 4, 8, 16, auto);
 
 - `@mixin reponsize-type($min-width: 0, $max-width: 2560, $min-size: 12, $max-size: 16)`: a mixin to generate declaration for responsive font-sizes
 - `@mixin type-antialiased`: a mixin to generate properties for antialiased font rendering
-- `$type-sizes`: a map of font-sizes lists to be used in your project structured as `<name>: ( size: <font-size>[, line-height: <line-height>][, weight: <font-weight>])`
+- `$type-sizes`: a map of font-sizes lists to be used in your project structured as `<name>: ( size: <font-size>[, line-height: <line-height>][, weight: <font-weight>] )` or `<name>: ( default: ( size: <font-size>[, line-height: <line-height>][, weight: <font-weight>] ), <breakpoint>: ( ... ) )` for responsive type sizes
   + `<name>`: the name of the size
   + `<font-size>`: the `font-size` value in pixels
   + `<line-height>`: the `line-height` value in pixels
@@ -480,6 +480,7 @@ $spaces: (0, 1, 2, 4, 8, 16, auto);
 - `@mixin font-size($font-size, $unit: 'em')`: a mixin to get CSS properties of the given name defined in the `$font-size` map
 - `@mixin fz($font-size, $unit: 'em')`: alias for the `@include font-size($font-size, $unit)` mixin
 - `$type-webfont-dir`: path to the folder of your webfont files (which must be of `*.woff` and `*.woff2` formats)
+- `$font-size-root`: the root font size applied to `html` DOM element, used to calculate others font sizes
 - `$type-webfont-display`: the `font-display` property that will be applied to the `@font-faces` declarations
 - `$type-fonts: (<identifier>: <definition>)`: a map of font identifiers
   + `<identifier>`: a unique font name, will be used to generate helper classes
@@ -494,9 +495,8 @@ $spaces: (0, 1, 2, 4, 8, 16, auto);
 - `@function ff($type-font)`: alias for the above `font-family($type-font)` function
 - Class helpers:
   + `.type-antialiased`: a class implementing the `type-antialiased` mixin
-  + `.type[-rem]-<size>[--<breakpoint>]`: set the `font-size` in `em` and `line-height` properties to the given `<size>` defined values, with the `-rem` variation setting the `font-size` unit in `rem` and the `<breakpoint>` modifier applying the styles to the corresponding breakpoint
+  + `.type[-rem]-<size>`: set the `font-size` in `em` and `line-height` properties to the given `<size>` defined values, with the `-rem` variation setting the `font-size` unit in `rem`
     * `<size>`: a name defined in the `$font-sizes` map
-    * `<breakpoint>`: a breakpoint's name defined in the `$breakpoints` map
   + `.type-<font-name>`: set the `font-family` property to the corresponding stack in the `$type-fonts` map
     * `<font-name>`: the unique identifier given to the font
   + `.type-align-<alignment>[--<breakpoint>]`: set the `text-align` property, with the `<breakpoint>` modifier applying the styles to the corresponding breakpoint
@@ -516,6 +516,9 @@ $spaces: (0, 1, 2, 4, 8, 16, auto);
 **Defaults**
 
 ```scss
+/** @type {String} Root font size, used to calculate others font sizes */
+$font-size-root: 16px !default;
+
 /**
  * A map to define all type-sizes and their corresponding line-heights, the
  * first value is the font-size, the seconde the line-height.
@@ -524,9 +527,11 @@ $spaces: (0, 1, 2, 4, 8, 16, auto);
  */
 $type-sizes: (
   display-1: (
-    size: 32px,
-    line-height: 48px,
-    weight: 700,
+    default: (
+      size: 32px,
+      line-height: 48px,
+      weight: 700,
+    ),
   ),
   display-2: (
     size: 24px,
