@@ -151,7 +151,7 @@ $type-sizes: (
       }
 
       .type-rem-#{$size}--#{$breakpoint} {
-        @include fz($size);
+        @include fz($size, 'rem');
       }
     }
   }
